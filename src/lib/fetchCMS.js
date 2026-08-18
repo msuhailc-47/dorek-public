@@ -23,8 +23,8 @@ export async function fetchCMSData() {
   const projectId = 'dorek-international-3ef93';
   const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/dorek_cms`;
   
-  // Next.js ISR: Revalidate every 60 seconds
-  const res = await fetch(url, { next: { revalidate: 60 } });
+  // Next.js ISR: Revalidate every 10 seconds for fast admin updates
+  const res = await fetch(url, { next: { revalidate: 10 } });
   
   if (!res.ok) {
     console.error('Failed to fetch CMS data');
