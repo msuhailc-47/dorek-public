@@ -50,10 +50,9 @@ export default function About({ lang, t }) {
           <h3 className="about-h3 about-h3-center">{t.about.coreValues}</h3>
           <div className="about-values-grid">
             {t.about.values.map((val, i) => {
-              const Icon = valueIcons[i];
               return (
                 <div key={i} className="about-value-item">
-                  <div className="about-value-icon"><Icon size={22} /></div>
+                  <div className="about-value-icon"></div>
                   <span>{val}</span>
                 </div>
               );
