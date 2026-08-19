@@ -64,7 +64,7 @@ export default function Businesses({ lang, t }) {
             <div className="biz-popup-body">
               <p className="biz-popup-desc">{t.businesses.items[activePopup].desc}</p>
               <div className="biz-popup-details">
-                {t.businesses.items[activePopup].details || 'No additional details available. Add details from the Admin Panel.'}
+                {t.businesses.items[activePopup].details || (t.businesses.noDetails || 'No additional details available. Add details from the Admin Panel.')}
               </div>
             </div>
           </div>

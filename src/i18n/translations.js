@@ -66,7 +66,8 @@ const translations = {
         { name: 'Training Division', desc: 'Skill development programs, technical training, and entrepreneurship workshops for associates and partners.', tag: 'Training' },
         { name: 'Software Division', desc: 'Custom ERP, CRM, billing, inventory, and mobile app solutions for businesses and franchise operations.', tag: 'Technology' }
       ],
-      learnMore: 'Learn More'
+      learnMore: 'Learn More',
+      noDetails: 'Additional information will be updated soon.'
     },
     whyChoose: {
       label: 'Why Dorek',
