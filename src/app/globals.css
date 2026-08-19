@@ -314,7 +314,7 @@ img {
 
 .scroll-revealed {
   opacity: 1;
-  transform: translateY(0);
+  transform: none;
   transition: opacity 0.45s ease-out, transform 0.45s ease-out;
 }
 
