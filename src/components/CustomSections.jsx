@@ -16,10 +16,7 @@ const CustomSections = () => {
           key={section.id || index} 
           id={section.id || `custom-section-${index}`}
           className={`custom-section`}
-          style={{ 
-            backgroundColor: section.backgroundColor || 'var(--bg-main)',
-            color: section.textColor || 'var(--text-heading)'
-          }}
+          style={{ backgroundColor: index % 2 === 0 ? 'var(--bg-main)' : 'var(--bg-section)' }}
         >
           <div className="container">
             <div className="section-header">
@@ -28,7 +25,7 @@ const CustomSections = () => {
               {section.subtitle && <p className="section-subtitle">{section.subtitle}</p>}
             </div>
 
-            <div className={`custom-content-grid ${section.image ? 'has-image' : 'no-image'}`}>
+            <div className={`custom-content-grid ${section.image ? 'has-image' : 'no-image'} ${section.imagePosition === 'left' ? 'image-left' : 'image-right'}`}>
               <div className="custom-text-content">
                 {section.text && (
                   <div 
