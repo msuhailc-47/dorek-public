@@ -15,13 +15,15 @@ function LegalPageInner({ pageKey, pageTitle }) {
     <div className='legal-page'>
       <Navbar minimal={true} lang={lang} t={t} onLangChange={() => setLang(lang === 'en' ? 'ml' : 'en')} onPortalOpen={() => setIsPortalOpen(true)} />
       
-      <main className='legal-content' style={{ padding: '150px 20px 80px', minHeight: '80vh', maxWidth: '1000px', margin: '0 auto' }}>
-        <h1 style={{ color: 'var(--primary)', marginBottom: '30px', fontSize: '2.5rem' }}>{pageTitle}</h1>
-        <div 
-          className='legal-text' 
-          style={{ lineHeight: '1.8', color: 'var(--text-muted)' }}
-          dangerouslySetInnerHTML={{ __html: htmlContent }} 
-        />
+      <main className='legal-content container' style={{ paddingTop: '110px', paddingBottom: '80px', minHeight: '80vh' }}>
+        <div style={{ maxWidth: '900px' }}>
+          <h1 style={{ color: 'var(--primary)', marginBottom: '30px', fontSize: '2.5rem' }}>{pageTitle}</h1>
+          <div 
+            className='legal-text' 
+            style={{ lineHeight: '1.8', color: 'var(--text-muted)' }}
+            dangerouslySetInnerHTML={{ __html: htmlContent }} 
+          />
+        </div>
       </main>
 
       <Footer lang={lang} t={t} />
