@@ -4,12 +4,15 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import PortalLogin from './PortalLogin';
 import { CMSProvider, useCMS } from '../context/CMSContext';
+import { translations } from '../i18n/translations';
 
 function LegalPageInner({ pageKey, pageTitle }) {
   const { t, lang, setLang } = useCMS();
   const [isPortalOpen, setIsPortalOpen] = useState(false);
   
-  const htmlContent = t?.legal?.[pageKey] || '<p>Content not available. Please add it from the Admin Panel.</p>';
+  // Use Firestore data, fallback to local dummy data, then error message
+  const localDummyData = translations?.[lang]?.legal?.[pageKey];
+  const htmlContent = t?.legal?.[pageKey] || localDummyData || '<p>Content not available. Please add it from the Admin Panel.</p>';
 
   return (
     <div className='legal-page'>
