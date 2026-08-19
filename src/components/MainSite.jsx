@@ -29,14 +29,13 @@ export default function MainSite() {
   const [isPortalOpen, setIsPortalOpen] = useState(false);
   const [showWelcome, setShowWelcome] = useState(true);
   
-  const { lang, t, sectionVisibility } = useCMS();
+  const { lang, setLang, t, sectionVisibility } = useCMS();
   
   // Convert boolean-based section visibility mapping
   const isSectionVisible = (id) => sectionVisibility[id] !== false;
 
   const toggleLang = () => {
-    // Basic stub, real app might change context state, but context is read-only right now
-    alert("Language switching requires SSR locale changes in Next.js setup");
+    setLang(lang === 'en' ? 'ml' : 'en');
   };
 
   return (

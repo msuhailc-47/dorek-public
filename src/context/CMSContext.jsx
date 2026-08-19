@@ -11,7 +11,7 @@ export function CMSProvider({ children, initialData }) {
   }
 
   const { translationsData, themeSettings, sectionVisibility, codeSettings, customSections, navigation } = initialData;
-  const lang = 'en';
+  const [lang, setLang] = React.useState('en');
   const t = translationsData && translationsData[lang] ? translationsData[lang] : null;
 
   // Simple animation class generator, could be upgraded to IntersectionObserver
@@ -44,6 +44,7 @@ export function CMSProvider({ children, initialData }) {
   return (
     <CMSContext.Provider value={{
       lang,
+      setLang,
       t,
       themeSettings: themeSettings || {},
       sectionVisibility: sectionVisibility || {},
