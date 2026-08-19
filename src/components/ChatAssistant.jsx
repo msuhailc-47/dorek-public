@@ -14,11 +14,21 @@ export default function ChatAssistant({ lang, t }) {
   const [showPulse, setShowPulse] = useState(true);
   const bodyRef = useRef(null);
 
-  // Update greeting when language changes
+  const defaultChips = [
+    'Products & Services',
+    'Business Opportunities',
+    'Franchise Info',
+    'Contact Sales'
+  ];
+  
+  const [availableChips, setAvailableChips] = useState(t.chat.options || defaultChips);
+
+  // Update greeting and chips when language changes
   useEffect(() => {
     const greeting = t.chat.greeting;
     setMessages(prev => prev.map((m, i) => (i === 0 ? { ...m, text: greeting } : m)));
-  }, [t.chat.greeting]);
+    setAvailableChips(t.chat.options || defaultChips);
+  }, [t.chat.greeting, t.chat.options]);
 
   // Auto-scroll to latest message
   useEffect(() => {
@@ -56,6 +66,7 @@ export default function ChatAssistant({ lang, t }) {
 
   const handleChipClick = (chip) => {
     setMessages(prev => [...prev, { text: chip, isBot: false }]);
+    setAvailableChips(prev => prev.filter(c => c !== chip));
     setIsTyping(true);
 
     setTimeout(() => {
@@ -75,13 +86,6 @@ export default function ChatAssistant({ lang, t }) {
       return <span key={i}>{part}</span>;
     });
   };
-
-  const quickChips = t.chat.options || [
-    'Products & Services',
-    'Business Opportunities',
-    'Franchise Info',
-    'Contact Sales'
-  ];
 
   return (
     <>
@@ -144,10 +148,10 @@ export default function ChatAssistant({ lang, t }) {
               </div>
             )}
 
-            {/* Quick Reply Chips — show after first bot message if no user messages yet */}
-            {messages.length <= 1 && !isTyping && (
+            {/* Quick Reply Chips — show available chips always unless typing */}
+            {availableChips.length > 0 && !isTyping && (
               <div className="chat-chips">
-                {quickChips.map((chip, i) => (
+                {availableChips.map((chip, i) => (
                   <button key={i} className="chat-chip" onClick={() => handleChipClick(chip)}>
                     {chip}
                   </button>
