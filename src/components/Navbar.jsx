@@ -44,7 +44,10 @@ export default function Navbar({ lang, t, onLangChange, onPortalOpen }) {
     <nav className={`navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
       <div className="navbar-container">
         <div className="navbar-logo" onClick={() => handleNavClick('home')}>
-          <img src="logo.png" alt="Dorek Logo" className="navbar-logo-img" />
+          <div className="navbar-logo-wrapper">
+            <img src="logo.png" alt="Dorek Logo" className="navbar-logo-img" />
+          </div>
+          <span className="navbar-logo-text">DOREK</span>
         </div>
         <div className={`navbar-links ${mobileOpen ? 'navbar-links-open' : ''}`}>
           <button className="navbar-close-mobile" onClick={() => setMobileOpen(false)}><X size={24} /></button>

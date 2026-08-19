@@ -38,17 +38,40 @@
   gap: 12px;
 }
 
+.navbar-logo-wrapper {
+  background: #ffffff;
+  padding: 4px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.navbar-scrolled .navbar-logo-wrapper {
+  box-shadow: none;
+  background: transparent;
+  padding: 0;
+}
+
 .navbar-logo-img {
-  height: 42px;
+  height: 36px;
   width: auto;
   object-fit: contain;
+  transition: all 0.3s ease;
+}
+
+.navbar-scrolled .navbar-logo-img {
+  height: 40px;
 }
 
 .navbar-logo-text {
   font-family: var(--font-heading);
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   font-weight: 800;
-  color: var(--primary);
+  color: #ffffff;
+  letter-spacing: 1px;
 }
 
 .navbar-scrolled .navbar-logo-text {
