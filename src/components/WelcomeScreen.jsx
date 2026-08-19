@@ -6,17 +6,20 @@ export default function WelcomeScreen({ onComplete }) {
   const [isFadingOut, setIsFadingOut] = useState(false);
 
   useEffect(() => {
-    // Start fading out after 2 seconds
+    // Lock body scroll while welcome screen is active
+    document.body.style.overflow = 'hidden';
+
     const fadeOutTimer = setTimeout(() => {
       setIsFadingOut(true);
     }, 2000);
 
-    // Call onComplete after the fade out animation finishes (e.g., 500ms later)
     const completeTimer = setTimeout(() => {
+      document.body.style.overflow = '';
       onComplete();
     }, 2500);
 
     return () => {
+      document.body.style.overflow = '';
       clearTimeout(fadeOutTimer);
       clearTimeout(completeTimer);
     };
