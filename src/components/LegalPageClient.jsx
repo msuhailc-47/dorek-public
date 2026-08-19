@@ -4,7 +4,7 @@ import Navbar from './Navbar';
 import Footer from './Footer';
 import PortalLogin from './PortalLogin';
 import { CMSProvider, useCMS } from '../context/CMSContext';
-import { translations } from '../i18n/translations';
+import translations from '../i18n/translations';
 
 function LegalPageInner({ pageKey, pageTitle }) {
   const { t, lang, setLang } = useCMS();
