@@ -1,12 +1,13 @@
 "use client";
 import React from 'react';
 import { getOptimizedUrl } from '../utils/getOptimizedUrl';
+import { useCMS } from '../context/CMSContext';
 import './CustomSections.css';
 
-const CustomSections = ({ lang, t }) => {
-  const customSections = t.customSections || [];
+const CustomSections = () => {
+  const { customSections } = useCMS();
 
-  if (customSections.length === 0) return null;
+  if (!customSections || customSections.length === 0) return null;
 
   return (
     <>

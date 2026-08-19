@@ -14,6 +14,11 @@ export function CMSProvider({ children, initialData }) {
   const [lang, setLang] = React.useState('en');
   const t = translationsData && translationsData[lang] ? translationsData[lang] : null;
 
+  // Fallback custom sections to English if Malayalam doesn't have them
+  const fallbackCustomSections = (t && t.customSections && t.customSections.length > 0)
+    ? t.customSections
+    : (translationsData?.en?.customSections || []);
+
   // Simple animation class generator, could be upgraded to IntersectionObserver
   const getAnimationClass = (sectionId) => {
     return 'animate-fadeIn'; 
@@ -50,7 +55,7 @@ export function CMSProvider({ children, initialData }) {
       sectionVisibility: sectionVisibility || {},
       isSectionVisible,
       codeSettings: codeSettings || {},
-      customSections: customSections || [],
+      customSections: fallbackCustomSections,
       navigation: navigation || [],
       getAnimationClass,
       addSubmission
