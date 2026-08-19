@@ -41,7 +41,7 @@ export default function Navbar({ lang, t, onLangChange, onPortalOpen, minimal = 
   };
 
   return (
-    <nav className={`navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
+    <nav className={`navbar ${(scrolled || minimal) ? 'navbar-scrolled' : ''}`}>
       <div className="navbar-container">
         <div className="navbar-logo" onClick={() => {
           if (minimal) window.location.href = '/';
