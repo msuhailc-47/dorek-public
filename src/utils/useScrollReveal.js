@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from 'react';
  * The element starts invisible and fades/slides in when it enters the viewport.
  */
 export default function useScrollReveal(options = {}) {
-  const { threshold = 0.15, rootMargin = '0px 0px -50px 0px' } = options;
+  const { threshold = 0.01, rootMargin = '0px 0px 100px 0px' } = options;
   const ref = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
 
