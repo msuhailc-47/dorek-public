@@ -1,5 +1,7 @@
 "use client";
 import React, { createContext, useContext } from 'react';
+import { doc, updateDoc, arrayUnion, setDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 
 const CMSContext = createContext(null);
 
@@ -19,6 +21,24 @@ export function CMSProvider({ children, initialData }) {
   
   const isSectionVisible = (id) => sectionVisibility ? sectionVisibility[id] !== false : true;
 
+  const addSubmission = async (formData) => {
+    try {
+      const submission = { id: Date.now(), date: new Date().toLocaleString(), ...formData };
+      const docRef = doc(db, 'dorek_cms', 'submissions');
+      await updateDoc(docRef, {
+        submissions: arrayUnion(submission)
+      });
+    } catch (error) {
+      // If the document doesn't exist yet, create it
+      if (error.code === 'not-found') {
+        const submission = { id: Date.now(), date: new Date().toLocaleString(), ...formData };
+        await setDoc(doc(db, 'dorek_cms', 'submissions'), { submissions: [submission] });
+      } else {
+        console.error("Error adding submission: ", error);
+      }
+    }
+  };
+
   if (!t) return null;
 
   return (
@@ -31,7 +51,8 @@ export function CMSProvider({ children, initialData }) {
       codeSettings: codeSettings || {},
       customSections: customSections || [],
       navigation: navigation || [],
-      getAnimationClass
+      getAnimationClass,
+      addSubmission
     }}>
       {children}
     </CMSContext.Provider>
