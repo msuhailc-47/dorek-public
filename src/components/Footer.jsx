@@ -44,10 +44,10 @@ export default function Footer({ lang, t }) {
           <div className="footer-col">
             <h4>{t.footer?.legal || 'Legal'}</h4>
             <ul className="footer-links">
-              <li><a href="#">{t.footer?.privacy || 'Privacy Policy'}</a></li>
-              <li><a href="#">{t.footer?.terms || 'Terms & Conditions'}</a></li>
-              <li><a href="#">{t.footer?.refund || 'Refund Policy'}</a></li>
-              <li><a href="#">{t.footer?.disclaimer || 'Disclaimer'}</a></li>
+              <li><a href="/privacy">{t.footer?.privacy || 'Privacy Policy'}</a></li>
+              <li><a href="/terms">{t.footer?.terms || 'Terms & Conditions'}</a></li>
+              <li><a href="/refund">{t.footer?.refund || 'Refund Policy'}</a></li>
+              <li><a href="/disclaimer">{t.footer?.disclaimer || 'Disclaimer'}</a></li>
             </ul>
           </div>
           <div className="footer-col">
