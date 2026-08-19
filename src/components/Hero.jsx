@@ -22,7 +22,7 @@ export default function Hero({ lang, t }) {
       <div className="hero-grid-bg" />
       {t.hero.image && <div className="hero-bg-image" style={{ backgroundImage: `url(${getOptimizedUrl(t.hero.image)})` }} />}
       <div className="hero-content">
-        <div className="hero-badge">🏢 Dorek International Enterprises LLP</div>
+        <div className="hero-badge">✨ {lang === 'ml' ? 'ഡോറെക്കിലേക്ക് സ്വാഗതം' : 'Welcome to Dorek'}</div>
         <h1 className="hero-title">
           <span className="hero-title-main">DOREK</span>
           <span className="hero-title-sub">INTERNATIONAL ENTERPRISES LLP</span>
