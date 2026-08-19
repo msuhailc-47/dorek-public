@@ -3,11 +3,11 @@ import { useState } from 'react';
 import { MapPin, Phone, Mail, Send } from 'lucide-react';
 import { useCMS } from '../context/CMSContext';
 import './Contact.css';
+import useScrollReveal from '../utils/useScrollReveal';
 
 export default function Contact({ lang, t }) {
-  const { getAnimationClass, addSubmission } = useCMS();
-  const animClass = getAnimationClass('contact');
-  
+  const { addSubmission } = useCMS();
+  const { ref: scrollRef, className: scrollClass } = useScrollReveal();
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
   
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,7 +21,7 @@ export default function Contact({ lang, t }) {
   };
   
   return (
-    <section id="contact" className={`section contact-sec ${animClass}`}>
+    <section id="contact" className={`section contact-sec ${scrollClass}`} ref={scrollRef}>
       <div className="container">
         <div className="section-header">
           <span className="section-label">{t.contact.label}</span>

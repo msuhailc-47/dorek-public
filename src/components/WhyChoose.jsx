@@ -2,12 +2,12 @@
 import { CheckCircle2 } from 'lucide-react';
 import { useCMS } from '../context/CMSContext';
 import './WhyChoose.css';
+import useScrollReveal from '../utils/useScrollReveal';
 
 export default function WhyChoose({ lang, t }) {
-  const { getAnimationClass } = useCMS();
-  const animClass = getAnimationClass('whyChoose');
+  const { ref: scrollRef, className: scrollClass } = useScrollReveal();
     return (
-    <section id="why-choose" className={`section why-choose ${animClass}`}>
+    <section id="why-choose" className={`section why-choose ${scrollClass}`} ref={scrollRef}>
       <div className="container">
         <div className="section-header">
           <span className="section-label">{t.whyChoose.label}</span>

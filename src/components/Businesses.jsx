@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { ShoppingCart, Store, Network, Truck, Wrench, Settings, GraduationCap, Code, X } from 'lucide-react';
 import { useCMS } from '../context/CMSContext';
 import './Businesses.css';
+import useScrollReveal from '../utils/useScrollReveal';
 
 const icons = [ShoppingCart, Store, Network, Truck, Wrench, Settings, GraduationCap, Code];
 const gradients = [
@@ -13,12 +14,11 @@ const gradients = [
 ];
 
 export default function Businesses({ lang, t }) {
-  const { getAnimationClass } = useCMS();
-  const animClass = getAnimationClass('businesses');
+  const { ref: scrollRef, className: scrollClass } = useScrollReveal();
   const [activePopup, setActivePopup] = useState(null);
 
   return (
-    <section id="businesses" className={`section businesses ${animClass}`}>
+    <section id="businesses" className={`section businesses ${scrollClass}`} ref={scrollRef}>
       <div className="container">
         <div className="section-header">
           <span className="section-label">{t.businesses.label}</span>

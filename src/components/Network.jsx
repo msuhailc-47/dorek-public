@@ -6,6 +6,7 @@ import './Network.css';
 import { mapData } from './keralaMapData';
 
 import defaultTranslations from '../i18n/translations';
+import useScrollReveal from '../utils/useScrollReveal';
 
 // Stats are now loaded dynamically from translations
 
@@ -46,8 +47,7 @@ function AnimatedCounter({ end, suffix = '' }) {
 }
 
 export default function Network({ lang, t }) {
-  const { getAnimationClass } = useCMS();
-  const animClass = getAnimationClass('network');
+  const { ref: scrollRef, className: scrollClass } = useScrollReveal();
   const [selected, setSelected] = useState(null);
   const [hoveredIndex, setHoveredIndex] = useState(null);
 
@@ -80,7 +80,7 @@ export default function Network({ lang, t }) {
   const activeIndex = hoveredIndex !== null ? hoveredIndex : selected;
 
   return (
-    <section id="network" className={`section network ${animClass}`}>
+    <section id="network" className={`section network ${scrollClass}`} ref={scrollRef}>
       <div className="container">
         <div className="section-header">
           <span className="section-label">{t.network.label}</span>

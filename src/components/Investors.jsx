@@ -2,15 +2,15 @@
 import { TrendingUp, PieChart, DollarSign, BarChart3, ArrowRight } from 'lucide-react';
 import { useCMS } from '../context/CMSContext';
 import './Investors.css';
+import useScrollReveal from '../utils/useScrollReveal';
 
 const icons = [TrendingUp, PieChart, DollarSign, BarChart3];
 const accents = ['#d4a843','#10b981','#00b4d8','#8b5cf6'];
 
 export default function Investors({ lang, t }) {
-  const { getAnimationClass } = useCMS();
-  const animClass = getAnimationClass('investors');
+  const { ref: scrollRef, className: scrollClass } = useScrollReveal();
     return (
-    <section id="investors" className={`section investors-sec ${animClass}`}>
+    <section id="investors" className={`section investors-sec ${scrollClass}`} ref={scrollRef}>
       <div className="container">
         <div className="section-header">
           <span className="section-label">{t.investors.label}</span>

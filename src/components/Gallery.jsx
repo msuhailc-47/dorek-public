@@ -4,10 +4,10 @@ import { useCMS } from '../context/CMSContext';
 import { getOptimizedUrl } from '../utils/getOptimizedUrl';
 import { Image, Play, Trophy, Calendar, X } from 'lucide-react';
 import './Gallery.css';
+import useScrollReveal from '../utils/useScrollReveal';
 
 export default function Gallery({ lang, t }) {
-  const { getAnimationClass } = useCMS();
-  const animClass = getAnimationClass('gallery');
+  const { ref: scrollRef, className: scrollClass } = useScrollReveal();
   const [tab, setTab] = useState(0);
   const [lightbox, setLightbox] = useState(null);
   const photos = t.gallery.photos;
@@ -22,7 +22,7 @@ export default function Gallery({ lang, t }) {
   };
 
   return (
-    <section id="gallery" className={`section gallery-sec ${animClass}`}>
+    <section id="gallery" className={`section gallery-sec ${scrollClass}`} ref={scrollRef}>
       <div className="container">
         <div className="section-header">
           <span className="section-label">{t.gallery.label}</span>

@@ -2,15 +2,15 @@
 import { Heart, Users, GraduationCap, Leaf, ArrowRight } from 'lucide-react';
 import { useCMS } from '../context/CMSContext';
 import './CSR.css';
+import useScrollReveal from '../utils/useScrollReveal';
 
 const icons = [Heart, Users, GraduationCap, Leaf];
 const accents = ['#ef4444','#00b4d8','#f59e0b','#10b981'];
 
 export default function CSR({ lang, t }) {
-  const { getAnimationClass } = useCMS();
-  const animClass = getAnimationClass('csr');
+  const { ref: scrollRef, className: scrollClass } = useScrollReveal();
     return (
-    <section id="csr" className={`section csr-sec ${animClass}`}>
+    <section id="csr" className={`section csr-sec ${scrollClass}`} ref={scrollRef}>
       <div className="container">
         <div className="section-header">
           <span className="section-label">{t.csr.label}</span>

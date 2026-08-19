@@ -3,16 +3,16 @@ import { useState } from 'react';
 import { useCMS } from '../context/CMSContext';
 import { Briefcase, Clock, MapPin, GraduationCap, Award, ArrowRight } from 'lucide-react';
 import './Careers.css';
+import useScrollReveal from '../utils/useScrollReveal';
 
 export default function Careers({ lang, t }) {
-  const { getAnimationClass } = useCMS();
-  const animClass = getAnimationClass('careers');
+  const { ref: scrollRef, className: scrollClass } = useScrollReveal();
     const [tab, setTab] = useState(0);
   const jobs = t.careers.jobs;
   const internships = t.careers.internships;
   const training = t.careers.training;
   return (
-    <section id="careers" className={`section careers ${animClass}`}>
+    <section id="careers" className={`section careers ${scrollClass}`} ref={scrollRef}>
       <div className="container">
         <div className="section-header">
           <span className="section-label">{t.careers.label}</span>

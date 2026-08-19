@@ -2,12 +2,12 @@
 import { FileText, Download } from 'lucide-react';
 import { useCMS } from '../context/CMSContext';
 import './Downloads.css';
+import useScrollReveal from '../utils/useScrollReveal';
 
 export default function Downloads({ lang, t }) {
-  const { getAnimationClass } = useCMS();
-  const animClass = getAnimationClass('downloads');
+  const { ref: scrollRef, className: scrollClass } = useScrollReveal();
     return (
-    <section id="downloads" className={`section downloads-sec ${animClass}`}>
+    <section id="downloads" className={`section downloads-sec ${scrollClass}`} ref={scrollRef}>
       <div className="container">
         <div className="section-header">
           <span className="section-label">{t.downloads.label}</span>

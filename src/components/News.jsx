@@ -2,15 +2,15 @@
 import { Calendar, ArrowRight, Newspaper } from 'lucide-react';
 import { useCMS } from '../context/CMSContext';
 import './News.css';
+import useScrollReveal from '../utils/useScrollReveal';
 
 export default function News({ lang, t }) {
-  const { getAnimationClass } = useCMS();
-  const animClass = getAnimationClass('news');
+  const { ref: scrollRef, className: scrollClass } = useScrollReveal();
     const newsItems = t.news.items;
   const featured = newsItems[0];
   const rest = newsItems.slice(1);
   return (
-    <section id="news" className={`section news-sec ${animClass}`}>
+    <section id="news" className={`section news-sec ${scrollClass}`} ref={scrollRef}>
       <div className="container">
         <div className="section-header">
           <span className="section-label">{t.news.label}</span>

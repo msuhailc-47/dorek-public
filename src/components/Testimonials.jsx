@@ -3,16 +3,16 @@ import { useState } from 'react';
 import { useCMS } from '../context/CMSContext';
 import { Quote, Star } from 'lucide-react';
 import './Testimonials.css';
+import useScrollReveal from '../utils/useScrollReveal';
 
 export default function Testimonials({ lang, t }) {
-  const { getAnimationClass } = useCMS();
-  const animClass = getAnimationClass('testimonials');
+  const { ref: scrollRef, className: scrollClass } = useScrollReveal();
     const [activeTab, setActiveTab] = useState(t.testimonials.tabs[0]);
 
   const filteredItems = t.testimonials.items.filter(item => item.category === activeTab);
 
   return (
-    <section id="testimonials" className={`section testimonials-sec ${animClass}`}>
+    <section id="testimonials" className={`section testimonials-sec ${scrollClass}`} ref={scrollRef}>
       <div className="container">
         <div className="section-header">
           <span className="section-label">{t.testimonials.label}</span>

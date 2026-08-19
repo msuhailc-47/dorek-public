@@ -5,10 +5,8 @@ import { getOptimizedUrl } from '../utils/getOptimizedUrl';
 import './Hero.css';
 
 export default function Hero({ lang, t }) {
-  const { getAnimationClass } = useCMS();
-  const animClass = getAnimationClass('hero');
     return (
-    <section id="home" className={`hero ${animClass}`}>
+    <section id="home" className={`hero `}>
       <div className="hero-particles">
         {[...Array(20)].map((_, i) => (
           <span key={i} className="hero-particle" style={{

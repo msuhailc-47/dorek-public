@@ -3,13 +3,13 @@ import { Eye, Target, Heart, Users, Award, Leaf, Quote } from 'lucide-react';
 import { useCMS } from '../context/CMSContext';
 import { getOptimizedUrl } from '../utils/getOptimizedUrl';
 import './About.css';
+import useScrollReveal from '../utils/useScrollReveal';
 
 export default function About({ lang, t }) {
-  const { getAnimationClass } = useCMS();
-  const animClass = getAnimationClass('about');
+  const { ref: scrollRef, className: scrollClass } = useScrollReveal();
     const valueIcons = [Heart, Award, Users, Target, Leaf, Eye];
   return (
-    <section id="about" className={`section about ${animClass}`}>
+    <section id="about" className={`section about ${scrollClass}`} ref={scrollRef}>
       <div className="container">
         <div className="section-header">
           <span className="section-label">{t.about.label}</span>
