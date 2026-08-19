@@ -9,11 +9,11 @@ function LegalPageInner({ pageKey, pageTitle }) {
   const { t, lang, setLang } = useCMS();
   const [isPortalOpen, setIsPortalOpen] = useState(false);
   
-  const htmlContent = t?.legal?.[pageKey] || <p>Content not available.</p>;
+  const htmlContent = t?.legal?.[pageKey] || '<p>Content not available. Please add it from the Admin Panel.</p>';
 
   return (
     <div className='legal-page'>
-      <Navbar lang={lang} t={t} onLangChange={() => setLang(lang === 'en' ? 'ml' : 'en')} onPortalOpen={() => setIsPortalOpen(true)} />
+      <Navbar minimal={true} lang={lang} t={t} onLangChange={() => setLang(lang === 'en' ? 'ml' : 'en')} onPortalOpen={() => setIsPortalOpen(true)} />
       
       <main className='legal-content' style={{ padding: '150px 20px 80px', minHeight: '80vh', maxWidth: '1000px', margin: '0 auto' }}>
         <h1 style={{ color: 'var(--primary)', marginBottom: '30px', fontSize: '2.5rem' }}>{pageTitle}</h1>

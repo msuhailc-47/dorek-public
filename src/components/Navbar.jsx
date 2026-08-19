@@ -4,7 +4,7 @@ import { Menu, X, Globe, LogIn } from 'lucide-react';
 import { useCMS } from '../context/CMSContext';
 import './Navbar.css';
 
-export default function Navbar({ lang, t, onLangChange, onPortalOpen }) {
+export default function Navbar({ lang, t, onLangChange, onPortalOpen, minimal = false }) {
   const { navigation } = useCMS();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -43,44 +43,56 @@ export default function Navbar({ lang, t, onLangChange, onPortalOpen }) {
   return (
     <nav className={`navbar ${scrolled ? 'navbar-scrolled' : ''}`}>
       <div className="navbar-container">
-        <div className="navbar-logo" onClick={() => handleNavClick('home')}>
+        <div className="navbar-logo" onClick={() => {
+          if (minimal) window.location.href = '/';
+          else handleNavClick('home');
+        }}>
           <div className="navbar-logo-wrapper">
-            <img src="logo.png" alt="Dorek Logo" className="navbar-logo-img" />
+            <img src="/logo.png" alt="Dorek Logo" className="navbar-logo-img" />
           </div>
           <span className="navbar-logo-text">DOREK</span>
         </div>
-        <div className={`navbar-links ${mobileOpen ? 'navbar-links-open' : ''}`}>
-          <button className="navbar-close-mobile" onClick={() => setMobileOpen(false)}><X size={24} /></button>
-          {navigation.map(item => {
-            let targetId = (item.path || item.id).replace('#', '');
-            if (targetId === 'hero') targetId = 'home';
-            return (
-              <a key={item.id} className={`navbar-link ${activeSection === targetId ? 'navbar-link-active' : ''}`}
-                onClick={() => handleNavClick(targetId)}>
-                {t.nav[item.id] || item.label}
-              </a>
-            );
-          })}
-          <div className="navbar-mobile-actions">
-            <button className="navbar-lang-btn" onClick={onLangChange}>
-              <Globe size={16} />{lang === 'en' ? 'മല' : 'EN'}
-            </button>
-            <button className="btn btn-primary btn-sm" onClick={() => { setMobileOpen(false); onPortalOpen(); }}>
-              <LogIn size={16} />{t.hero.portalLogin}
-            </button>
+        
+        {!minimal && (
+          <div className={`navbar-links ${mobileOpen ? 'navbar-links-open' : ''}`}>
+            <button className="navbar-close-mobile" onClick={() => setMobileOpen(false)}><X size={24} /></button>
+            {navigation.map(item => {
+              let targetId = (item.path || item.id).replace('#', '');
+              if (targetId === 'hero') targetId = 'home';
+              return (
+                <a key={item.id} className={`navbar-link ${activeSection === targetId ? 'navbar-link-active' : ''}`}
+                  onClick={() => handleNavClick(targetId)}>
+                  {t.nav?.[item.id] || item.label}
+                </a>
+              );
+            })}
+            <div className="navbar-mobile-actions">
+              <button className="navbar-lang-btn" onClick={onLangChange}>
+                <Globe size={16} />{lang === 'en' ? 'മല' : 'EN'}
+              </button>
+              <button className="btn btn-primary btn-sm" onClick={() => { setMobileOpen(false); onPortalOpen(); }}>
+                <LogIn size={16} />{t.hero?.portalLogin || 'Portal'}
+              </button>
+            </div>
           </div>
-        </div>
+        )}
+
         <div className="navbar-actions">
           <button className="navbar-lang-btn" onClick={onLangChange}>
             <Globe size={16} />{lang === 'en' ? 'മല' : 'EN'}
           </button>
-          <button className="btn btn-primary btn-sm" onClick={onPortalOpen}>
-            <LogIn size={16} />{t.hero.portalLogin}
-          </button>
+          {!minimal && (
+            <button className="btn btn-primary btn-sm" onClick={onPortalOpen}>
+              <LogIn size={16} />{t.hero?.portalLogin || 'Portal'}
+            </button>
+          )}
         </div>
-        <button className="navbar-hamburger" onClick={() => setMobileOpen(true)}><Menu size={24} /></button>
+        
+        {!minimal && (
+          <button className="navbar-hamburger" onClick={() => setMobileOpen(true)}><Menu size={24} /></button>
+        )}
       </div>
-      {mobileOpen && <div className="navbar-overlay" onClick={() => setMobileOpen(false)} />}
+      {mobileOpen && !minimal && <div className="navbar-overlay" onClick={() => setMobileOpen(false)} />}
     </nav>
   );
 }
