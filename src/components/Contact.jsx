@@ -6,7 +6,7 @@ import './Contact.css';
 import useScrollReveal from '../utils/useScrollReveal';
 
 export default function Contact({ lang, t }) {
-  const { addSubmission } = useCMS();
+  const { addSubmission, themeSettings } = useCMS();
   const { ref: scrollRef, className: scrollClass } = useScrollReveal();
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
   
@@ -19,13 +19,19 @@ export default function Contact({ lang, t }) {
     // Save to Firestore
     addSubmission(formData);
     
-    // Send email notification (non-blocking)
+    // Send email notification (non-blocking, but we'll await it to catch errors in dev)
     try {
-      fetch('/api/contact', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, adminEmail: themeSettings?.adminEmail }),
       });
+      const data = await response.json();
+      if (!response.ok || data.error) {
+        console.error('Email API Error:', data);
+      } else {
+        console.log('Email sent successfully:', data);
+      }
     } catch (err) {
       console.error('Email notification failed:', err);
     }
