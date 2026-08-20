@@ -12,10 +12,24 @@ export default function Contact({ lang, t }) {
   
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name || !formData.email || !formData.message) return;
+    
+    // Save to Firestore
     addSubmission(formData);
+    
+    // Send email notification (non-blocking)
+    try {
+      fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+    } catch (err) {
+      console.error('Email notification failed:', err);
+    }
+    
     alert('Thank you for contacting us! We will get back to you soon.');
     setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
   };
