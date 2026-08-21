@@ -17,8 +17,7 @@ export default function Footer({ lang, t }) {
             <div className="footer-logo" style={{display: 'flex', alignItems: 'center', gap: '12px'}}>
               <img src="/logo.png" alt="Dorek Logo" style={{height: '42px', width: 'auto', objectFit: 'contain', filter: 'brightness(0) invert(1)'}} />
               <div style={{display: 'flex', flexDirection: 'column'}}>
-                <span style={{color: '#fff', fontSize: '24px', fontWeight: '800', letterSpacing: '1px', lineHeight: '1'}}>DOREK</span>
-                <span style={{color: '#d4af37', fontSize: '10px', fontWeight: '600', letterSpacing: '2.5px', marginTop: '2px'}}>INTERNATIONAL</span>
+                <span className="navbar-logo-text" style={{color: '#ffffff', fontSize: '24px'}}>DOREK</span>
               </div>
             </div>
             <p className="footer-desc">{t.footer?.description || 'A diversified corporate conglomerate delivering excellence across industries.'}</p>
