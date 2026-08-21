@@ -21,7 +21,7 @@ export default function Footer({ lang, t }) {
                 <span className="navbar-logo-sub" style={{color: '#8b9bb4'}}>INTERNATIONAL</span>
               </div>
             </div>
-            <p className="footer-desc">A diversified corporate conglomerate delivering excellence across industries.</p>
+            <p className="footer-desc">{t.footer?.description || 'A diversified corporate conglomerate delivering excellence across industries.'}</p>
             <div className="social-links">
               {t.footer?.facebook && <a href={t.footer.facebook} target="_blank" rel="noopener noreferrer"><FacebookIcon /></a>}
               {t.footer?.instagram && <a href={t.footer.instagram} target="_blank" rel="noopener noreferrer"><InstagramIcon /></a>}

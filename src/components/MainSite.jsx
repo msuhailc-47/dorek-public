@@ -60,7 +60,7 @@ export default function MainSite() {
 
   return (
     <div className={`app-container ${showWelcome ? 'welcome-active' : ''}`}>
-      {showWelcome && <WelcomeScreen onComplete={() => setShowWelcome(false)} />}
+      {showWelcome && <WelcomeScreen t={t} onComplete={() => setShowWelcome(false)} />}
       <Navbar lang={lang} t={t} onLangChange={toggleLang} onPortalOpen={() => setIsPortalOpen(true)} />
       
       <main>

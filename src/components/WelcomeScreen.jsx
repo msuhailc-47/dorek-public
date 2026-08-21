@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import './WelcomeScreen.css';
 
-export default function WelcomeScreen({ onComplete }) {
+export default function WelcomeScreen({ onComplete, t }) {
   const [isFadingOut, setIsFadingOut] = useState(false);
 
   useEffect(() => {
@@ -31,9 +31,10 @@ export default function WelcomeScreen({ onComplete }) {
         <div className="welcome-logo-container">
           <div className="welcome-glow" />
           <h1 className="welcome-title">
-            <span className="welcome-title-main">Welcome to</span>
-            <span className="welcome-title-sub">DOREK INTERNATIONAL</span>
+            <span className="welcome-title-main">{t.welcome?.titleMain || 'Welcome to'}</span>
+            <span className="welcome-title-sub">{t.welcome?.titleSub || 'DOREK INTERNATIONAL'}</span>
           </h1>
+          <p className="welcome-tagline">{t.welcome?.tagline || 'ENGINEERING SOLUTIONS'}</p>
         </div>
         <div className="welcome-loader">
           <div className="welcome-loader-bar"></div>
@@ -42,4 +43,3 @@ export default function WelcomeScreen({ onComplete }) {
     </div>
   );
 }
-

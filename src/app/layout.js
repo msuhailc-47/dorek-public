@@ -17,6 +17,10 @@ export const metadata = {
     default: 'Dorek International',
   },
   description: 'Building the future of business.',
+  icons: {
+    icon: '/logo.png',
+    apple: '/logo.png'
+  }
 };
 
 export default function RootLayout({ children }) {
