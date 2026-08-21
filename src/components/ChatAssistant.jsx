@@ -3,9 +3,10 @@ import { useState, useEffect, useRef } from 'react';
 import { MessageSquare, X, Send, Bot, Sparkles } from 'lucide-react';
 import './ChatAssistant.css';
 import { findBestResponse } from './chatKnowledge';
+import { useCMS } from '../context/CMSContext';
 
 export default function ChatAssistant({ lang, t }) {
-    const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
     { text: t.chat.greeting, isBot: true }
   ]);
@@ -13,6 +14,10 @@ export default function ChatAssistant({ lang, t }) {
   const [isTyping, setIsTyping] = useState(false);
   const [showPulse, setShowPulse] = useState(true);
   const bodyRef = useRef(null);
+  
+  const { addSubmission } = useCMS();
+  const [leadState, setLeadState] = useState(null); // 'name', 'phone', 'done'
+  const [leadData, setLeadData] = useState({ name: '', phone: '' });
 
   const defaultChips = [
     'Products & Services',
@@ -46,6 +51,52 @@ export default function ChatAssistant({ lang, t }) {
     return findBestResponse(userMessage);
   };
 
+  const processLeadStep = (userMessage) => {
+    if (leadState === 'name') {
+      setLeadData(prev => ({ ...prev, name: userMessage }));
+      setLeadState('phone');
+      setTimeout(() => {
+        setMessages(prev => [...prev, { text: "Thank you. What is your phone or WhatsApp number?", isBot: true }]);
+        setIsTyping(false);
+      }, 600);
+      return true;
+    }
+    
+    if (leadState === 'phone') {
+      const finalPhone = userMessage;
+      setLeadState('done');
+      
+      setTimeout(() => {
+        setMessages(prev => [...prev, { text: "Thank you! Our sales team will reach out to you shortly.", isBot: true }]);
+        setIsTyping(false);
+        
+        // Save lead
+        addSubmission({
+          name: leadData.name,
+          email: 'chatbot@dorek.in', // dummy email for bots
+          phone: finalPhone,
+          subject: 'Chatbot Lead - Contact Sales',
+          message: 'Lead generated via Chat Assistant.'
+        });
+        
+        fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: leadData.name,
+            email: 'chatbot@dorek.in',
+            phone: finalPhone,
+            subject: 'Chatbot Lead - Contact Sales',
+            message: 'Lead generated via Chat Assistant.'
+          })
+        }).catch(console.error);
+        
+      }, 800);
+      return true;
+    }
+    return false;
+  };
+
   const handleSend = (e) => {
     e.preventDefault();
     if (!input.trim()) return;
@@ -54,6 +105,18 @@ export default function ChatAssistant({ lang, t }) {
     setMessages(prev => [...prev, { text: userMessage, isBot: false }]);
     setInput('');
     setIsTyping(true);
+
+    if (processLeadStep(userMessage)) return;
+
+    const lower = userMessage.toLowerCase();
+    if (lower.includes('contact sales') || lower.includes('contact') || lower.includes('call')) {
+      setTimeout(() => {
+        setLeadState('name');
+        setMessages(prev => [...prev, { text: "Sure! I can help you connect with our sales team. May I know your name?", isBot: true }]);
+        setIsTyping(false);
+      }, 600);
+      return;
+    }
 
     // Simulate a small thinking delay
     const delay = 600 + Math.random() * 800;
@@ -68,6 +131,15 @@ export default function ChatAssistant({ lang, t }) {
     setMessages(prev => [...prev, { text: chip, isBot: false }]);
     setAvailableChips(prev => prev.filter(c => c !== chip));
     setIsTyping(true);
+
+    if (chip === 'Contact Sales' || chip === 'സെയിൽസ് ബന്ധപ്പെടുക') {
+      setTimeout(() => {
+        setLeadState('name');
+        setMessages(prev => [...prev, { text: "Sure! I can help you connect with our sales team. May I know your name?", isBot: true }]);
+        setIsTyping(false);
+      }, 600);
+      return;
+    }
 
     setTimeout(() => {
       const response = getBotResponse(chip);
