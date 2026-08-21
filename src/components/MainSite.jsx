@@ -35,6 +35,25 @@ export default function MainSite() {
   // Convert boolean-based section visibility mapping
   const isSectionVisible = (id) => sectionVisibility[id] !== false;
 
+  React.useEffect(() => {
+    // Log unique visitor session
+    const logVisit = async () => {
+      if (!sessionStorage.getItem('dorek_visit_logged')) {
+        try {
+          const { doc, setDoc, increment } = await import('firebase/firestore');
+          const { db } = await import('../firebase');
+          const analyticsRef = doc(db, 'dorek_cms', 'analytics');
+          // increment(1) safely adds 1 to the counter in Firestore
+          await setDoc(analyticsRef, { totalVisitors: increment(1) }, { merge: true });
+          sessionStorage.setItem('dorek_visit_logged', 'true');
+        } catch (e) {
+          console.error("Failed to log visit", e);
+        }
+      }
+    };
+    logVisit();
+  }, []);
+
   const toggleLang = () => {
     setLang(lang === 'en' ? 'ml' : 'en');
   };
