@@ -24,6 +24,7 @@ import Footer from './Footer';
 import PortalLogin from './PortalLogin';
 import ChatAssistant from './ChatAssistant';
 import WelcomeScreen from './WelcomeScreen';
+import WhatsAppButton from './WhatsAppButton';
 
 export default function MainSite() {
   const [isPortalOpen, setIsPortalOpen] = useState(false);
@@ -66,6 +67,10 @@ export default function MainSite() {
       <Footer lang={lang} t={t} />
       
       <PortalLogin lang={lang} t={t} isOpen={isPortalOpen} onClose={() => setIsPortalOpen(false)} />
+      <WhatsAppButton 
+        phone={t.contact?.whatsapp || ''} 
+        message="Hi Dorek, I would like to know more about your services.." 
+      />
       <ChatAssistant lang={lang} t={t} />
     </div>
   );
