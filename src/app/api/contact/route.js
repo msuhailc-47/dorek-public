@@ -6,8 +6,17 @@ export async function POST(request) {
     const body = await request.json();
     const { name, email, phone, subject, message, adminEmail } = body;
 
+    // Server-side validation
     if (!name || !email || !message) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    }
+
+    // Basic Anti-Spam: Block messages containing obvious spam patterns (multiple URLs, crypto keywords)
+    const spamRegex = /(http[s]?:\/\/[^\s]+|www\.[^\s]+)/gi;
+    const urlMatches = message.match(spamRegex);
+    if (urlMatches && urlMatches.length > 2) {
+      console.log('Spam blocked based on multiple URLs in message');
+      return NextResponse.json({ success: true, emailSent: false, reason: 'Spam detected' });
     }
 
     const smtpUser = process.env.SMTP_USER;

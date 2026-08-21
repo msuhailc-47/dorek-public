@@ -8,23 +8,44 @@ import useScrollReveal from '../utils/useScrollReveal';
 export default function Contact({ lang, t }) {
   const { addSubmission, themeSettings } = useCMS();
   const { ref: scrollRef, className: scrollClass } = useScrollReveal();
-  const [formData, setFormData] = useState({ name: '', email: '', phone: '', subject: '', message: '' });
+  const [formData, setFormData] = useState({ name: '', email: '', phone: '', subject: '', message: '', honeypot: '' });
   
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
   
   const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Honeypot check - if bot fills this hidden field, silently reject
+    if (formData.honeypot !== '') {
+      console.log('Spam detected');
+      setFormData({ name: '', email: '', phone: '', subject: '', message: '', honeypot: '' });
+      return;
+    }
+
     if (!formData.name || !formData.email || !formData.message) return;
     
     // Save to Firestore
-    addSubmission(formData);
+    addSubmission({
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      subject: formData.subject,
+      message: formData.message
+    });
     
     // Send email notification (non-blocking, but we'll await it to catch errors in dev)
     try {
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...formData, adminEmail: themeSettings?.adminEmail }),
+        body: JSON.stringify({ 
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          subject: formData.subject,
+          message: formData.message,
+          adminEmail: themeSettings?.adminEmail 
+        }),
       });
       const data = await response.json();
       if (!response.ok || data.error) {
@@ -37,7 +58,7 @@ export default function Contact({ lang, t }) {
     }
     
     alert('Thank you for contacting us! We will get back to you soon.');
-    setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+    setFormData({ name: '', email: '', phone: '', subject: '', message: '', honeypot: '' });
   };
   
   return (
