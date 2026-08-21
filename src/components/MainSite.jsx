@@ -24,6 +24,7 @@ import Footer from './Footer';
 import PortalLogin from './PortalLogin';
 import ChatAssistant from './ChatAssistant';
 import WelcomeScreen from './WelcomeScreen';
+import LeadPopup from './LeadPopup';
 import WhatsAppButton from './WhatsAppButton';
 
 export default function MainSite() {
@@ -91,6 +92,7 @@ export default function MainSite() {
         message="Hi Dorek, I would like to know more about your services.." 
       />
       <ChatAssistant lang={lang} t={t} />
+      <LeadPopup />
     </div>
   );
 }
