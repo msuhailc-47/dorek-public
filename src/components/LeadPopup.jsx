@@ -8,7 +8,7 @@ export default function LeadPopup() {
   const [formData, setFormData] = useState({ name: '', phone: '', email: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const { addSubmission } = useCMS();
+  const { addSubmission, themeSettings } = useCMS();
 
   useEffect(() => {
     // Only run on client side
@@ -58,7 +58,8 @@ export default function LeadPopup() {
           phone: formData.phone,
           email: formData.email || 'lead@dorek.in',
           subject: 'Lead Capture Popup',
-          message: 'Lead generated from the automatic 15-second popup.'
+          message: 'Lead generated from the automatic 15-second popup.',
+          adminEmail: themeSettings?.adminEmail
         })
       });
     } catch (err) {
