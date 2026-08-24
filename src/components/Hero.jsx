@@ -27,7 +27,7 @@ export default function Hero({ lang, t }) {
       {t.hero.image && <div className="hero-bg-image" style={{ backgroundImage: `url(${getOptimizedUrl(t.hero.image)})` }} />}
       <div className="hero-content">
         <div className="hero-logo-container">
-          <img src="/logo.png" alt="Dorek Logo" className="hero-logo" />
+          <img src="/hero-logo.png" alt="Dorek Logo" className="hero-logo" />
         </div>
         <h1 className="hero-title">
           <span className="hero-title-main">DOREK</span>
