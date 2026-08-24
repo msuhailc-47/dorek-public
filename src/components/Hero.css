@@ -65,14 +65,14 @@
   align-items: center;
   justify-content: center;
   background: #ffffff;
-  padding: 12px 18px;
-  border-radius: 12px;
-  margin-bottom: 24px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  padding: 20px 36px;
+  border-radius: 20px;
+  margin-bottom: 30px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
 }
 
 .hero-logo {
-  height: 54px;
+  height: 120px;
   width: auto;
   object-fit: contain;
 }
