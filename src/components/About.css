@@ -6,6 +6,13 @@
   background: var(--bg-section);
 }
 
+.about .section-subtitle {
+  max-width: 100%;
+  text-align: left;
+  line-height: 1.9;
+  font-size: 1.05rem;
+}
+
 .about-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
