@@ -40,7 +40,8 @@ const translations = {
       values: ['Integrity & Trust', 'Innovation & Excellence', 'Customer First', 'Teamwork & Growth', 'Social Responsibility', 'Sustainable Development'],
       founderTitle: 'Founder\'s Message',
       founderMsg: '"Our vision is clear — to build a corporate ecosystem that empowers every stakeholder. From our associates and franchise partners to our customers and investors, every relationship at Dorek is built on trust, transparency, and shared growth."',
-      founderName: 'Founder & Managing Partner',
+      founderName: 'Abdulla Ullattil',
+      founderRole: 'Founder & Managing Partner',
       founderCompany: 'Dorek International Enterprises LLP',
       timeline: 'Company Timeline',
       timelineItems: [
@@ -423,7 +424,8 @@ const translations = {
       values: ['സത്യസന്ധതയും വിശ്വാസവും', 'നവീകരണവും മികവും', 'ഉപഭോക്താവ് ആദ്യം', 'ടീംവർക്കും വളർച്ചയും', 'സാമൂഹിക ഉത്തരവാദിത്തം', 'സുസ്ഥിര വികസനം'],
       founderTitle: 'സ്ഥാപകന്റെ സന്ദേശം',
       founderMsg: '"ഞങ്ങളുടെ ദർശനം വ്യക്തമാണ് — ഓരോ പങ്കാളിയെയും ശാക്തീകരിക്കുന്ന ഒരു കോർപ്പറേറ്റ് ആവാസവ്യവസ്ഥ കെട്ടിപ്പടുക്കുക. ഡോറെക്കിലെ ഓരോ ബന്ധവും വിശ്വാസത്തിലും സുതാര്യതയിലും പരസ്പര വളർച്ചയിലും നിർമ്മിച്ചതാണ്."',
-      founderName: 'സ്ഥാപകനും മാനേജിംഗ് പാർട്ണറും',
+      founderName: 'അബ്ദുള്ള ഉള്ളാട്ടിൽ',
+      founderRole: 'സ്ഥാപകൻ & മാനേജിംഗ് പാർട്ണർ',
       founderCompany: 'ഡോറെക് ഇന്റർനാഷണൽ എന്റർപ്രൈസസ് LLP',
       timeline: 'കമ്പനി ടൈംലൈൻ',
       timelineItems: [

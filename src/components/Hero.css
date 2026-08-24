@@ -60,23 +60,25 @@
   animation: fadeInUp 0.8s ease forwards;
 }
 
-.hero-badge {
+.hero-logo-container {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 22px;
-  border-radius: 50px;
-  font-family: var(--font-heading);
-  font-size: 0.85rem;
-  font-weight: 600;
-  background: rgba(212, 175, 55, 0.15);
-  border: 1px solid rgba(212, 175, 55, 0.3);
-  color: var(--secondary);
-  margin-bottom: 28px;
+  justify-content: center;
+  background: #ffffff;
+  padding: 12px 18px;
+  border-radius: 12px;
+  margin-bottom: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.hero-logo {
+  height: 54px;
+  width: auto;
+  object-fit: contain;
 }
 
 .hero-title {
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .hero-title-main {
@@ -122,7 +124,7 @@
   gap: 16px;
   justify-content: center;
   flex-wrap: wrap;
-  margin-bottom: 48px;
+  margin-bottom: 32px;
 }
 
 .hero-actions .btn-primary {
@@ -151,8 +153,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 36px;
-  padding: 24px 44px;
+  gap: 24px;
+  padding: 16px 32px;
   border-radius: var(--radius-card);
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -164,13 +166,13 @@
 .hero-stat-num {
   display: block;
   font-family: var(--font-heading);
-  font-size: 1.9rem;
+  font-size: 1.6rem;
   font-weight: 700;
   color: var(--secondary);
 }
 
 .hero-stat-label {
-  font-size: 0.78rem;
+  font-size: 0.72rem;
   color: rgba(255, 255, 255, 0.7);
   text-transform: uppercase;
   letter-spacing: 1px;

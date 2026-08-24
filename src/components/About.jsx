@@ -64,13 +64,16 @@ export default function About({ lang, t }) {
           <div className="about-founder-card">
             <Quote size={40} className="about-quote-icon" />
             <p className="about-founder-msg">{t.about.founderMsg}</p>
-            <div className="about-founder-info">
-              <div className="about-founder-avatar">D</div>
-              <div>
-                <div className="about-founder-name">{t.about.founderName}</div>
-                <div className="about-founder-company">{t.about.founderCompany}</div>
+              <div className="about-founder-info">
+                <div className="about-founder-avatar">
+                  {t.about.founderName ? t.about.founderName.charAt(0) : 'A'}
+                </div>
+                <div>
+                  <div className="about-founder-name">{t.about.founderName || 'Abdulla Ullattil'}</div>
+                  <div className="about-founder-role" style={{ fontSize: '0.85rem', color: 'rgba(10, 46, 93, 0.7)', fontWeight: 600, marginBottom: '2px' }}>{t.about.founderRole || 'Founder & Managing Partner'}</div>
+                  <div className="about-founder-company">{t.about.founderCompany || 'Dorek International Enterprises LLP'}</div>
+                </div>
               </div>
-            </div>
           </div>
         </div>
 
