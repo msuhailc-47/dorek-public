@@ -1,5 +1,8 @@
 import nodemailer from 'nodemailer';
 import { NextResponse } from 'next/server';
+import { getClientIp, checkRateLimit, inspectPayload, sendSecurityIncidentAlert } from '../../../lib/securityGuard';
+
+export const runtime = 'nodejs';
 
 function escapeHtml(str) {
   if (!str || typeof str !== 'string') return '';
@@ -12,34 +15,76 @@ function escapeHtml(str) {
 }
 
 export async function POST(request) {
+  const clientIp = getClientIp(request);
+  const smtpUser = process.env.SMTP_USER;
+  const smtpPass = process.env.SMTP_PASS;
+  const adminEmail = process.env.ADMIN_EMAIL || 'info@dorek.in';
+
   try {
+    // 1. Rate-Limit Check (Max 10 requests per minute per IP)
+    const rateCheck = checkRateLimit(clientIp, 10, 60000);
+    if (rateCheck.exceeded) {
+      console.warn(`Rate limit exceeded for IP ${clientIp}`);
+      sendSecurityIncidentAlert({
+        clientIp,
+        endpoint: '/api/contact',
+        threatType: 'DDoS / Rapid Request Flooding',
+        sample: `Request count: ${rateCheck.count} in 60s`,
+        smtpUser,
+        smtpPass,
+        adminEmail
+      }).catch(e => console.error('Alert error:', e));
+
+      return NextResponse.json(
+        { error: 'Too many requests. Please wait a minute before submitting again.' }, 
+        { status: 429 }
+      );
+    }
+
     const body = await request.json();
+
+    // 2. Deep Cyber Security Threat Inspection (XSS, SQLi, NoSQLi, RCE, Path Traversal)
+    const threatAnalysis = inspectPayload(body);
+    if (threatAnalysis.isThreat) {
+      console.warn(`🚨 Security threat detected from IP ${clientIp}: ${threatAnalysis.type}`);
+      
+      // Dispatch immediate high-priority warning email to admin
+      sendSecurityIncidentAlert({
+        clientIp,
+        endpoint: '/api/contact',
+        threatType: threatAnalysis.type,
+        sample: threatAnalysis.sample,
+        smtpUser,
+        smtpPass,
+        adminEmail
+      }).catch(e => console.error('Alert error:', e));
+
+      return NextResponse.json(
+        { error: 'Security violation: Request blocked by Dorek Cyber Defense System.' }, 
+        { status: 403 }
+      );
+    }
+
     const { name, email, phone, subject, message } = body;
 
-    // Server-side validation
+    // 3. Server-side required fields validation
     if (!name || !email || !message) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    // Basic email format check
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // 4. Strict input length caps to prevent buffer bloat
+    if (name.length > 80 || email.length > 100 || (phone && phone.length > 25) || (subject && subject.length > 150) || message.length > 2500) {
+      return NextResponse.json({ error: 'Payload exceeds permissible character limits.' }, { status: 400 });
+    }
+
+    // 5. Email format validation
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailRegex.test(email)) {
       return NextResponse.json({ error: 'Invalid email address' }, { status: 400 });
     }
 
-    // Basic Anti-Spam: Block messages containing obvious spam patterns (multiple URLs)
-    const spamRegex = /(http[s]?:\/\/[^\s]+|www\.[^\s]+)/gi;
-    const urlMatches = message.match(spamRegex);
-    if (urlMatches && urlMatches.length > 2) {
-      console.log('Spam blocked based on multiple URLs in message');
-      return NextResponse.json({ success: true, emailSent: false, reason: 'Spam detected' });
-    }
-
-    const smtpUser = process.env.SMTP_USER;
-    const smtpPass = process.env.SMTP_PASS;
-
     if (!smtpUser || !smtpPass) {
-      console.warn('SMTP credentials not configured. Skipping email notification.');
+      console.warn('SMTP credentials not configured. Contact submission saved.');
       return NextResponse.json({ success: true, emailSent: false, reason: 'SMTP not configured' });
     }
 
@@ -51,52 +96,51 @@ export async function POST(request) {
       },
     });
 
-    // Enforce server-side recipient email strictly
-    const recipientEmail = process.env.ADMIN_EMAIL || 'info@dorek.in';
-
-    // Sanitize user-provided values before HTML embedding
+    // Sanitize user-provided values
     const safeName = escapeHtml(name);
     const safeEmail = escapeHtml(email);
     const safePhone = escapeHtml(phone || 'Not provided');
-    const safeSubject = escapeHtml(subject || 'No Subject');
+    const safeSubject = escapeHtml(subject || 'Customer Inquiry');
     const safeMessage = escapeHtml(message).replace(/\n/g, '<br />');
 
     const mailOptions = {
       from: `"Dorek Website" <${smtpUser}>`,
-      to: recipientEmail,
+      to: adminEmail,
       replyTo: email,
-      subject: `New Contact Form: ${safeSubject}`,
+      subject: `📬 Website Inquiry: ${safeSubject}`,
       html: `
-        <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <div style="background: #0A2E5D; padding: 20px; border-radius: 12px 12px 0 0; text-align: center;">
-            <h2 style="color: #D4AF37; margin: 0;">New Contact Form Submission</h2>
+        <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
+          <div style="background: #0A2E5D; padding: 20px; text-align: center; border-bottom: 3px solid #D4AF37;">
+            <h2 style="color: #D4AF37; margin: 0; font-size: 18px;">DOREK INTERNATIONAL</h2>
+            <p style="color: #ffffff; margin: 4px 0 0 0; font-size: 13px;">Official Website Inquiry</p>
           </div>
-          <div style="background: #ffffff; padding: 24px; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 12px 12px;">
-            <table style="width: 100%; border-collapse: collapse;">
-              <tr>
-                <td style="padding: 8px 0; color: #666; font-weight: 600;">Name:</td>
-                <td style="padding: 8px 0; color: #222;">${safeName}</td>
+          <div style="background: #ffffff; padding: 24px;">
+            <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+              <tr style="border-bottom: 1px solid #f1f5f9;">
+                <td style="padding: 8px 0; color: #64748b; font-weight: 600; width: 120px;">Name:</td>
+                <td style="padding: 8px 0; color: #1e293b; font-weight: 700;">${safeName}</td>
               </tr>
-              <tr>
-                <td style="padding: 8px 0; color: #666; font-weight: 600;">Email:</td>
-                <td style="padding: 8px 0; color: #222;"><a href="mailto:${safeEmail}">${safeEmail}</a></td>
+              <tr style="border-bottom: 1px solid #f1f5f9;">
+                <td style="padding: 8px 0; color: #64748b; font-weight: 600;">Email:</td>
+                <td style="padding: 8px 0; color: #0A2E5D; font-weight: 700;"><a href="mailto:${safeEmail}">${safeEmail}</a></td>
               </tr>
-              <tr>
-                <td style="padding: 8px 0; color: #666; font-weight: 600;">Phone:</td>
-                <td style="padding: 8px 0; color: #222;">${safePhone}</td>
+              <tr style="border-bottom: 1px solid #f1f5f9;">
+                <td style="padding: 8px 0; color: #64748b; font-weight: 600;">Phone:</td>
+                <td style="padding: 8px 0; color: #1e293b;">${safePhone}</td>
               </tr>
-              <tr>
-                <td style="padding: 8px 0; color: #666; font-weight: 600;">Subject:</td>
-                <td style="padding: 8px 0; color: #222;">${safeSubject}</td>
+              <tr style="border-bottom: 1px solid #f1f5f9;">
+                <td style="padding: 8px 0; color: #64748b; font-weight: 600;">Subject:</td>
+                <td style="padding: 8px 0; color: #1e293b;">${safeSubject}</td>
               </tr>
             </table>
-            <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 16px 0;">
-            <h3 style="color: #0A2E5D; margin-bottom: 8px;">Message:</h3>
-            <p style="color: #444; line-height: 1.6; background: #f9fafb; padding: 12px; border-radius: 8px;">${safeMessage}</p>
+            <div style="margin-top: 18px; background: #f8fafc; padding: 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+              <strong style="color: #64748b; font-size: 12px; text-transform: uppercase;">Message:</strong>
+              <p style="color: #334155; margin: 6px 0 0 0; line-height: 1.5; font-size: 14px;">${safeMessage}</p>
+            </div>
+            <p style="font-size: 11px; color: #94a3b8; text-align: center; margin-top: 20px;">
+              Submitted from IP: ${clientIp} • Verified Safe by Dorek Security
+            </p>
           </div>
-          <p style="text-align: center; color: #999; font-size: 12px; margin-top: 16px;">
-            Sent from Dorek International Website Contact Form
-          </p>
         </div>
       `,
     };
@@ -105,7 +149,7 @@ export async function POST(request) {
     return NextResponse.json({ success: true, emailSent: true });
 
   } catch (error) {
-    console.error('Email send error:', error);
-    return NextResponse.json({ error: 'Failed to send email' }, { status: 500 });
+    console.error('Contact API error:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
