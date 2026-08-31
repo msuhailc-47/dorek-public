@@ -1,17 +1,33 @@
 import nodemailer from 'nodemailer';
 import { NextResponse } from 'next/server';
 
+function escapeHtml(str) {
+  if (!str || typeof str !== 'string') return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { name, email, phone, subject, message, adminEmail } = body;
+    const { name, email, phone, subject, message } = body;
 
     // Server-side validation
     if (!name || !email || !message) {
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
     }
 
-    // Basic Anti-Spam: Block messages containing obvious spam patterns (multiple URLs, crypto keywords)
+    // Basic email format check
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json({ error: 'Invalid email address' }, { status: 400 });
+    }
+
+    // Basic Anti-Spam: Block messages containing obvious spam patterns (multiple URLs)
     const spamRegex = /(http[s]?:\/\/[^\s]+|www\.[^\s]+)/gi;
     const urlMatches = message.match(spamRegex);
     if (urlMatches && urlMatches.length > 2) {
@@ -35,12 +51,21 @@ export async function POST(request) {
       },
     });
 
-    const recipientEmail = adminEmail || process.env.ADMIN_EMAIL || 'info@dorek.in';
+    // Enforce server-side recipient email strictly
+    const recipientEmail = process.env.ADMIN_EMAIL || 'info@dorek.in';
+
+    // Sanitize user-provided values before HTML embedding
+    const safeName = escapeHtml(name);
+    const safeEmail = escapeHtml(email);
+    const safePhone = escapeHtml(phone || 'Not provided');
+    const safeSubject = escapeHtml(subject || 'No Subject');
+    const safeMessage = escapeHtml(message).replace(/\n/g, '<br />');
 
     const mailOptions = {
       from: `"Dorek Website" <${smtpUser}>`,
       to: recipientEmail,
-      subject: `New Contact Form: ${subject || 'No Subject'}`,
+      replyTo: email,
+      subject: `New Contact Form: ${safeSubject}`,
       html: `
         <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
           <div style="background: #0A2E5D; padding: 20px; border-radius: 12px 12px 0 0; text-align: center;">
@@ -50,24 +75,24 @@ export async function POST(request) {
             <table style="width: 100%; border-collapse: collapse;">
               <tr>
                 <td style="padding: 8px 0; color: #666; font-weight: 600;">Name:</td>
-                <td style="padding: 8px 0; color: #222;">${name}</td>
+                <td style="padding: 8px 0; color: #222;">${safeName}</td>
               </tr>
               <tr>
                 <td style="padding: 8px 0; color: #666; font-weight: 600;">Email:</td>
-                <td style="padding: 8px 0; color: #222;"><a href="mailto:${email}">${email}</a></td>
+                <td style="padding: 8px 0; color: #222;"><a href="mailto:${safeEmail}">${safeEmail}</a></td>
               </tr>
               <tr>
                 <td style="padding: 8px 0; color: #666; font-weight: 600;">Phone:</td>
-                <td style="padding: 8px 0; color: #222;">${phone || 'Not provided'}</td>
+                <td style="padding: 8px 0; color: #222;">${safePhone}</td>
               </tr>
               <tr>
                 <td style="padding: 8px 0; color: #666; font-weight: 600;">Subject:</td>
-                <td style="padding: 8px 0; color: #222;">${subject || 'Not specified'}</td>
+                <td style="padding: 8px 0; color: #222;">${safeSubject}</td>
               </tr>
             </table>
             <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 16px 0;">
             <h3 style="color: #0A2E5D; margin-bottom: 8px;">Message:</h3>
-            <p style="color: #444; line-height: 1.6; background: #f9fafb; padding: 12px; border-radius: 8px;">${message}</p>
+            <p style="color: #444; line-height: 1.6; background: #f9fafb; padding: 12px; border-radius: 8px;">${safeMessage}</p>
           </div>
           <p style="text-align: center; color: #999; font-size: 12px; margin-top: 16px;">
             Sent from Dorek International Website Contact Form

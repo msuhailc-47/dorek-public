@@ -58,8 +58,7 @@ export default function LeadPopup() {
           phone: formData.phone,
           email: formData.email || 'lead@dorek.in',
           subject: 'Lead Capture Popup',
-          message: 'Lead generated from the automatic 15-second popup.',
-          adminEmail: themeSettings?.adminEmail
+          message: 'Lead generated from the automatic 15-second popup.'
         })
       });
     } catch (err) {

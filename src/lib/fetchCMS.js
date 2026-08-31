@@ -19,30 +19,62 @@ const parseFirestoreValue = (value) => {
   return value;
 };
 
+import translations from '../i18n/translations';
+
+const defaultFallbackData = {
+  translationsData: translations,
+  themeSettings: {
+    colors: { primary: '#0A2E5D', secondary: '#D4AF37', bgMain: '#FFFFFF', bgSection: '#F5F7FA' },
+    animations: {},
+    sectionBackgrounds: {}
+  },
+  sectionVisibility: {
+    hero: true, about: true, businesses: true, whyChoose: true, products: true,
+    opportunities: true, software: true, network: true, investors: true,
+    careers: true, news: true, gallery: true, downloads: true, testimonials: true,
+    csr: true, contact: true
+  },
+  navigation: [],
+  codeSettings: {}
+};
+
 export async function fetchCMSData() {
   const projectId = 'dorek-international-3ef93';
   const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/dorek_cms`;
   
-  // Next.js ISR: Revalidate every 10 seconds for fast admin updates
-  const res = await fetch(url, { next: { revalidate: 10 } });
-  
-  if (!res.ok) {
-    console.error('Failed to fetch CMS data');
-    return null;
-  }
-
-  const json = await res.json();
-  const data = {};
-
-  json.documents.forEach((doc) => {
-    const id = doc.name.split('/').pop();
-    const parsedFields = {};
-    for (const [k, v] of Object.entries(doc.fields || {})) {
-      parsedFields[k] = parseFirestoreValue(v);
+  try {
+    // Next.js ISR: Revalidate every 10 seconds for fast admin updates
+    const res = await fetch(url, { next: { revalidate: 10 } });
+    
+    if (!res.ok) {
+      console.warn('Could not fetch remote CMS data from Firestore, using local fallback.');
+      return defaultFallbackData;
     }
-    // Unwrap the top level key since our migration script wrapped them like { themeSettings: { ... } }
-    data[id] = parsedFields[id] !== undefined ? parsedFields[id] : parsedFields;
-  });
 
-  return data;
+    const json = await res.json();
+    if (!json || !json.documents) {
+      return defaultFallbackData;
+    }
+
+    const data = { ...defaultFallbackData };
+
+    (json.documents || []).forEach((doc) => {
+      const id = doc.name.split('/').pop();
+      const parsedFields = {};
+      for (const [k, v] of Object.entries(doc.fields || {})) {
+        parsedFields[k] = parseFirestoreValue(v);
+      }
+      // Unwrap the top level key since our migration script wrapped them like { themeSettings: { ... } }
+      data[id] = parsedFields[id] !== undefined ? parsedFields[id] : parsedFields;
+    });
+
+    if (!data.translationsData) {
+      data.translationsData = translations;
+    }
+
+    return data;
+  } catch (error) {
+    console.error('Error in fetchCMSData, falling back to local translations:', error);
+    return defaultFallbackData;
+  }
 }

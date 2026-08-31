@@ -47,9 +47,20 @@ export default function Products({ lang, t }) {
                 </div>
               ))}
             </div>
-            <button className="btn btn-primary" style={{ marginTop: 28 }}>
+            <a 
+              href="#contact" 
+              className="btn btn-primary" 
+              style={{ marginTop: 28, display: 'inline-flex', alignItems: 'center', textDecoration: 'none' }}
+              onClick={(e) => {
+                const contactSec = document.getElementById('contact');
+                if (contactSec) {
+                  e.preventDefault();
+                  contactSec.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            >
               Inquire Now →
-            </button>
+            </a>
           </div>
         </div>
       </div>
