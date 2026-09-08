@@ -9,12 +9,28 @@ const LinkedinIcon = () => <svg width="18" height="18" viewBox="0 0 24 24" fill=
 const YoutubeIcon = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>;
 
 export default function Footer({ lang, t }) {
-    return (
+  const handleQuickLink = (e, targetHash) => {
+    if (typeof window !== 'undefined') {
+      const isHomePage = window.location.pathname === '/' || window.location.pathname === '';
+      if (isHomePage) {
+        e.preventDefault();
+        const targetId = targetHash.replace('#', '');
+        const element = document.getElementById(targetId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+          window.history.pushState(null, '', `/#${targetId}`);
+        }
+      }
+      // If on subpages (/privacy, /terms, etc.), default navigation to /#hash proceeds
+    }
+  };
+
+  return (
     <footer className="footer">
       <div className="container">
         <div className="footer-top">
           <div className="footer-col brand-col">
-            <div className="footer-logo" style={{display: 'flex', alignItems: 'center', gap: '12px'}}>
+            <div className="footer-logo" onClick={() => window.location.href = '/'} style={{display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer'}} title="Dorek International">
               <div style={{background: '#ffffff', padding: '6px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                 <img src="/logo.png" alt="Dorek Logo" style={{height: '32px', width: 'auto', objectFit: 'contain'}} />
               </div>
@@ -35,12 +51,12 @@ export default function Footer({ lang, t }) {
           <div className="footer-col">
             <h4>{t.footer?.quickLinks || 'Quick Links'}</h4>
             <ul className="footer-links">
-              <li><a href="#about">{t.nav.about}</a></li>
-              <li><a href="#businesses">{t.nav.businesses}</a></li>
-              <li><a href="#services">{t.nav.services}</a></li>
-              <li><a href="#opportunities">{t.nav.opportunities}</a></li>
-              <li><a href="#investors">{t.nav.investors}</a></li>
-              <li><a href="#careers">{t.nav.careers}</a></li>
+              <li><a href="/#about" onClick={(e) => handleQuickLink(e, '#about')}>{t.nav?.about || 'About'}</a></li>
+              <li><a href="/#businesses" onClick={(e) => handleQuickLink(e, '#businesses')}>{t.nav?.businesses || 'Businesses'}</a></li>
+              <li><a href="/#services" onClick={(e) => handleQuickLink(e, '#services')}>{t.nav?.services || 'Services'}</a></li>
+              <li><a href="/#opportunities" onClick={(e) => handleQuickLink(e, '#opportunities')}>{t.nav?.opportunities || 'Opportunities'}</a></li>
+              <li><a href="/#investors" onClick={(e) => handleQuickLink(e, '#investors')}>{t.nav?.investors || 'Investors'}</a></li>
+              <li><a href="/#careers" onClick={(e) => handleQuickLink(e, '#careers')}>{t.nav?.careers || 'Careers'}</a></li>
             </ul>
           </div>
           <div className="footer-col">

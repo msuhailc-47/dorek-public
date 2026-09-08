@@ -78,6 +78,26 @@ export default function Navbar({ lang, t, onLangChange, onPortalOpen, minimal = 
         )}
 
         <div className="navbar-actions">
+          {minimal && (
+            <a 
+              href="/" 
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '6px',
+                textDecoration: 'none',
+                color: '#ffffff',
+                border: '1px solid rgba(255,255,255,0.3)',
+                padding: '6px 14px',
+                borderRadius: '20px',
+                fontSize: '13px',
+                fontWeight: '600',
+                transition: 'all 0.2s'
+              }}
+            >
+              ← {lang === 'en' ? 'Back to Home' : 'ഹോം'}
+            </a>
+          )}
           <button className="navbar-lang-btn" onClick={onLangChange}>
             <Globe size={16} />{lang === 'en' ? 'മല' : 'EN'}
           </button>

@@ -29,7 +29,12 @@ import WhatsAppButton from './WhatsAppButton';
 
 export default function MainSite() {
   const [isPortalOpen, setIsPortalOpen] = useState(false);
-  const [showWelcome, setShowWelcome] = useState(true);
+  const [showWelcome, setShowWelcome] = useState(() => {
+    if (typeof window !== 'undefined' && window.location.hash) {
+      return false; // Skip welcome animation if navigating directly to a section
+    }
+    return true;
+  });
   
   const { lang, setLang, t, sectionVisibility } = useCMS();
   
