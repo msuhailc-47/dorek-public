@@ -120,19 +120,25 @@ export async function POST(request) {
 
     const { name, email, phone, subject, message, adminEmail: clientAdminEmail } = body;
 
-    // 3. Server-side required fields validation
-    if (!name || !email || !message) {
-      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+    // 3. Server-side strict trimming and non-blank validation
+    const cleanName = (typeof name === 'string' ? name : '').trim();
+    const cleanEmail = (typeof email === 'string' ? email : '').trim();
+    const cleanMessage = (typeof message === 'string' ? message : '').trim();
+    const cleanPhone = (typeof phone === 'string' ? phone : '').trim();
+    const cleanSubject = (typeof subject === 'string' ? subject : '').trim();
+
+    if (!cleanName || !cleanEmail || !cleanMessage) {
+      return NextResponse.json({ error: 'Required fields cannot be blank.' }, { status: 400 });
     }
 
     // 4. Strict input length caps to prevent buffer bloat
-    if (name.length > 80 || email.length > 100 || (phone && phone.length > 25) || (subject && subject.length > 150) || message.length > 2500) {
+    if (cleanName.length > 80 || cleanEmail.length > 100 || cleanPhone.length > 25 || cleanSubject.length > 150 || cleanMessage.length > 2500) {
       return NextResponse.json({ error: 'Payload exceeds permissible character limits.' }, { status: 400 });
     }
 
     // 5. Email format validation
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailRegex.test(email)) {
+    if (!emailRegex.test(cleanEmail)) {
       return NextResponse.json({ error: 'Invalid email address' }, { status: 400 });
     }
 
@@ -156,11 +162,11 @@ export async function POST(request) {
     });
 
     // Sanitize user-provided values
-    const safeName = escapeHtml(name);
-    const safeEmail = escapeHtml(email);
-    const safePhone = escapeHtml(phone || 'Not provided');
-    const safeSubject = escapeHtml(subject || 'Customer Inquiry');
-    const safeMessage = escapeHtml(message).replace(/\n/g, '<br />');
+    const safeName = escapeHtml(cleanName);
+    const safeEmail = escapeHtml(cleanEmail);
+    const safePhone = escapeHtml(cleanPhone || 'Not provided');
+    const safeSubject = escapeHtml(cleanSubject || 'Customer Inquiry');
+    const safeMessage = escapeHtml(cleanMessage).replace(/\n/g, '<br />');
 
     // Accurate Indian Standard Time (IST - Asia/Kolkata)
     const istDate = new Date().toLocaleDateString('en-IN', {
@@ -181,7 +187,7 @@ export async function POST(request) {
     const mailOptions = {
       from: `"Dorek Website" <${smtpUser}>`,
       to: targetRecipients,
-      replyTo: email,
+      replyTo: cleanEmail,
       subject: `📬 Website Inquiry: ${safeSubject}`,
       priority: 'high',
       headers: {

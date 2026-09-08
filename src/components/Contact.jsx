@@ -1,5 +1,5 @@
 "use client";
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { MapPin, Phone, Mail, Send } from 'lucide-react';
 import { useCMS } from '../context/CMSContext';
 import './Contact.css';
@@ -9,12 +9,17 @@ export default function Contact({ lang, t }) {
   const { addSubmission, themeSettings } = useCMS();
   const { ref: scrollRef, className: scrollClass } = useScrollReveal();
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', subject: '', message: '', honeypot: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const isSubmittingRef = useRef(false);
   
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
   
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    // Strict lock against duplicate double clicks
+    if (isSubmittingRef.current || isSubmitting) return;
+
     // Honeypot check - if bot fills this hidden field, silently reject
     if (formData.honeypot !== '') {
       console.log('Spam detected');
@@ -22,43 +27,63 @@ export default function Contact({ lang, t }) {
       return;
     }
 
-    if (!formData.name || !formData.email || !formData.message) return;
-    
-    // Save to Firestore
-    addSubmission({
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      subject: formData.subject,
-      message: formData.message
-    });
-    
-    // Send email notification (non-blocking, but we'll await it to catch errors in dev)
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          subject: formData.subject,
-          message: formData.message,
-          adminEmail: themeSettings?.adminEmail
-        }),
-      });
-      const data = await response.json();
-      if (!response.ok || data.error) {
-        console.error('Email API Error:', data);
-      } else {
-        console.log('Email sent successfully:', data);
-      }
-    } catch (err) {
-      console.error('Email notification failed:', err);
+    const cleanName = (formData.name || '').trim();
+    const cleanEmail = (formData.email || '').trim();
+    const cleanMessage = (formData.message || '').trim();
+    const cleanPhone = (formData.phone || '').trim();
+    const cleanSubject = (formData.subject || '').trim();
+
+    if (!cleanName || !cleanEmail || !cleanMessage) {
+      alert('Please fill in all required fields.');
+      return;
     }
+
+    isSubmittingRef.current = true;
+    setIsSubmitting(true);
     
-    alert('Thank you for contacting us! We will get back to you soon.');
-    setFormData({ name: '', email: '', phone: '', subject: '', message: '', honeypot: '' });
+    try {
+      // Save to Firestore
+      addSubmission({
+        name: cleanName,
+        email: cleanEmail,
+        phone: cleanPhone,
+        subject: cleanSubject,
+        message: cleanMessage
+      });
+      
+      // Send email notification
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            name: cleanName,
+            email: cleanEmail,
+            phone: cleanPhone,
+            subject: cleanSubject,
+            message: cleanMessage,
+            adminEmail: themeSettings?.adminEmail
+          }),
+        });
+        const data = await response.json();
+        if (!response.ok || data.error) {
+          console.error('Email API Error:', data);
+        } else {
+          console.log('Email sent successfully:', data);
+        }
+      } catch (notifyErr) {
+        console.error('Email notification failed:', notifyErr);
+      }
+      
+      alert('Thank you for contacting us! We will get back to you soon.');
+      setFormData({ name: '', email: '', phone: '', subject: '', message: '', honeypot: '' });
+    } catch (err) {
+      console.error('Submission error:', err);
+      alert('An error occurred. Please try again.');
+    } finally {
+      isSubmittingRef.current = false;
+      setIsSubmitting(false);
+    }
   };
   
   return (
@@ -116,16 +141,16 @@ export default function Contact({ lang, t }) {
             <h3>Send us a Message</h3>
             <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <input type="text" name="name" value={formData.name} onChange={handleChange} className="form-control" placeholder={t.contact.formName} required />
+                <input type="text" name="name" value={formData.name} onChange={handleChange} className="form-control" placeholder={t.contact.formName} disabled={isSubmitting} required />
               </div>
               <div className="form-group">
-                <input type="email" name="email" value={formData.email} onChange={handleChange} className="form-control" placeholder={t.contact.formEmail} required />
+                <input type="email" name="email" value={formData.email} onChange={handleChange} className="form-control" placeholder={t.contact.formEmail} disabled={isSubmitting} required />
               </div>
               <div className="form-group">
-                <input type="tel" name="phone" value={formData.phone} onChange={handleChange} className="form-control" placeholder={t.contact.formPhone} required />
+                <input type="tel" name="phone" value={formData.phone} onChange={handleChange} className="form-control" placeholder={t.contact.formPhone} disabled={isSubmitting} required />
               </div>
               <div className="form-group">
-                <select name="subject" value={formData.subject} onChange={handleChange} className="form-control">
+                <select name="subject" value={formData.subject} onChange={handleChange} className="form-control" disabled={isSubmitting}>
                   <option value="" disabled>{t.contact.formSubject}</option>
                   {(t.contact.formOptions || []).map((opt, i) => (
                     <option key={i} value={opt}>{opt}</option>
@@ -133,10 +158,18 @@ export default function Contact({ lang, t }) {
                 </select>
               </div>
               <div className="form-group">
-                <textarea name="message" value={formData.message} onChange={handleChange} className="form-control" placeholder={t.contact.formMessage} rows="5" required></textarea>
+                <textarea name="message" value={formData.message} onChange={handleChange} className="form-control" placeholder={t.contact.formMessage} rows="5" disabled={isSubmitting} required></textarea>
               </div>
-              <button type="submit" className="btn btn-primary btn-block">
-                {t.contact.formSubmit} <Send size={16} />
+              <button 
+                type="submit" 
+                className="btn btn-primary btn-block"
+                disabled={isSubmitting}
+                style={{
+                  opacity: isSubmitting ? 0.75 : 1,
+                  cursor: isSubmitting ? 'not-allowed' : 'pointer'
+                }}
+              >
+                {isSubmitting ? 'Sending Message...' : <>{t.contact.formSubmit} <Send size={16} /></>}
               </button>
             </form>
           </div>

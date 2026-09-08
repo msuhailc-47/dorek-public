@@ -35,6 +35,7 @@ export default function LeadPopup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (isSubmitting) return;
     if (!formData.name || !formData.phone) return;
     
     setIsSubmitting(true);
