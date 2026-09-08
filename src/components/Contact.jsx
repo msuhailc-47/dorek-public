@@ -43,7 +43,8 @@ export default function Contact({ lang, t }) {
           email: formData.email,
           phone: formData.phone,
           subject: formData.subject,
-          message: formData.message
+          message: formData.message,
+          adminEmail: themeSettings?.adminEmail
         }),
       });
       const data = await response.json();

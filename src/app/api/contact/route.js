@@ -1,6 +1,8 @@
 import nodemailer from 'nodemailer';
 import { NextResponse } from 'next/server';
 import { getClientIp, checkRateLimit, inspectPayload, sendSecurityIncidentAlert } from '../../../lib/securityGuard';
+import { db } from '../../../firebase';
+import { doc, getDoc } from 'firebase/firestore';
 
 export const runtime = 'nodejs';
 
@@ -14,11 +16,63 @@ function escapeHtml(str) {
     .replace(/'/g, '&#039;');
 }
 
+async function getAdminRecipients(defaultFallback) {
+  const recipients = new Set();
+
+  try {
+    if (db) {
+      // 1. Primary: Check themeSettings (where Admin Submissions tab saves contact form notification email)
+      const themeSnap = await getDoc(doc(db, 'dorek_cms', 'themeSettings'));
+      if (themeSnap.exists()) {
+        const themeEmail = themeSnap.data()?.themeSettings?.adminEmail;
+        if (themeEmail && typeof themeEmail === 'string' && themeEmail.includes('@')) {
+          themeEmail.split(',').forEach(e => {
+            const clean = e.trim();
+            if (clean && clean.includes('@')) recipients.add(clean);
+          });
+        }
+      }
+
+      // 2. Secondary: Check translations contact email if themeSettings had none
+      if (recipients.size === 0) {
+        const transSnap = await getDoc(doc(db, 'dorek_cms', 'translationsData'));
+        if (transSnap.exists()) {
+          const contactEmail = transSnap.data()?.translationsData?.en?.contact?.email;
+          if (contactEmail && typeof contactEmail === 'string' && contactEmail.includes('@')) {
+            recipients.add(contactEmail.trim());
+          }
+        }
+      }
+
+      // 3. Tertiary: Check notification_settings emails
+      if (recipients.size === 0) {
+        const notifSnap = await getDoc(doc(db, 'dorek_cms', 'notification_settings'));
+        if (notifSnap.exists()) {
+          const emails = notifSnap.data()?.emails;
+          if (Array.isArray(emails)) {
+            emails.forEach(e => {
+              if (e && typeof e === 'string' && e.includes('@')) recipients.add(e.trim());
+            });
+          }
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('Could not read admin email from Firestore, using fallback:', err.message);
+  }
+
+  if (recipients.size === 0 && defaultFallback) {
+    recipients.add(defaultFallback.trim());
+  }
+
+  return Array.from(recipients);
+}
+
 export async function POST(request) {
   const clientIp = getClientIp(request);
   const smtpUser = process.env.SMTP_USER;
   const smtpPass = process.env.SMTP_PASS;
-  const adminEmail = process.env.ADMIN_EMAIL || 'info@dorek.in';
+  const envAdminEmail = process.env.ADMIN_EMAIL || 'info@dorek.in';
 
   try {
     // 1. Rate-Limit Check (Max 10 requests per minute per IP)
@@ -32,7 +86,7 @@ export async function POST(request) {
         sample: `Request count: ${rateCheck.count} in 60s`,
         smtpUser,
         smtpPass,
-        adminEmail
+        adminEmail: envAdminEmail
       }).catch(e => console.error('Alert error:', e));
 
       return NextResponse.json(
@@ -48,7 +102,6 @@ export async function POST(request) {
     if (threatAnalysis.isThreat) {
       console.warn(`🚨 Security threat detected from IP ${clientIp}: ${threatAnalysis.type}`);
       
-      // Dispatch immediate high-priority warning email to admin
       sendSecurityIncidentAlert({
         clientIp,
         endpoint: '/api/contact',
@@ -56,7 +109,7 @@ export async function POST(request) {
         sample: threatAnalysis.sample,
         smtpUser,
         smtpPass,
-        adminEmail
+        adminEmail: envAdminEmail
       }).catch(e => console.error('Alert error:', e));
 
       return NextResponse.json(
@@ -65,7 +118,7 @@ export async function POST(request) {
       );
     }
 
-    const { name, email, phone, subject, message } = body;
+    const { name, email, phone, subject, message, adminEmail: clientAdminEmail } = body;
 
     // 3. Server-side required fields validation
     if (!name || !email || !message) {
@@ -88,6 +141,12 @@ export async function POST(request) {
       return NextResponse.json({ success: true, emailSent: false, reason: 'SMTP not configured' });
     }
 
+    // 6. Dynamically resolve admin recipient email(s) from Firestore (matches Admin CMS Settings)
+    let targetRecipients = await getAdminRecipients(clientAdminEmail || envAdminEmail);
+    if (targetRecipients.length === 0) {
+      targetRecipients = [envAdminEmail];
+    }
+
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
@@ -103,42 +162,74 @@ export async function POST(request) {
     const safeSubject = escapeHtml(subject || 'Customer Inquiry');
     const safeMessage = escapeHtml(message).replace(/\n/g, '<br />');
 
+    // Accurate Indian Standard Time (IST - Asia/Kolkata)
+    const istDate = new Date().toLocaleDateString('en-IN', {
+      timeZone: 'Asia/Kolkata',
+      day: 'numeric',
+      month: 'short',
+      year: 'numeric'
+    });
+
+    const istTime = new Date().toLocaleTimeString('en-IN', {
+      timeZone: 'Asia/Kolkata',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true
+    });
+
     const mailOptions = {
       from: `"Dorek Website" <${smtpUser}>`,
-      to: adminEmail,
+      to: targetRecipients,
       replyTo: email,
       subject: `📬 Website Inquiry: ${safeSubject}`,
+      priority: 'high',
+      headers: {
+        'X-Priority': '1',
+        'X-MSMail-Priority': 'High',
+        'Importance': 'high'
+      },
       html: `
-        <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden;">
-          <div style="background: #0A2E5D; padding: 20px; text-align: center; border-bottom: 3px solid #D4AF37;">
-            <h2 style="color: #D4AF37; margin: 0; font-size: 18px;">DOREK INTERNATIONAL</h2>
-            <p style="color: #ffffff; margin: 4px 0 0 0; font-size: 13px;">Official Website Inquiry</p>
+        <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+          <div style="background: #0A2E5D; padding: 22px; text-align: center; border-bottom: 3px solid #D4AF37;">
+            <h2 style="color: #D4AF37; margin: 0; font-size: 20px; letter-spacing: 1px;">DOREK INTERNATIONAL</h2>
+            <p style="color: #ffffff; margin: 6px 0 0 0; font-size: 13px;">Official Website Customer Inquiry</p>
           </div>
           <div style="background: #ffffff; padding: 24px;">
-            <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+            <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px;">
+              <p style="margin: 0; color: #065f46; font-size: 13px; font-weight: 600;">
+                🕒 Received at ${istTime} on ${istDate} (IST)
+              </p>
+            </div>
+
+            <table style="width: 100%; border-collapse: collapse; font-size: 14px; margin-bottom: 20px;">
               <tr style="border-bottom: 1px solid #f1f5f9;">
-                <td style="padding: 8px 0; color: #64748b; font-weight: 600; width: 120px;">Name:</td>
-                <td style="padding: 8px 0; color: #1e293b; font-weight: 700;">${safeName}</td>
+                <td style="padding: 10px 0; color: #64748b; font-weight: 600; width: 130px;">Sender Name:</td>
+                <td style="padding: 10px 0; color: #1e293b; font-weight: 700;">${safeName}</td>
               </tr>
               <tr style="border-bottom: 1px solid #f1f5f9;">
-                <td style="padding: 8px 0; color: #64748b; font-weight: 600;">Email:</td>
-                <td style="padding: 8px 0; color: #0A2E5D; font-weight: 700;"><a href="mailto:${safeEmail}">${safeEmail}</a></td>
+                <td style="padding: 10px 0; color: #64748b; font-weight: 600;">Email Address:</td>
+                <td style="padding: 10px 0; color: #0A2E5D; font-weight: 700;"><a href="mailto:${safeEmail}" style="color: #0A2E5D; text-decoration: none;">${safeEmail}</a></td>
               </tr>
               <tr style="border-bottom: 1px solid #f1f5f9;">
-                <td style="padding: 8px 0; color: #64748b; font-weight: 600;">Phone:</td>
-                <td style="padding: 8px 0; color: #1e293b;">${safePhone}</td>
+                <td style="padding: 10px 0; color: #64748b; font-weight: 600;">Phone Number:</td>
+                <td style="padding: 10px 0; color: #1e293b;">
+                  ${phone ? `<a href="tel:${safePhone}" style="color: #0A2E5D; font-weight: 700; text-decoration: none;">${safePhone}</a>` : 'Not provided'}
+                </td>
               </tr>
               <tr style="border-bottom: 1px solid #f1f5f9;">
-                <td style="padding: 8px 0; color: #64748b; font-weight: 600;">Subject:</td>
-                <td style="padding: 8px 0; color: #1e293b;">${safeSubject}</td>
+                <td style="padding: 10px 0; color: #64748b; font-weight: 600;">Inquiry Topic:</td>
+                <td style="padding: 10px 0; color: #1e293b; font-weight: 700;">${safeSubject}</td>
               </tr>
             </table>
-            <div style="margin-top: 18px; background: #f8fafc; padding: 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
-              <strong style="color: #64748b; font-size: 12px; text-transform: uppercase;">Message:</strong>
-              <p style="color: #334155; margin: 6px 0 0 0; line-height: 1.5; font-size: 14px;">${safeMessage}</p>
+
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 20px;">
+              <div style="font-size: 12px; font-weight: 700; color: #64748b; margin-bottom: 6px; text-transform: uppercase;">Message Content:</div>
+              <p style="color: #334155; margin: 0; line-height: 1.6; font-size: 14px;">${safeMessage}</p>
             </div>
-            <p style="font-size: 11px; color: #94a3b8; text-align: center; margin-top: 20px;">
-              Submitted from IP: ${clientIp} • Verified Safe by Dorek Security
+
+            <p style="font-size: 11px; color: #94a3b8; text-align: center; margin-top: 24px; border-top: 1px solid #f1f5f9; padding-top: 12px;">
+              Submitted from IP: ${clientIp} • Verified Safe by Dorek Cyber Defense
             </p>
           </div>
         </div>
@@ -146,7 +237,8 @@ export async function POST(request) {
     };
 
     await transporter.sendMail(mailOptions);
-    return NextResponse.json({ success: true, emailSent: true });
+    console.log(`Website contact inquiry forwarded to ${targetRecipients.join(', ')}`);
+    return NextResponse.json({ success: true, emailSent: true, recipients: targetRecipients });
 
   } catch (error) {
     console.error('Contact API error:', error);
