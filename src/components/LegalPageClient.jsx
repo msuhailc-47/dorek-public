@@ -1,14 +1,12 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import PortalLogin from './PortalLogin';
 import { CMSProvider, useCMS } from '../context/CMSContext';
 import translations from '../i18n/translations';
 
 function LegalPageInner({ pageKey, pageTitle }) {
   const { t, lang, setLang } = useCMS();
-  const [isPortalOpen, setIsPortalOpen] = useState(false);
   
   // Use Firestore data, fallback to local dummy data, then error message
   const localDummyData = translations?.[lang]?.legal?.[pageKey];
@@ -16,7 +14,7 @@ function LegalPageInner({ pageKey, pageTitle }) {
 
   return (
     <div className='legal-page'>
-      <Navbar minimal={true} lang={lang} t={t} onLangChange={() => setLang(lang === 'en' ? 'ml' : 'en')} onPortalOpen={() => setIsPortalOpen(true)} />
+      <Navbar minimal={true} lang={lang} t={t} onLangChange={() => setLang(lang === 'en' ? 'ml' : 'en')} />
       
       <main className='legal-content container' style={{ paddingTop: '110px', paddingBottom: '80px', minHeight: '80vh' }}>
         <div style={{ maxWidth: '900px' }}>
@@ -30,7 +28,6 @@ function LegalPageInner({ pageKey, pageTitle }) {
       </main>
 
       <Footer lang={lang} t={t} />
-      <PortalLogin lang={lang} t={t} isOpen={isPortalOpen} onClose={() => setIsPortalOpen(false)} />
     </div>
   );
 }

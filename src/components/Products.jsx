@@ -14,7 +14,7 @@ export default function Products({ lang, t }) {
   const categories = t.products.categories;
 
   return (
-    <section id="services" className={`section products ${scrollClass}`} ref={scrollRef}>
+    <section id="products" className={`section products ${scrollClass}`} ref={scrollRef}>
       <div className="container">
         <div className="section-header">
           <span className="section-label">{t.products.label}</span>

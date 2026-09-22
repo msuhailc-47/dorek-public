@@ -1,5 +1,8 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import dynamic from 'next/dynamic';
+import { ArrowRight } from 'lucide-react';
 import { useCMS } from '../context/CMSContext';
 
 import Navbar from './Navbar';
@@ -7,57 +10,65 @@ import Hero from './Hero';
 import About from './About';
 import Businesses from './Businesses';
 import WhyChoose from './WhyChoose';
-import Products from './Products';
-import Opportunities from './Opportunities';
-import Software from './Software';
-import Network from './Network';
-import Investors from './Investors';
-import Careers from './Careers';
-import News from './News';
-import Gallery from './Gallery';
-import Downloads from './Downloads';
 import Testimonials from './Testimonials';
-import CSR from './CSR';
 import Contact from './Contact';
 import CustomSections from './CustomSections';
 import Footer from './Footer';
-import PortalLogin from './PortalLogin';
-import ChatAssistant from './ChatAssistant';
-import WelcomeScreen from './WelcomeScreen';
-import LeadPopup from './LeadPopup';
-import WhatsAppButton from './WhatsAppButton';
+
+// Defer non-critical floating / modal components for rapid FCP / LCP
+const ChatAssistant = dynamic(() => import('./ChatAssistant'), { ssr: false });
+const WhatsAppButton = dynamic(() => import('./WhatsAppButton'), { ssr: false });
 
 export default function MainSite() {
-  const [isPortalOpen, setIsPortalOpen] = useState(false);
-  const [showWelcome, setShowWelcome] = useState(() => {
-    if (typeof window !== 'undefined' && window.location.hash) {
-      return false; // Skip welcome animation if navigating directly to a section
-    }
-    return true;
-  });
-  
+  const [loadFloatingWidgets, setLoadFloatingWidgets] = useState(false);
   const { lang, setLang, t, sectionVisibility } = useCMS();
   
   // Convert boolean-based section visibility mapping
   const isSectionVisible = (id) => sectionVisibility[id] !== false;
 
-  React.useEffect(() => {
-    // Log unique visitor session
+  useEffect(() => {
+    const triggerFloating = () => {
+      setLoadFloatingWidgets(true);
+      window.removeEventListener('scroll', triggerFloating);
+      window.removeEventListener('mousemove', triggerFloating);
+      window.removeEventListener('touchstart', triggerFloating);
+      window.removeEventListener('pointerdown', triggerFloating);
+    };
+
+    window.addEventListener('scroll', triggerFloating, { passive: true, once: true });
+    window.addEventListener('mousemove', triggerFloating, { passive: true, once: true });
+    window.addEventListener('touchstart', triggerFloating, { passive: true, once: true });
+    window.addEventListener('pointerdown', triggerFloating, { passive: true, once: true });
+
+    const timer = setTimeout(() => setLoadFloatingWidgets(true), 8000);
+
+    // Log unique visitor session safely on idle via server API route
     const logVisit = async () => {
+      if (typeof window === 'undefined') return;
       if (!sessionStorage.getItem('dorek_visit_logged')) {
         try {
-          const { doc, setDoc, increment } = await import('firebase/firestore');
-          const { db } = await import('../firebase');
-          const analyticsRef = doc(db, 'dorek_cms', 'analytics');
-          // increment(1) safely adds 1 to the counter in Firestore
-          await setDoc(analyticsRef, { totalVisitors: increment(1) }, { merge: true });
+          await fetch('/api/analytics', { method: 'POST', keepalive: true });
           sessionStorage.setItem('dorek_visit_logged', 'true');
-        } catch (e) {
-          console.error("Failed to log visit", e);
+        } catch {
+          // Graceful fallback
         }
       }
     };
-    logVisit();
+
+    if (typeof window !== 'undefined') {
+      if ('requestIdleCallback' in window) {
+        window.requestIdleCallback(logVisit, { timeout: 8000 });
+      } else {
+        setTimeout(logVisit, 8000);
+      }
+    }
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('scroll', triggerFloating);
+      window.removeEventListener('mousemove', triggerFloating);
+      window.removeEventListener('touchstart', triggerFloating);
+    };
   }, []);
 
   const toggleLang = () => {
@@ -65,39 +76,67 @@ export default function MainSite() {
   };
 
   return (
-    <div className={`app-container ${showWelcome ? 'welcome-active' : ''}`}>
-      {showWelcome && <WelcomeScreen t={t} onComplete={() => setShowWelcome(false)} />}
-      <Navbar lang={lang} t={t} onLangChange={toggleLang} onPortalOpen={() => setIsPortalOpen(true)} />
+    <div className="app-container">
+      <Navbar 
+        lang={lang} 
+        t={t} 
+        onLangChange={toggleLang} 
+      />
       
       <main>
+        {/* 1. Hero Section (Above the Fold) */}
         {isSectionVisible('hero') && <Hero lang={lang} t={t} />}
-        {isSectionVisible('about') && <About lang={lang} t={t} />}
-        {isSectionVisible('businesses') && <Businesses lang={lang} t={t} />}
+
+        {/* 2. Executive About Teaser */}
+        {isSectionVisible('about') && (
+          <div className="home-section-wrapper">
+            <About lang={lang} t={t} />
+            <div className="section-cta-banner">
+              <Link href="/about" className="section-cta-btn">
+                <span>{lang === 'en' ? 'Explore Full Corporate Story & CSR' : 'മുഴുവൻ കമ്പനി ചരിത്രവും സിഎസ്ആറും കാണുക'}</span>
+                <ArrowRight size={16} />
+              </Link>
+            </div>
+          </div>
+        )}
+
+        {/* 3. Core Business Verticals Bento Grid */}
+        {isSectionVisible('businesses') && (
+          <div className="home-section-wrapper">
+            <Businesses lang={lang} t={t} />
+            <div className="section-cta-banner">
+              <Link href="/businesses" className="section-cta-btn">
+                <span>{lang === 'en' ? 'Explore All Products, Software & Franchise Models' : 'എല്ലാ ഉൽപ്പന്നങ്ങളും ബിസിനസ് അവസരങ്ങളും കാണുക'}</span>
+                <ArrowRight size={16} />
+              </Link>
+            </div>
+          </div>
+        )}
+
+        {/* 4. Why Dorek Group */}
         {isSectionVisible('whyChoose') && <WhyChoose lang={lang} t={t} />}
-        {isSectionVisible('products') && <Products lang={lang} t={t} />}
-        {isSectionVisible('opportunities') && <Opportunities lang={lang} t={t} onApplyOpen={() => setIsPortalOpen(true)} />}
-        {isSectionVisible('software') && <Software lang={lang} t={t} />}
-        {isSectionVisible('network') && <Network lang={lang} t={t} />}
-        {isSectionVisible('investors') && <Investors lang={lang} t={t} />}
-        {isSectionVisible('careers') && <Careers lang={lang} t={t} />}
-        {isSectionVisible('news') && <News lang={lang} t={t} />}
-        {isSectionVisible('gallery') && <Gallery lang={lang} t={t} />}
-        {isSectionVisible('downloads') && <Downloads lang={lang} t={t} />}
+
+        {/* 5. Testimonials & Social Proof */}
         {isSectionVisible('testimonials') && <Testimonials lang={lang} t={t} />}
-        {isSectionVisible('csr') && <CSR lang={lang} t={t} />}
+
+        {/* 6. Quick Direct Inquiry Form */}
         {isSectionVisible('contact') && <Contact lang={lang} t={t} />}
+
+        {/* Dynamic CMS Sections */}
         <CustomSections lang={lang} t={t} />
       </main>
       
       <Footer lang={lang} t={t} />
       
-      <PortalLogin lang={lang} t={t} isOpen={isPortalOpen} onClose={() => setIsPortalOpen(false)} />
-      <WhatsAppButton 
-        phone={t.contact?.whatsapp || ''} 
-        message="Hi Dorek, I would like to know more about your services.." 
-      />
-      <ChatAssistant lang={lang} t={t} />
-      <LeadPopup />
+      {loadFloatingWidgets && (
+        <>
+          <WhatsAppButton 
+            phone={t.contact?.whatsapp || ''} 
+            message="Hi Dorek, I would like to know more about your services.." 
+          />
+          <ChatAssistant lang={lang} t={t} />
+        </>
+      )}
     </div>
   );
 }

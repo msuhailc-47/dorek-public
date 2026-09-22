@@ -49,7 +49,7 @@ export default function Businesses({ lang, t }) {
       {activePopup !== null && t.businesses.items[activePopup] && (
         <div className="biz-popup-overlay" onClick={() => setActivePopup(null)}>
           <div className="biz-popup-modal" onClick={(e) => e.stopPropagation()}>
-            <button className="biz-popup-close" onClick={() => setActivePopup(null)}>
+            <button className="biz-popup-close" onClick={() => setActivePopup(null)} aria-label="Close Details Modal">
               <X size={22} />
             </button>
             <div className="biz-popup-header">

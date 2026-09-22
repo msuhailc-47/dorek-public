@@ -10,7 +10,7 @@
   width: 52px; height: 52px; border-radius: 12px; background: rgba(10, 46, 93, 0.08);
   color: var(--primary); display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
-.contact-info-card h4 { font-family: var(--font-heading); font-size: 1.05rem; margin-bottom: 8px; color: var(--text-heading); }
+.contact-info-card h3, .contact-info-card h4 { font-family: var(--font-heading); font-size: 1.05rem; margin-bottom: 8px; color: var(--text-heading); }
 .contact-info-card p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
 .contact-map { flex: 1; min-height: 200px; border-radius: var(--radius-card); overflow: hidden; border: 1px solid rgba(10, 46, 93, 0.1); margin-top: 12px; }
 .contact-map-placeholder {

@@ -2,6 +2,10 @@
 const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false, // Hide Next.js fingerprint from attackers
+  compress: true,
+  experimental: {
+    optimizePackageImports: ['lucide-react'],
+  },
   async headers() {
     return [
       {

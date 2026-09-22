@@ -1,5 +1,4 @@
 "use client";
-import { useState, useEffect } from 'react';
 import { LayoutDashboard, Users, Receipt, Package, Calculator, Clock, Smartphone } from 'lucide-react';
 import { useCMS } from '../context/CMSContext';
 import './Software.css';
@@ -7,14 +6,11 @@ import useScrollReveal from '../utils/useScrollReveal';
 
 const iconMap = { LayoutDashboard, Users, Receipt, Package, Calculator, Clock, Smartphone };
 const mockColors = ['#0ea5e9', '#8b5cf6', '#10b981', '#f59e0b', '#ec4899', '#06b6d4', '#3b82f6'];
+const mockHeights = ['35%', '65%', '45%', '80%', '55%'];
+const mockOpacities = [0.6, 0.9, 0.7, 1.0, 0.8];
 
 export default function Software({ lang, t }) {
   const { ref: scrollRef, className: scrollClass } = useScrollReveal();
-  const [mounted, setMounted] = useState(false);
-  
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   return (
     <section id="software" className={`section software ${scrollClass}`} ref={scrollRef}>
@@ -36,23 +32,17 @@ export default function Software({ lang, t }) {
                     <div className="sw-mockup-title" style={{ background: `${mockColors[i]}30` }} />
                   </div>
                   <div className="sw-mockup-body">
-                    {mounted ? (
-                      <>
-                        <div className="sw-mock-sidebar" style={{ background: `${mockColors[i]}15` }}>
-                          {[...Array(4)].map((_,j) => <div key={j} className="sw-mock-bar" style={{ background: `${mockColors[i]}25`, width: `${60+j*10}%` }}/>)}
-                        </div>
-                        <div className="sw-mock-content">
-                          <div className="sw-mock-chart" style={{ background: `${mockColors[i]}10` }}>
-                            {[...Array(5)].map((_,j) => <div key={j} className="sw-mock-col" style={{ background: mockColors[i], height: `${20+Math.random()*60}%`, opacity: 0.5+Math.random()*0.5 }}/>)}
-                          </div>
-                          <div className="sw-mock-rows">
-                            {[...Array(3)].map((_,j) => <div key={j} className="sw-mock-row" style={{ background: `${mockColors[i]}12` }}/>)}
-                          </div>
-                        </div>
-                      </>
-                    ) : (
-                      <div className="sw-mock-content" style={{ opacity: 0 }} />
-                    )}
+                    <div className="sw-mock-sidebar" style={{ background: `${mockColors[i]}15` }}>
+                      {[...Array(4)].map((_,j) => <div key={j} className="sw-mock-bar" style={{ background: `${mockColors[i]}25`, width: `${60+j*10}%` }}/>)}
+                    </div>
+                    <div className="sw-mock-content">
+                      <div className="sw-mock-chart" style={{ background: `${mockColors[i]}10` }}>
+                        {[...Array(5)].map((_,j) => <div key={j} className="sw-mock-col" style={{ background: mockColors[i], height: mockHeights[(i + j) % 5], opacity: mockOpacities[(i + j) % 5] }}/>)}
+                      </div>
+                      <div className="sw-mock-rows">
+                        {[...Array(3)].map((_,j) => <div key={j} className="sw-mock-row" style={{ background: `${mockColors[i]}12` }}/>)}
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div className="sw-card-info">

@@ -1,4 +1,4 @@
-"use client";
+import Link from 'next/link';
 import { Users, Store, Building2, TrendingUp, Briefcase, Handshake, Package, Truck, ArrowRight } from 'lucide-react';
 import { useCMS } from '../context/CMSContext';
 import './Opportunities.css';
@@ -7,7 +7,7 @@ import useScrollReveal from '../utils/useScrollReveal';
 const iconMap = { Users, Store, Building2, TrendingUp, Briefcase, Handshake, Package, Truck };
 const accents = ['#00b4d8','#d4a843','#10b981','#8b5cf6','#f59e0b','#ef4444','#06b6d4','#3b82f6'];
 
-export default function Opportunities({ lang, t, onApplyOpen }) {
+export default function Opportunities({ lang, t }) {
   const { ref: scrollRef, className: scrollClass } = useScrollReveal();
     return (
     <section id="opportunities" className={`section opp ${scrollClass}`} ref={scrollRef}>
@@ -32,9 +32,9 @@ export default function Opportunities({ lang, t, onApplyOpen }) {
           })}
         </div>
         <div className="opp-cta">
-          <button className="btn btn-gold btn-lg" onClick={onApplyOpen}>
-            {t.opportunities.applyNow} <ArrowRight size={18} />
-          </button>
+          <Link href="/contact" className="btn btn-gold btn-lg">
+            {t.opportunities?.applyNow || 'Apply Now'} <ArrowRight size={18} />
+          </Link>
         </div>
       </div>
     </section>

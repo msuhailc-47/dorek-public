@@ -28,7 +28,7 @@ export default function WhyChoose({ lang, t }) {
               <div key={i} className="why-item">
                 <div className="why-item-num">{String(i + 1).padStart(2, '0')}</div>
                 <div className="why-item-content">
-                  <h4>{item.title}</h4>
+                  <h3>{item.title}</h3>
                   <p>{item.desc}</p>
                 </div>
                 <CheckCircle2 size={20} className="why-check" />

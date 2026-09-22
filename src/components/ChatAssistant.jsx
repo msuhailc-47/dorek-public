@@ -165,6 +165,7 @@ export default function ChatAssistant({ lang, t }) {
             <input
               type="text"
               placeholder={t.chat.placeholder}
+              aria-label="Type your message"
               value={input}
               onChange={e => setInput(e.target.value)}
               disabled={isTyping}

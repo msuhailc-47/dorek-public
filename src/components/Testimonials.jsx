@@ -33,7 +33,7 @@ export default function Testimonials({ lang, t }) {
               <div className="test-author">
                 <div className="test-avatar">{item.name.charAt(0)}</div>
                 <div className="test-author-info">
-                  <h4>{item.name}</h4>
+                  <h3>{item.name}</h3>
                   <span>{item.role}</span>
                 </div>
                 <div className="test-stars">

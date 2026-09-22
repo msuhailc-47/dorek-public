@@ -19,6 +19,14 @@ function escapeHtml(str) {
 async function getAdminRecipients(defaultFallback) {
   const recipients = new Set();
 
+  if (defaultFallback && typeof defaultFallback === 'string' && defaultFallback.includes('@')) {
+    defaultFallback.split(',').forEach(e => {
+      const clean = e.trim();
+      if (clean && clean.includes('@')) recipients.add(clean);
+    });
+    if (recipients.size > 0) return Array.from(recipients);
+  }
+
   try {
     if (db) {
       // 1. Primary: Check themeSettings (where Admin Submissions tab saves contact form notification email)
@@ -59,10 +67,6 @@ async function getAdminRecipients(defaultFallback) {
     }
   } catch (err) {
     console.warn('Could not read admin email from Firestore, using fallback:', err.message);
-  }
-
-  if (recipients.size === 0 && defaultFallback) {
-    recipients.add(defaultFallback.trim());
   }
 
   return Array.from(recipients);
@@ -159,6 +163,9 @@ export async function POST(request) {
         user: smtpUser,
         pass: smtpPass,
       },
+      connectionTimeout: 4000,
+      greetingTimeout: 4000,
+      socketTimeout: 4000
     });
 
     // Sanitize user-provided values

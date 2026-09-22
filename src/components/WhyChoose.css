@@ -7,6 +7,7 @@
 .why-visual-circle {
   position: absolute; border-radius: 50%; border: 1px solid rgba(10, 46, 93, 0.1);
   animation: rotate 30s linear infinite;
+  transform: translateZ(0);
 }
 .why-vc-1 { width: 100%; height: 100%; border-color: rgba(10, 46, 93, 0.12); }
 .why-vc-2 { width: 75%; height: 75%; border-color: rgba(212, 175, 55, 0.2); animation-direction: reverse; animation-duration: 25s; }
@@ -27,10 +28,10 @@
 .why-item:hover { transform: translateX(8px); border-color: var(--secondary); background: #ffffff; box-shadow: var(--shadow-hover); }
 .why-item-num {
   font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800;
-  color: var(--secondary); flex-shrink: 0; min-width: 30px;
+  color: var(--primary); flex-shrink: 0; min-width: 30px;
 }
 .why-item-content { flex: 1; }
-.why-item-content h4 { font-family: var(--font-heading); font-size: 0.95rem; font-weight: 600; margin-bottom: 2px; color: var(--text-heading); }
+.why-item-content h3, .why-item-content h4 { font-family: var(--font-heading); font-size: 0.95rem; font-weight: 600; margin-bottom: 2px; color: var(--text-heading); }
 .why-item-content p { font-size: 0.82rem; color: var(--text-muted); }
 .why-check { color: var(--color-success); flex-shrink: 0; }
 @media (max-width: 768px) {

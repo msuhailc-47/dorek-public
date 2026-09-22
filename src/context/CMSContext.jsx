@@ -1,7 +1,5 @@
 "use client";
 import React, { createContext, useContext } from 'react';
-import { doc, updateDoc, arrayUnion, setDoc } from 'firebase/firestore';
-import { db } from '../firebase';
 
 const CMSContext = createContext(null);
 
@@ -28,19 +26,13 @@ export function CMSProvider({ children, initialData }) {
 
   const addSubmission = async (formData) => {
     try {
-      const submission = { id: Date.now(), date: new Date().toLocaleString(), ...formData };
-      const docRef = doc(db, 'dorek_cms', 'submissions');
-      await updateDoc(docRef, {
-        submissions: arrayUnion(submission)
+      await fetch('/api/submissions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
       });
     } catch (error) {
-      // If the document doesn't exist yet, create it
-      if (error.code === 'not-found') {
-        const submission = { id: Date.now(), date: new Date().toLocaleString(), ...formData };
-        await setDoc(doc(db, 'dorek_cms', 'submissions'), { submissions: [submission] });
-      } else {
-        console.error("Error adding submission: ", error);
-      }
+      console.error("Error adding submission: ", error);
     }
   };
 

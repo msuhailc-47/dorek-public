@@ -15,7 +15,7 @@
   font-size: 1.2rem;
 }
 .test-author-info { flex: 1; }
-.test-author-info h4 { font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 2px; color: var(--text-heading); }
+.test-author-info h3, .test-author-info h4 { font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 2px; color: var(--text-heading); }
 .test-author-info span { font-size: 0.75rem; color: var(--text-muted); }
 .test-stars { display: flex; gap: 2px; color: var(--secondary); }
 @media (max-width: 900px) { .test-grid { grid-template-columns: repeat(2, 1fr); } }

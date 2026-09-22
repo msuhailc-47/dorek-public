@@ -1,80 +1,214 @@
-.businesses { background: var(--bg-main); }
-.biz-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
-.biz-card {
-  padding: 28px; border-radius: var(--radius-card); background: #ffffff;
-  border: 1px solid rgba(10, 46, 93, 0.1); box-shadow: var(--shadow-soft);
-  transition: all 0.3s ease; position: relative;
+/* ========================================================
+   DOREK INTERNATIONAL — BENTO BUSINESSES DESIGN SYSTEM
+   ======================================================== */
+
+.businesses {
+  background: #F8FAFC;
+  padding: 100px 0;
+  position: relative;
 }
-.biz-card:hover { border-color: var(--secondary); transform: translateY(-6px); box-shadow: var(--shadow-hover); }
+
+.businesses .container {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.businesses .section-header {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 56px;
+}
+
+.businesses .section-label {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: #0A2E5D;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+  background: rgba(10, 46, 93, 0.08);
+  padding: 4px 16px;
+  border-radius: 30px;
+  border: 1px solid rgba(10, 46, 93, 0.15);
+}
+
+.businesses .section-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+.businesses .section-subtitle {
+  font-size: 1.05rem;
+  color: #64748B;
+  line-height: 1.7;
+}
+
+/* Bento Grid Architecture */
+.biz-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 24px;
+}
+
+/* Standard Bento Card */
+.biz-card {
+  grid-column: span 4;
+  padding: 32px 28px;
+  border-radius: 20px;
+  background: #ffffff;
+  border: 1px solid rgba(10, 46, 93, 0.08);
+  box-shadow: 0 4px 20px rgba(10, 46, 93, 0.04);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Feature 1 & 2: First two cards span 6 columns each for Bento hierarchy */
+.biz-card:nth-child(1),
+.biz-card:nth-child(2) {
+  grid-column: span 6;
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  box-shadow: 0 10px 30px rgba(10, 46, 93, 0.07);
+}
+
+.biz-card:hover {
+  border-color: var(--secondary);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(10, 46, 93, 0.1);
+}
+
 .biz-card-icon {
-  width: 56px; height: 56px; border-radius: 14px; margin-bottom: 16px;
-  display: flex; align-items: center; justify-content: center;
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
   transition: transform 0.3s ease;
 }
-.biz-card:hover .biz-card-icon { transform: scale(1.1); }
-.biz-card .badge { margin-bottom: 12px; }
-.biz-card-name { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; color: var(--text-heading); }
-.biz-card-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px; }
-.biz-learn-more {
-  background: none; border: none; color: var(--primary); font-size: 0.85rem;
-  font-weight: 600; cursor: pointer; padding: 0; transition: color 0.2s;
-}
-.biz-learn-more:hover { color: var(--secondary); }
 
-/* ===== Learn More Popup Modal ===== */
+.biz-card:hover .biz-card-icon {
+  transform: scale(1.08) rotate(3deg);
+}
+
+.biz-card .badge {
+  align-self: flex-start;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--primary);
+  background: rgba(10, 46, 93, 0.08);
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+}
+
+.biz-card:nth-child(1) .badge,
+.biz-card:nth-child(2) .badge {
+  background: rgba(212, 175, 55, 0.15);
+  color: #B45309;
+}
+
+.biz-card-name {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  color: var(--primary);
+  line-height: 1.3;
+}
+
+.biz-card:nth-child(1) .biz-card-name,
+.biz-card:nth-child(2) .biz-card-name {
+  font-size: 1.45rem;
+}
+
+.biz-card-desc {
+  font-size: 0.9rem;
+  color: #64748B;
+  line-height: 1.65;
+  margin-bottom: 22px;
+  flex: 1;
+}
+
+.biz-learn-more {
+  background: transparent;
+  border: none;
+  color: var(--primary);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  align-self: flex-start;
+}
+
+.biz-learn-more:hover {
+  color: var(--secondary);
+  gap: 10px;
+}
+
+/* Modal Styling */
 .biz-popup-overlay {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
+  inset: 0;
+  background: rgba(6, 28, 59, 0.75);
+  backdrop-filter: blur(8px);
   z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
-  animation: biz-fadeIn 0.3s ease forwards;
-}
-
-@keyframes biz-fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes biz-slideUp {
-  from { opacity: 0; transform: translateY(30px) scale(0.95); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .biz-popup-modal {
   background: #ffffff;
-  border-radius: 16px;
-  max-width: 600px;
+  border-radius: 24px;
+  max-width: 640px;
   width: 100%;
-  max-height: 80vh;
+  max-height: 85vh;
   overflow-y: auto;
   padding: 36px;
   position: relative;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  animation: biz-slideUp 0.35s ease forwards;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(10, 46, 93, 0.1);
 }
 
 .biz-popup-close {
   position: absolute;
-  top: 16px; right: 16px;
-  background: rgba(10, 46, 93, 0.08);
+  top: 20px;
+  right: 20px;
+  background: #f1f5f9;
   border: none;
   border-radius: 50%;
-  width: 40px; height: 40px;
-  display: flex; align-items: center; justify-content: center;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  color: var(--text-heading);
+  color: #64748B;
   transition: all 0.2s ease;
 }
 
 .biz-popup-close:hover {
-  background: #ef4444;
-  color: #fff;
+  background: #fee2e2;
+  color: #ef4444;
   transform: rotate(90deg);
 }
 
@@ -84,45 +218,60 @@
   gap: 18px;
   margin-bottom: 24px;
   padding-bottom: 20px;
-  border-bottom: 2px solid rgba(10, 46, 93, 0.08);
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .biz-popup-icon {
-  width: 64px; height: 64px;
-  border-radius: 16px;
-  display: flex; align-items: center; justify-content: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
 }
 
 .biz-popup-title {
   font-family: var(--font-heading);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--text-heading);
-  margin-top: 6px;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin: 4px 0 0 0;
 }
 
-.biz-popup-body {}
-
 .biz-popup-desc {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-  line-height: 1.8;
+  font-size: 0.98rem;
+  color: #475569;
+  line-height: 1.7;
   margin-bottom: 20px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid rgba(10, 46, 93, 0.06);
 }
 
 .biz-popup-details {
-  font-size: 0.95rem;
-  color: var(--text-main);
-  line-height: 1.9;
-  white-space: pre-line;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 18px 20px;
+  font-size: 0.92rem;
+  color: #334155;
+  line-height: 1.7;
 }
 
-@media (max-width: 1024px) { .biz-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 480px) {
-  .biz-grid { grid-template-columns: 1fr; }
-  .biz-popup-modal { padding: 24px; }
-  .biz-popup-header { flex-direction: column; text-align: center; }
+/* Responsive Breakpoints */
+@media (max-width: 1080px) {
+  .biz-card {
+    grid-column: span 6 !important;
+  }
+}
+
+@media (max-width: 680px) {
+  .businesses {
+    padding: 70px 0;
+  }
+  .biz-grid {
+    grid-template-columns: 1fr;
+  }
+  .biz-card {
+    grid-column: span 12 !important;
+    padding: 24px 20px;
+  }
 }

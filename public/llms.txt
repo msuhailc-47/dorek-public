@@ -1,0 +1,16 @@
+# Dorek International Enterprises LLP
+
+> Dorek International Enterprises LLP is a diversified corporate enterprise delivering turnkey engineering, commercial solar energy, smart retail networks, and enterprise software systems.
+
+## Primary Sections
+- [Home](https://dorek.in/): Official corporate landing portal
+- [About Us](https://dorek.in/about): Corporate overview, leadership, timeline and CSR
+- [Businesses](https://dorek.in/businesses): Engineering, Solar, Doorcarts Smart Retail, Enterprise Software
+- [Careers](https://dorek.in/careers): Career openings and talent acquisition
+- [Contact](https://dorek.in/contact): Headquarters contact and partnership inquiries
+
+## Legal & Compliance
+- [Privacy Policy](https://dorek.in/privacy): Privacy guidelines
+- [Terms & Conditions](https://dorek.in/terms): Legal terms of service
+- [Refund Policy](https://dorek.in/refund): Refund guidelines
+- [Disclaimer](https://dorek.in/disclaimer): Official disclaimer

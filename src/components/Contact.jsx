@@ -51,29 +51,21 @@ export default function Contact({ lang, t }) {
         message: cleanMessage
       });
       
-      // Send email notification
-      try {
-        const response = await fetch('/api/contact', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
-            name: cleanName,
-            email: cleanEmail,
-            phone: cleanPhone,
-            subject: cleanSubject,
-            message: cleanMessage,
-            adminEmail: themeSettings?.adminEmail
-          }),
-        });
-        const data = await response.json();
-        if (!response.ok || data.error) {
-          console.error('Email API Error:', data);
-        } else {
-          console.log('Email sent successfully:', data);
-        }
-      } catch (notifyErr) {
-        console.error('Email notification failed:', notifyErr);
-      }
+      // Send email notification in background asynchronously
+      fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          name: cleanName,
+          email: cleanEmail,
+          phone: cleanPhone,
+          subject: cleanSubject,
+          message: cleanMessage,
+          adminEmail: themeSettings?.adminEmail
+        }),
+      }).catch(notifyErr => {
+        console.warn('Email notification failed:', notifyErr);
+      });
       
       alert('Thank you for contacting us! We will get back to you soon.');
       setFormData({ name: '', email: '', phone: '', subject: '', message: '', honeypot: '' });
@@ -99,21 +91,21 @@ export default function Contact({ lang, t }) {
             <div className="contact-info-card">
               <div className="contact-icon"><MapPin size={24} /></div>
               <div>
-                <h4>{t.contact.addressLabel}</h4>
+                <h3>{t.contact.addressLabel}</h3>
                 <p style={{ whiteSpace: 'pre-line' }}>{t.contact.address}</p>
               </div>
             </div>
             <div className="contact-info-card">
               <div className="contact-icon"><Phone size={24} /></div>
               <div>
-                <h4>{t.contact.phoneLabel}</h4>
+                <h3>{t.contact.phoneLabel}</h3>
                 <p>{t.contact.phone}<br />{t.contact.whatsapp && `WA: ${t.contact.whatsapp}`}</p>
               </div>
             </div>
             <div className="contact-info-card">
               <div className="contact-icon"><Mail size={24} /></div>
               <div>
-                <h4>{t.contact.emailLabel}</h4>
+                <h3>{t.contact.emailLabel}</h3>
                 <p>{t.contact.email}</p>
               </div>
             </div>
@@ -141,16 +133,61 @@ export default function Contact({ lang, t }) {
             <h3>Send us a Message</h3>
             <form onSubmit={handleSubmit}>
               <div className="form-group">
-                <input type="text" name="name" value={formData.name} onChange={handleChange} className="form-control" placeholder={t.contact.formName} disabled={isSubmitting} required />
+                <label htmlFor="contact-name" className="sr-only">{t.contact.formName}</label>
+                <input 
+                  id="contact-name"
+                  type="text" 
+                  name="name" 
+                  value={formData.name} 
+                  onChange={handleChange} 
+                  className="form-control" 
+                  placeholder={t.contact.formName} 
+                  aria-label={t.contact.formName}
+                  disabled={isSubmitting} 
+                  required 
+                />
               </div>
               <div className="form-group">
-                <input type="email" name="email" value={formData.email} onChange={handleChange} className="form-control" placeholder={t.contact.formEmail} disabled={isSubmitting} required />
+                <label htmlFor="contact-email" className="sr-only">{t.contact.formEmail}</label>
+                <input 
+                  id="contact-email"
+                  type="email" 
+                  name="email" 
+                  value={formData.email} 
+                  onChange={handleChange} 
+                  className="form-control" 
+                  placeholder={t.contact.formEmail} 
+                  aria-label={t.contact.formEmail}
+                  disabled={isSubmitting} 
+                  required 
+                />
               </div>
               <div className="form-group">
-                <input type="tel" name="phone" value={formData.phone} onChange={handleChange} className="form-control" placeholder={t.contact.formPhone} disabled={isSubmitting} required />
+                <label htmlFor="contact-phone" className="sr-only">{t.contact.formPhone}</label>
+                <input 
+                  id="contact-phone"
+                  type="tel" 
+                  name="phone" 
+                  value={formData.phone} 
+                  onChange={handleChange} 
+                  className="form-control" 
+                  placeholder={t.contact.formPhone} 
+                  aria-label={t.contact.formPhone}
+                  disabled={isSubmitting} 
+                  required 
+                />
               </div>
               <div className="form-group">
-                <select name="subject" value={formData.subject} onChange={handleChange} className="form-control" disabled={isSubmitting}>
+                <label htmlFor="contact-subject" className="sr-only">{t.contact.formSubject}</label>
+                <select 
+                  id="contact-subject"
+                  name="subject" 
+                  value={formData.subject} 
+                  onChange={handleChange} 
+                  className="form-control" 
+                  aria-label={t.contact.formSubject}
+                  disabled={isSubmitting}
+                >
                   <option value="" disabled>{t.contact.formSubject}</option>
                   {(t.contact.formOptions || []).map((opt, i) => (
                     <option key={i} value={opt}>{opt}</option>
@@ -158,7 +195,19 @@ export default function Contact({ lang, t }) {
                 </select>
               </div>
               <div className="form-group">
-                <textarea name="message" value={formData.message} onChange={handleChange} className="form-control" placeholder={t.contact.formMessage} rows="5" disabled={isSubmitting} required></textarea>
+                <label htmlFor="contact-message" className="sr-only">{t.contact.formMessage}</label>
+                <textarea 
+                  id="contact-message"
+                  name="message" 
+                  value={formData.message} 
+                  onChange={handleChange} 
+                  className="form-control" 
+                  placeholder={t.contact.formMessage} 
+                  aria-label={t.contact.formMessage}
+                  rows="5" 
+                  disabled={isSubmitting} 
+                  required
+                ></textarea>
               </div>
               <button 
                 type="submit" 
