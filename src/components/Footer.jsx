@@ -49,6 +49,7 @@ export default function Footer({ lang, t }) {
               <li><Link href="/businesses#opportunities">{t.nav?.opportunities || 'Opportunities'}</Link></li>
               <li><Link href="/media#investors">{t.nav?.investors || 'Investors'}</Link></li>
               <li><Link href="/careers">{t.nav?.careers || 'Careers'}</Link></li>
+              <li><Link href="/contact">{t.nav?.contact || (lang === 'en' ? 'Contact' : 'ബന്ധപ്പെടുക')}</Link></li>
             </ul>
           </div>
           <div className="footer-col">

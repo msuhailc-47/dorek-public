@@ -2,15 +2,19 @@
 import { useState } from 'react';
 import { Eye, Target, Heart, Users, Award, Leaf, Quote, ChevronDown, Calendar } from 'lucide-react';
 import { useCMS } from '../context/CMSContext';
-import { getOptimizedUrl } from '../utils/getOptimizedUrl';
+import { getOptimizedUrl, convertDriveUrl } from '../utils/getOptimizedUrl';
 import './About.css';
 import useScrollReveal from '../utils/useScrollReveal';
+import translations from '../i18n/translations';
 
 export default function About({ lang, t }) {
   const { ref: scrollRef, className: scrollClass } = useScrollReveal();
   const [showAllTimeline, setShowAllTimeline] = useState(false);
   const timelineItems = t.about?.timelineItems || [];
   const visibleTimelineItems = showAllTimeline ? timelineItems : timelineItems.slice(0, 3);
+  const foundersList = (t.about?.founders && t.about.founders.length > 0)
+    ? t.about.founders
+    : (translations[lang]?.about?.founders || translations.en?.about?.founders || []);
 
   return (
     <section id="about" className={`section about ${scrollClass}`} ref={scrollRef}>
@@ -88,6 +92,54 @@ export default function About({ lang, t }) {
             </div>
           </div>
         </div>
+
+        {/* 6 Founders & Board of Leadership Grid */}
+        {foundersList.length > 0 && (
+          <div className="about-founders-section">
+            <div className="section-header" style={{ marginBottom: '36px' }}>
+              <span className="section-label">{lang === 'en' ? 'Leadership' : 'നേതൃത്വം'}</span>
+              <h3 className="about-h3 about-h3-center">{t.about?.foundersTitle || (lang === 'en' ? 'Founders & Board of Leadership' : 'സ്ഥാപകരും നേതൃത്വവും')}</h3>
+              <p className="about-tl-subtitle">
+                {t.about?.foundersSubtitle || (lang === 'en' 
+                  ? 'Meet the visionary founding leadership driving innovation, sustainable operations, and business excellence at Dorek International Enterprises LLP.'
+                  : 'ഡോറക് ഇന്റർനാഷണൽ എന്റർപ്രൈസസ് എൽഎൽപിയുടെ വിജയത്തിന് പിന്നിലെ സ്ഥാപക നേതൃത്വം.')}
+              </p>
+            </div>
+
+            <div className="about-founders-grid">
+              {foundersList.map((founder, idx) => (
+                <div key={idx} className="about-founder-profile-card">
+                  <div className="about-founder-photo-wrapper">
+                    {founder.photo ? (
+                      <img 
+                        src={getOptimizedUrl(founder.photo)} 
+                        alt={founder.name} 
+                        className="about-founder-photo" 
+                        loading="lazy"
+                        referrerPolicy="no-referrer"
+                        onError={(e) => {
+                          const direct = convertDriveUrl(founder.photo);
+                          if (direct && e.target.src !== direct) {
+                            e.target.src = direct;
+                          }
+                        }}
+                      />
+                    ) : (
+                      <div className="about-founder-photo-placeholder">
+                        <span>{founder.name ? founder.name.charAt(0) : 'D'}</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="about-founder-details">
+                    <h4 className="about-founder-card-name">{founder.name}</h4>
+                    <span className="about-founder-card-role">{founder.role}</span>
+                    <p className="about-founder-card-bio">{founder.bio}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Horizontal Timeline Section: Max 3 items visible by default + View More Toggle */}
         <div id="timeline" className="about-timeline-section">

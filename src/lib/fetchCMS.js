@@ -70,6 +70,31 @@ export async function fetchCMSData() {
 
     if (!data.translationsData) {
       data.translationsData = translations;
+    } else {
+      data.translationsData = {
+        en: {
+          ...translations.en,
+          ...(data.translationsData.en || {}),
+          about: {
+            ...translations.en.about,
+            ...(data.translationsData.en?.about || {}),
+            founders: (data.translationsData.en?.about?.founders && data.translationsData.en.about.founders.length > 0)
+              ? data.translationsData.en.about.founders
+              : translations.en.about.founders
+          }
+        },
+        ml: {
+          ...translations.ml,
+          ...(data.translationsData.ml || {}),
+          about: {
+            ...translations.ml.about,
+            ...(data.translationsData.ml?.about || {}),
+            founders: (data.translationsData.ml?.about?.founders && data.translationsData.ml.about.founders.length > 0)
+              ? data.translationsData.ml.about.founders
+              : translations.ml.about.founders
+          }
+        }
+      };
     }
 
     return data;

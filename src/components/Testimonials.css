@@ -1,4 +1,46 @@
 .testimonials-sec { background: var(--bg-main); }
+
+/* Category Filter Tabs */
+.test-tabs, .career-tabs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin: 0 auto 40px auto;
+  padding: 0 16px;
+}
+
+.test-tab, .career-tab {
+  padding: 10px 24px;
+  border-radius: 50px;
+  border: 1px solid rgba(10, 46, 93, 0.15);
+  background: #ffffff;
+  color: var(--text-muted, #475569);
+  font-family: var(--font-heading, inherit);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 5px rgba(10, 46, 93, 0.05);
+}
+
+.test-tab:hover, .career-tab:hover {
+  border-color: var(--secondary, #D4AF37);
+  color: var(--primary, #0A2E5D);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(10, 46, 93, 0.1);
+}
+
+.test-tab-active, .career-tab-active {
+  background: var(--primary, #0A2E5D) !important;
+  color: #ffffff !important;
+  border-color: var(--primary, #0A2E5D) !important;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(10, 46, 93, 0.25) !important;
+  transform: translateY(-1px);
+}
+
 .test-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .test-card {
   padding: 32px; border-radius: var(--radius-card); background: #ffffff;
@@ -18,5 +60,21 @@
 .test-author-info h3, .test-author-info h4 { font-family: var(--font-heading); font-size: 0.95rem; margin-bottom: 2px; color: var(--text-heading); }
 .test-author-info span { font-size: 0.75rem; color: var(--text-muted); }
 .test-stars { display: flex; gap: 2px; color: var(--secondary); }
-@media (max-width: 900px) { .test-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 600px) { .test-grid { grid-template-columns: 1fr; } }
+@media (max-width: 900px) { 
+  .test-grid { grid-template-columns: repeat(2, 1fr); } 
+}
+@media (max-width: 600px) { 
+  .test-grid { grid-template-columns: 1fr; gap: 16px; } 
+  .test-tabs, .career-tabs {
+    gap: 8px;
+    margin-bottom: 24px;
+    padding: 0 8px;
+  }
+  .test-tab, .career-tab {
+    padding: 8px 16px;
+    font-size: 0.82rem;
+  }
+  .test-card {
+    padding: 22px;
+  }
+}

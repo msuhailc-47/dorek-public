@@ -11,7 +11,6 @@ import About from './About';
 import Businesses from './Businesses';
 import WhyChoose from './WhyChoose';
 import Testimonials from './Testimonials';
-import Contact from './Contact';
 import CustomSections from './CustomSections';
 import Footer from './Footer';
 
@@ -87,18 +86,8 @@ export default function MainSite() {
         {/* 1. Hero Section (Above the Fold) */}
         {isSectionVisible('hero') && <Hero lang={lang} t={t} />}
 
-        {/* 2. Executive About Teaser */}
-        {isSectionVisible('about') && (
-          <div className="home-section-wrapper">
-            <About lang={lang} t={t} />
-            <div className="section-cta-banner">
-              <Link href="/about" className="section-cta-btn">
-                <span>{lang === 'en' ? 'Explore Full Corporate Story & CSR' : 'മുഴുവൻ കമ്പനി ചരിത്രവും സിഎസ്ആറും കാണുക'}</span>
-                <ArrowRight size={16} />
-              </Link>
-            </div>
-          </div>
-        )}
+        {/* 2. Executive About Section */}
+        {isSectionVisible('about') && <About lang={lang} t={t} />}
 
         {/* 3. Core Business Verticals Bento Grid */}
         {isSectionVisible('businesses') && (
@@ -118,9 +107,6 @@ export default function MainSite() {
 
         {/* 5. Testimonials & Social Proof */}
         {isSectionVisible('testimonials') && <Testimonials lang={lang} t={t} />}
-
-        {/* 6. Quick Direct Inquiry Form */}
-        {isSectionVisible('contact') && <Contact lang={lang} t={t} />}
 
         {/* Dynamic CMS Sections */}
         <CustomSections lang={lang} t={t} />
