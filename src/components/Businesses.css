@@ -274,4 +274,15 @@
     grid-column: span 12 !important;
     padding: 24px 20px;
   }
+  .biz-popup-overlay {
+    padding: 16px;
+  }
+  .biz-popup-modal {
+    padding: 26px 20px;
+    border-radius: 20px;
+    max-height: 88vh;
+  }
+  .biz-popup-title {
+    font-size: 1.25rem;
+  }
 }

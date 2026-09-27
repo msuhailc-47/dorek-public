@@ -373,7 +373,6 @@ img {
 }
 
 /* Rendering Performance: Skip off-screen rendering until user scrolls */
-.home-section-wrapper,
 .why-choose,
 .testimonials,
 .contact {

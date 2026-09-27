@@ -22,7 +22,7 @@ export const viewport = {
 };
 
 export const metadata = {
-  metadataBase: new URL('https://dorek.in'),
+  metadataBase: new URL('https://dorekinternational.in'),
   title: {
     template: '%s | Dorek International',
     default: 'Dorek International Enterprises LLP',
@@ -48,7 +48,7 @@ export const metadata = {
   openGraph: {
     title: 'Dorek International Enterprises LLP',
     description: 'Engineering Excellence. Powering Future Brands.',
-    url: 'https://dorek.in',
+    url: 'https://dorekinternational.in',
     siteName: 'Dorek International',
     images: [{ url: '/logo.png', width: 600, height: 600, alt: 'Dorek International Logo' }],
     type: 'website',

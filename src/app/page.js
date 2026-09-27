@@ -14,11 +14,11 @@ export async function generateMetadata() {
     openGraph: {
       title: t.hero?.title,
       description: t.hero?.subtitle,
-      url: 'https://dorek.in',
+      url: 'https://dorekinternational.in',
       siteName: 'Dorek International',
       images: [
         {
-          url: t.hero?.image || 'https://dorek.in/logo.png',
+          url: t.hero?.image || 'https://dorekinternational.in/logo.png',
           width: 1200,
           height: 630,
         },
