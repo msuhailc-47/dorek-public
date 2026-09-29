@@ -50,7 +50,7 @@ export const metadata = {
     description: 'Engineering Excellence. Powering Future Brands.',
     url: 'https://dorekinternational.in',
     siteName: 'Dorek International',
-    images: [{ url: '/logo.png', width: 600, height: 600, alt: 'Dorek International Logo' }],
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Dorek International Enterprises LLP' }],
     type: 'website',
     locale: 'en_IN',
   },
@@ -58,17 +58,28 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'Dorek International Enterprises LLP',
     description: 'Engineering Excellence. Powering Future Brands.',
-    images: ['/logo.png'],
+    images: ['/og-image.png'],
   },
 };
 
+import { ThemeProvider } from "../context/ThemeContext";
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${poppins.variable}`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${poppins.variable}`} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/logo.png" sizes="any" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var s=localStorage.getItem('dorek-theme');var d=window.matchMedia('(prefers-color-scheme: dark)').matches;if(s==='dark'||(!s&&d)){document.documentElement.setAttribute('data-theme','dark');}else{document.documentElement.setAttribute('data-theme','light');}}catch(e){}})();`,
+          }}
+        />
       </head>
-      <body>{children}</body>
+      <body>
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

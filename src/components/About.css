@@ -244,6 +244,13 @@
   color: var(--text-heading);
 }
 
+.about-founder-role {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--secondary);
+  margin-bottom: 2px;
+}
+
 .about-founder-company {
   font-size: 0.85rem;
   color: var(--text-muted);

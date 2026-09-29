@@ -38,22 +38,40 @@ const defaultFallbackData = {
   codeSettings: {}
 };
 
+// In-memory server cache to avoid repetitive network calls across concurrent requests
+let inMemoryCache = null;
+let lastCacheTime = 0;
+const CACHE_TTL = 30 * 1000; // 30 seconds memory cache
+
 export async function fetchCMSData() {
+  const now = Date.now();
+  if (inMemoryCache && (now - lastCacheTime < CACHE_TTL)) {
+    return inMemoryCache;
+  }
+
   const projectId = 'dorek-international-3ef93';
   const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/dorek_cms`;
   
   try {
-    // Next.js ISR: Revalidate every 10 seconds for fast admin updates
-    const res = await fetch(url, { next: { revalidate: 10 } });
+    // 2.5s timeout prevents hanging if Firestore or connection has latency
+    const controller = typeof AbortController !== 'undefined' ? new AbortController() : null;
+    const timeoutId = controller ? setTimeout(() => controller.abort(), 2500) : null;
+
+    const res = await fetch(url, { 
+      signal: controller ? controller.signal : undefined,
+      next: { revalidate: 30 } 
+    });
     
+    if (timeoutId) clearTimeout(timeoutId);
+
     if (!res.ok) {
       console.warn('Could not fetch remote CMS data from Firestore, using local fallback.');
-      return defaultFallbackData;
+      return inMemoryCache || defaultFallbackData;
     }
 
     const json = await res.json();
     if (!json || !json.documents) {
-      return defaultFallbackData;
+      return inMemoryCache || defaultFallbackData;
     }
 
     const data = { ...defaultFallbackData };
@@ -97,9 +115,11 @@ export async function fetchCMSData() {
       };
     }
 
+    inMemoryCache = data;
+    lastCacheTime = Date.now();
     return data;
   } catch (error) {
     console.error('Error in fetchCMSData, falling back to local translations:', error);
-    return defaultFallbackData;
+    return inMemoryCache || defaultFallbackData;
   }
 }

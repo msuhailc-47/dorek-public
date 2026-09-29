@@ -3,8 +3,9 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ChevronDown, Globe } from 'lucide-react';
+import { Menu, X, ChevronDown, Globe, Sun, Moon } from 'lucide-react';
 import { useCMS } from '../context/CMSContext';
+import { useTheme } from '../context/ThemeContext';
 import './Navbar.css';
 
 export default function Navbar({ minimal = false, lang, t, onLangChange }) {
@@ -13,6 +14,7 @@ export default function Navbar({ minimal = false, lang, t, onLangChange }) {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [mobileExpandedGroup, setMobileExpandedGroup] = useState(null);
   const { isSectionVisible } = useCMS();
+  const { theme, toggleTheme } = useTheme();
   const navRef = useRef(null);
   const pathname = usePathname() || '/';
 
@@ -210,6 +212,17 @@ export default function Navbar({ minimal = false, lang, t, onLangChange }) {
             </Link>
           )}
 
+          {/* Theme Toggle */}
+          <button 
+            className="navbar-theme-pill" 
+            onClick={toggleTheme}
+            title={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            aria-label={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+          >
+            {theme === 'dark' ? <Sun size={15} className="theme-icon sun-icon" /> : <Moon size={15} className="theme-icon moon-icon" />}
+            <span className="theme-pill-text">{theme === 'dark' ? 'Light' : 'Dark'}</span>
+          </button>
+
           {/* Language Toggle */}
           <button 
             className="navbar-lang-pill" 
@@ -310,6 +323,14 @@ export default function Navbar({ minimal = false, lang, t, onLangChange }) {
             </div>
 
             <div className="mobile-drawer-footer">
+              <button 
+                className="mobile-theme-btn" 
+                onClick={toggleTheme}
+                aria-label={theme === 'dark' ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+              >
+                {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+                <span>{theme === 'dark' ? (lang === 'en' ? 'Light Theme' : 'ലൈറ്റ് തീം') : (lang === 'en' ? 'Dark Theme' : 'ഡാർക്ക് തീം')}</span>
+              </button>
               <button 
                 className="mobile-lang-btn" 
                 onClick={onLangChange}

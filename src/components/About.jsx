@@ -86,7 +86,7 @@ export default function About({ lang, t }) {
               </div>
               <div>
                 <div className="about-founder-name">{t.about?.founderName || 'Abdulla Ullattil'}</div>
-                <div className="about-founder-role" style={{ fontSize: '0.85rem', color: 'rgba(10, 46, 93, 0.7)', fontWeight: 600, marginBottom: '2px' }}>{t.about?.founderRole || 'Founder & Managing Partner'}</div>
+                <div className="about-founder-role">{t.about?.founderRole || 'Founder & Managing Partner'}</div>
                 <div className="about-founder-company">{t.about?.founderCompany || 'Dorek International Enterprises LLP'}</div>
               </div>
             </div>

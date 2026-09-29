@@ -389,4 +389,672 @@ img {
   }
 }
 
+/* ========================================================
+   DOREK INTERNATIONAL — OFFICIAL DARK THEME SYSTEM
+   ======================================================== */
+[data-theme="dark"] {
+  /* Canvas & Section Backgrounds */
+  --bg-main: #0B1120;           /* Deep Midnight Navy */
+  --bg-section: #080D1A;        /* Darker Charcoal Midnight */
+  --bg-dark: #050811;           /* Deep Black-Navy */
+
+  /* Text Colors */
+  --text-main: #CBD5E1;         /* Crisp Slate */
+  --text-heading: #F8FAFC;      /* Crisp Pure White */
+  --text-muted: #94A3B8;        /* Soft Slate */
+  --text-white: #FFFFFF;
+
+  /* Brand Accents */
+  --primary: #38BDF8;           /* High-contrast cyan blue */
+  --primary-dark: #050811;
+  --primary-light: #60A5FA;
+  --secondary: #F59E0B;         /* Radiant Gold */
+  --secondary-hover: #FBBF24;
+  --secondary-light: rgba(245, 158, 11, 0.15);
+
+  /* Shadows */
+  --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.5);
+  --shadow-hover: 0 14px 40px rgba(0, 0, 0, 0.7);
+  --shadow-gold-glow: 0 4px 20px rgba(245, 158, 11, 0.35);
+}
+
+/* Smooth Theme Transitions */
+body, 
+section, 
+.card, 
+.biz-card, 
+.about-card, 
+.test-card, 
+.why-item, 
+.contact-info-card, 
+.contact-form,
+.navbar {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* Dark Mode Global Body & Layout Containers */
+[data-theme="dark"] body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .app-container {
+  background-color: var(--bg-main);
+}
+
+[data-theme="dark"] section,
+[data-theme="dark"] .section {
+  background-color: var(--bg-main);
+}
+
+/* Dark Mode Section Backgrounds */
+[data-theme="dark"] .section-alt,
+[data-theme="dark"] .about,
+[data-theme="dark"] .why-choose,
+[data-theme="dark"] .careers,
+[data-theme="dark"] .software,
+[data-theme="dark"] .network,
+[data-theme="dark"] .downloads-sec,
+[data-theme="dark"] .news-sec,
+[data-theme="dark"] .opp,
+[data-theme="dark"] .csr-sec {
+  background: var(--bg-section) !important;
+}
+
+[data-theme="dark"] .businesses,
+[data-theme="dark"] .gallery-sec,
+[data-theme="dark"] .testimonials-sec,
+[data-theme="dark"] .contact-sec,
+[data-theme="dark"] .products,
+[data-theme="dark"] .investors-sec {
+  background: var(--bg-main) !important;
+}
+
+/* Dark Mode Cards, Boxes, Panels & Modals */
+[data-theme="dark"] .card,
+[data-theme="dark"] .about-card,
+[data-theme="dark"] .about-founder-card,
+[data-theme="dark"] .about-value-card,
+[data-theme="dark"] .about-founder-profile-card,
+[data-theme="dark"] .about-tl-card-inner,
+[data-theme="dark"] .biz-card,
+[data-theme="dark"] .biz-popup-modal,
+[data-theme="dark"] .prod-tabs,
+[data-theme="dark"] .prod-content,
+[data-theme="dark"] .dl-card,
+[data-theme="dark"] .news-featured,
+[data-theme="dark"] .news-card,
+[data-theme="dark"] .test-card,
+[data-theme="dark"] .why-item,
+[data-theme="dark"] .contact-info-card,
+[data-theme="dark"] .contact-form,
+[data-theme="dark"] .career-card,
+[data-theme="dark"] .career-modal,
+[data-theme="dark"] .gal-video-card,
+[data-theme="dark"] .gal-ach-card,
+[data-theme="dark"] .gal-achieve-card,
+[data-theme="dark"] .gal-video-title-bar,
+[data-theme="dark"] .sw-card,
+[data-theme="dark"] .opp-card,
+[data-theme="dark"] .inv-card,
+[data-theme="dark"] .inv-cta-card,
+[data-theme="dark"] .csr-card,
+[data-theme="dark"] .net-district-list,
+[data-theme="dark"] .net-info-panel,
+[data-theme="dark"] .net-stats-bar,
+[data-theme="dark"] .hero-contact-card,
+[data-theme="dark"] .hero-form-success,
+[data-theme="dark"] .portal-modal,
+[data-theme="dark"] .lead-popup-container {
+  background: #111A2E !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45) !important;
+}
+
+[data-theme="dark"] .biz-card:nth-child(1),
+[data-theme="dark"] .biz-card:nth-child(2) {
+  background: linear-gradient(145deg, #111A2E 0%, #16223B 100%) !important;
+  border-color: rgba(212, 175, 55, 0.35) !important;
+}
+
+/* Card Hover States */
+[data-theme="dark"] .card:hover,
+[data-theme="dark"] .about-card:hover,
+[data-theme="dark"] .about-founder-card:hover,
+[data-theme="dark"] .about-value-card:hover,
+[data-theme="dark"] .about-founder-profile-card:hover,
+[data-theme="dark"] .about-tl-card:hover .about-tl-card-inner,
+[data-theme="dark"] .biz-card:hover,
+[data-theme="dark"] .test-card:hover,
+[data-theme="dark"] .career-card:hover,
+[data-theme="dark"] .gal-video-card:hover,
+[data-theme="dark"] .gal-ach-card:hover,
+[data-theme="dark"] .sw-card:hover,
+[data-theme="dark"] .opp-card:hover,
+[data-theme="dark"] .inv-card:hover,
+[data-theme="dark"] .csr-card:hover,
+[data-theme="dark"] .dl-card:hover,
+[data-theme="dark"] .news-card:hover,
+[data-theme="dark"] .news-featured:hover {
+  border-color: var(--secondary) !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.65) !important;
+}
+
+[data-theme="dark"] .why-item:hover {
+  background: #16223B !important;
+  border-color: var(--secondary) !important;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.65) !important;
+}
+
+/* Sub-surfaces & Items inside Cards */
+[data-theme="dark"] .prod-item,
+[data-theme="dark"] .sw-mockup,
+[data-theme="dark"] .dl-btn,
+[data-theme="dark"] .news-featured-img,
+[data-theme="dark"] .news-card-img,
+[data-theme="dark"] .net-stat-box,
+[data-theme="dark"] .net-hub-card,
+[data-theme="dark"] .net-info-stat,
+[data-theme="dark"] .biz-popup-details,
+[data-theme="dark"] .contact-map-placeholder {
+  background: #080D1A !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .prod-item:hover {
+  background: #16223B !important;
+  border-color: var(--secondary) !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .dl-card:hover .dl-btn {
+  background: var(--secondary) !important;
+  color: #061C3B !important;
+  border-color: var(--secondary) !important;
+}
+
+/* Product Tabs in Dark Mode */
+[data-theme="dark"] .prod-tab {
+  color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .prod-tab:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .prod-tab-active {
+  background: rgba(245, 158, 11, 0.12) !important;
+  color: #FBBF24 !important;
+  border-left-color: var(--secondary) !important;
+  font-weight: 700 !important;
+}
+
+/* Timeline & Milestones in Dark Mode */
+[data-theme="dark"] .about-tl-node {
+  background: #0B1120 !important;
+  border-color: var(--secondary) !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .about-tl-card:hover .about-tl-node {
+  background: var(--secondary) !important;
+  color: #061C3B !important;
+  border-color: #061C3B !important;
+}
+
+[data-theme="dark"] .about-tl-node-line {
+  background: linear-gradient(90deg, #D4AF37 0%, rgba(255, 255, 255, 0.1) 100%) !important;
+}
+
+[data-theme="dark"] .about-tl-year-badge {
+  background: rgba(245, 158, 11, 0.12) !important;
+  color: #FBBF24 !important;
+  border-color: rgba(245, 158, 11, 0.25) !important;
+}
+
+/* Chat Assistant Dark Mode */
+[data-theme="dark"] .chat-window {
+  background: #0B1120 !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6) !important;
+}
+
+[data-theme="dark"] .chat-header {
+  background: #061C3B !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-theme="dark"] .chat-body {
+  background: #070B14 !important;
+}
+
+[data-theme="dark"] .chat-bubble.bot .chat-bubble-text {
+  background: #111A2E !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #E2E8F0 !important;
+}
+
+[data-theme="dark"] .chat-bubble.bot .chat-bubble-text strong {
+  color: #FBBF24 !important;
+}
+
+[data-theme="dark"] .typing-indicator {
+  background: #111A2E !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .typing-indicator span {
+  background: #94A3B8 !important;
+}
+
+[data-theme="dark"] .chat-chip {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .chat-chip:hover {
+  background: var(--secondary) !important;
+  color: #061C3B !important;
+  border-color: var(--secondary) !important;
+}
+
+[data-theme="dark"] .chat-input {
+  background: #0B1120 !important;
+  border-top-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-theme="dark"] .chat-input input {
+  background: #111A2E !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .chat-input input::placeholder {
+  color: #64748B !important;
+}
+
+/* Software Mockups in Dark Mode */
+[data-theme="dark"] .sw-mock-sidebar,
+[data-theme="dark"] .sw-mock-chart {
+  background: rgba(255, 255, 255, 0.03) !important;
+}
+
+[data-theme="dark"] .sw-dots span,
+[data-theme="dark"] .sw-mockup-title,
+[data-theme="dark"] .sw-mock-bar,
+[data-theme="dark"] .sw-mock-row {
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Kerala Network Map in Dark Mode */
+[data-theme="dark"] .net-district-list-title {
+  color: #94A3B8 !important;
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .net-district-item {
+  color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .net-district-item:hover,
+[data-theme="dark"] .net-district-item.active {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: var(--secondary) !important;
+}
+
+[data-theme="dark"] .net-info-title {
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .net-info-close {
+  background: #080D1A !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .net-district-path {
+  fill: rgba(255, 255, 255, 0.05) !important;
+  stroke: rgba(255, 255, 255, 0.25) !important;
+}
+
+[data-theme="dark"] .net-district-path:hover,
+[data-theme="dark"] .net-district-path.active {
+  fill: rgba(212, 175, 55, 0.3) !important;
+  stroke: var(--secondary) !important;
+}
+
+/* Headings in Dark Mode */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6,
+[data-theme="dark"] .section-title,
+[data-theme="dark"] .biz-card-name,
+[data-theme="dark"] .biz-card-title,
+[data-theme="dark"] .about-h3,
+[data-theme="dark"] .about-founder-name,
+[data-theme="dark"] .about-founder-card-name,
+[data-theme="dark"] .about-tl-card-title,
+[data-theme="dark"] .test-author-info h3,
+[data-theme="dark"] .test-author-info h4,
+[data-theme="dark"] .why-item-content h3,
+[data-theme="dark"] .why-item-content h4,
+[data-theme="dark"] .career-card-left h4,
+[data-theme="dark"] .career-modal-header h3,
+[data-theme="dark"] .career-modal-success h3,
+[data-theme="dark"] .contact-form h3,
+[data-theme="dark"] .biz-popup-title,
+[data-theme="dark"] .hero-card-title,
+[data-theme="dark"] .hero-form-success h4,
+[data-theme="dark"] .prod-content-header h3,
+[data-theme="dark"] .dl-name,
+[data-theme="dark"] .news-featured-content h3,
+[data-theme="dark"] .news-card-body h4,
+[data-theme="dark"] .sw-card-info h3,
+[data-theme="dark"] .opp-card-name,
+[data-theme="dark"] .inv-card h3,
+[data-theme="dark"] .inv-cta-card h3,
+[data-theme="dark"] .csr-card h3,
+[data-theme="dark"] .portal-logo,
+[data-theme="dark"] .gal-video-title,
+[data-theme="dark"] .gal-ach-title,
+[data-theme="dark"] .gal-achieve-title,
+[data-theme="dark"] .why-visual-logo,
+[data-theme="dark"] .legal-page h1,
+[data-theme="dark"] .lead-popup-header h2,
+[data-theme="dark"] .net-info-title,
+[data-theme="dark"] .net-stat-num,
+[data-theme="dark"] .net-info-stat-num {
+  color: #F8FAFC !important;
+}
+
+/* Subtitles, Descriptions, & Meta Text in Dark Mode */
+[data-theme="dark"] .section-subtitle,
+[data-theme="dark"] .about-text,
+[data-theme="dark"] .biz-card-desc,
+[data-theme="dark"] .why-item-content p,
+[data-theme="dark"] .test-text,
+[data-theme="dark"] .test-author-info span,
+[data-theme="dark"] .contact-info-card p,
+[data-theme="dark"] .career-meta span,
+[data-theme="dark"] .career-training-desc,
+[data-theme="dark"] .about-founder-bio,
+[data-theme="dark"] .about-founder-card-bio,
+[data-theme="dark"] .about-founder-company,
+[data-theme="dark"] .biz-popup-desc,
+[data-theme="dark"] .about-tl-card-desc,
+[data-theme="dark"] .hero-card-subtitle,
+[data-theme="dark"] .hero-form-trust,
+[data-theme="dark"] .why-visual-sub,
+[data-theme="dark"] .dl-size,
+[data-theme="dark"] .news-featured-content p,
+[data-theme="dark"] .news-card-body p,
+[data-theme="dark"] .news-date,
+[data-theme="dark"] .news-date-sm,
+[data-theme="dark"] .sw-card-info p,
+[data-theme="dark"] .opp-card-desc,
+[data-theme="dark"] .inv-card p,
+[data-theme="dark"] .inv-cta-card p,
+[data-theme="dark"] .csr-card p,
+[data-theme="dark"] .csr-cta p,
+[data-theme="dark"] .portal-header p,
+[data-theme="dark"] .portal-form label,
+[data-theme="dark"] .portal-checkbox,
+[data-theme="dark"] .lead-popup-header p,
+[data-theme="dark"] .gal-video-desc,
+[data-theme="dark"] .gal-ach-desc,
+[data-theme="dark"] .gal-achieve-desc,
+[data-theme="dark"] .net-stat-label,
+[data-theme="dark"] .net-info-stat-label,
+[data-theme="dark"] .net-info-coverage-label,
+[data-theme="dark"] .net-info-empty,
+[data-theme="dark"] .net-district-item-count,
+[data-theme="dark"] .career-modal-header p,
+[data-theme="dark"] .career-modal-success p {
+  color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .about-founder-msg,
+[data-theme="dark"] .hero-form-success p,
+[data-theme="dark"] .hero-field-label,
+[data-theme="dark"] .career-form-group label,
+[data-theme="dark"] .biz-popup-details,
+[data-theme="dark"] .legal-text,
+[data-theme="dark"] .custom-text {
+  color: #CBD5E1 !important;
+}
+
+/* Form Controls in Dark Mode */
+[data-theme="dark"] .form-control,
+[data-theme="dark"] .hero-text-input,
+[data-theme="dark"] .career-form-group input,
+[data-theme="dark"] .career-form-group textarea,
+[data-theme="dark"] .lead-popup-form input {
+  background: #080D1A !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .form-control:focus,
+[data-theme="dark"] .hero-text-input:focus,
+[data-theme="dark"] .career-form-group input:focus,
+[data-theme="dark"] .career-form-group textarea:focus,
+[data-theme="dark"] .lead-popup-form input:focus {
+  background: #0B1120 !important;
+  border-color: var(--secondary) !important;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15) !important;
+}
+
+[data-theme="dark"] .hero-text-input::placeholder,
+[data-theme="dark"] .form-control::placeholder,
+[data-theme="dark"] .career-form-group input::placeholder,
+[data-theme="dark"] .career-form-group textarea::placeholder,
+[data-theme="dark"] .lead-popup-form input::placeholder {
+  color: #64748B !important;
+}
+
+[data-theme="dark"] .hero-input-wrapper:focus-within .hero-input-icon {
+  color: var(--secondary) !important;
+}
+
+/* Modals & Popups Close Buttons */
+[data-theme="dark"] .biz-popup-close,
+[data-theme="dark"] .career-modal-close,
+[data-theme="dark"] .portal-close,
+[data-theme="dark"] .net-info-close,
+[data-theme="dark"] .lead-popup-close {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .biz-popup-close:hover,
+[data-theme="dark"] .career-modal-close:hover,
+[data-theme="dark"] .portal-close:hover,
+[data-theme="dark"] .net-info-close:hover,
+[data-theme="dark"] .lead-popup-close:hover {
+  background: rgba(239, 68, 68, 0.2) !important;
+  color: #EF4444 !important;
+  border-color: rgba(239, 68, 68, 0.4) !important;
+}
+
+/* Section Labels, Badges & Accents */
+[data-theme="dark"] .section-label,
+[data-theme="dark"] .businesses .section-label,
+[data-theme="dark"] .about-tl-node-badge,
+[data-theme="dark"] .hero-card-badge,
+[data-theme="dark"] .biz-card .badge,
+[data-theme="dark"] .career-modal-badge,
+[data-theme="dark"] .gal-ach-year-pill,
+[data-theme="dark"] .gal-video-badge {
+  background: rgba(245, 158, 11, 0.12) !important;
+  color: #FBBF24 !important;
+  border: 1px solid rgba(245, 158, 11, 0.25) !important;
+}
+
+[data-theme="dark"] .about-founder-role,
+[data-theme="dark"] .about-founder-card-role {
+  color: #FBBF24 !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+[data-theme="dark"] .biz-learn-more {
+  color: var(--secondary) !important;
+}
+
+[data-theme="dark"] .hero-form-reset-btn {
+  background: #16223B !important;
+  border: 1.5px solid rgba(245, 158, 11, 0.35) !important;
+  color: #FBBF24 !important;
+}
+
+[data-theme="dark"] .hero-form-reset-btn:hover {
+  background: var(--secondary) !important;
+  color: #061C3B !important;
+}
+
+[data-theme="dark"] .net-stat-divider {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+[data-theme="dark"] .net-info-coverage-bar {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .net-info-coverage-pct {
+  color: var(--secondary) !important;
+}
+
+[data-theme="dark"] .net-info-coverage-fill {
+  background: linear-gradient(90deg, #F59E0B, #FBBF24) !important;
+}
+
+[data-theme="dark"] .net-info-header {
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .legal-page {
+  background: var(--bg-main) !important;
+}
+
+[data-theme="dark"] .dl-icon,
+[data-theme="dark"] .news-read-more,
+[data-theme="dark"] .why-item-num {
+  color: var(--secondary) !important;
+}
+
+[data-theme="dark"] .why-item {
+  border-left: 3px solid var(--secondary) !important;
+}
+
+/* Scrolled Navbar in Dark Mode */
+[data-theme="dark"] .navbar-scrolled {
+  background: rgba(11, 17, 32, 0.95) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5) !important;
+}
+
+[data-theme="dark"] .navbar-scrolled .navbar-logo-text {
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .navbar-scrolled .nav-item-btn {
+  color: #CBD5E1 !important;
+}
+
+[data-theme="dark"] .navbar-scrolled .nav-item-btn:hover,
+[data-theme="dark"] .navbar-scrolled .nav-item-open {
+  color: #FFFFFF !important;
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+[data-theme="dark"] .navbar-scrolled .nav-item-active {
+  color: var(--secondary) !important;
+  background: rgba(245, 158, 11, 0.12) !important;
+}
+
+[data-theme="dark"] .navbar-scrolled .navbar-lang-pill {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .navbar-scrolled .navbar-theme-pill {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .navbar-scrolled .navbar-back-btn {
+  color: #F8FAFC !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Nav Dropdown Menu in Dark Mode */
+[data-theme="dark"] .nav-dropdown-menu {
+  background: #111A2E !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6) !important;
+}
+
+[data-theme="dark"] .dropdown-item-title {
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .dropdown-item-desc {
+  color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .dropdown-item-card:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Filter Tabs in Dark Mode */
+[data-theme="dark"] .test-tab,
+[data-theme="dark"] .career-tab,
+[data-theme="dark"] .gal-tab-btn {
+  background: #111A2E !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: #94A3B8 !important;
+}
+
+[data-theme="dark"] .test-tab:hover,
+[data-theme="dark"] .career-tab:hover,
+[data-theme="dark"] .gal-tab-btn:hover {
+  border-color: var(--secondary) !important;
+  color: #F8FAFC !important;
+}
+
+[data-theme="dark"] .test-tab-active,
+[data-theme="dark"] .career-tab-active,
+[data-theme="dark"] .gal-tab-active {
+  background: var(--secondary) !important;
+  color: #061C3B !important;
+  border-color: var(--secondary) !important;
+  font-weight: 700 !important;
+}
+
+/* Action CTA Buttons in Dark Mode */
+[data-theme="dark"] .section-cta-btn,
+[data-theme="dark"] .about-tl-more-btn {
+  background: #111A2E !important;
+  border-color: var(--secondary) !important;
+  color: var(--secondary) !important;
+}
+
+[data-theme="dark"] .section-cta-btn:hover,
+[data-theme="dark"] .about-tl-more-btn:hover {
+  background: var(--secondary) !important;
+  color: #061C3B !important;
+}
+
+
 

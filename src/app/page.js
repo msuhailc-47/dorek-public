@@ -18,12 +18,12 @@ export async function generateMetadata() {
       siteName: 'Dorek International',
       images: [
         {
-          url: t.hero?.image || 'https://dorekinternational.in/logo.png',
+          url: t.hero?.image || 'https://dorekinternational.in/og-image.png',
           width: 1200,
           height: 630,
         },
       ],
-      locale: 'en_US',
+      locale: 'en_IN',
       type: 'website',
     },
   };
