@@ -231,7 +231,7 @@ export default function Navbar({ minimal = false, lang, t, onLangChange }) {
             aria-label={lang === 'en' ? 'മലയാളം - Switch language' : 'English - ഭാഷ മാറ്റുക'}
           >
             <Globe size={14} />
-            <span>{lang === 'en' ? 'മലയാളം' : 'English'}</span>
+            <span className="lang-pill-text">{lang === 'en' ? 'മലയാളം' : 'English'}</span>
           </button>
 
           {/* Mobile Hamburger Toggle */}
