@@ -1,5 +1,6 @@
 "use client";
 import { useState } from 'react';
+import Link from 'next/link';
 import { useCMS } from '../context/CMSContext';
 import { Zap, Droplets, Wrench, Waves, Lightbulb, Sun, Battery, GlassWater, Shield, HardHat, ChevronRight } from 'lucide-react';
 import './Products.css';
@@ -47,20 +48,13 @@ export default function Products({ lang, t }) {
                 </div>
               ))}
             </div>
-            <a 
-              href="#contact" 
+            <Link 
+              href="/contact" 
               className="btn btn-primary" 
               style={{ marginTop: 28, display: 'inline-flex', alignItems: 'center', textDecoration: 'none' }}
-              onClick={(e) => {
-                const contactSec = document.getElementById('contact');
-                if (contactSec) {
-                  e.preventDefault();
-                  contactSec.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
             >
-              Inquire Now →
-            </a>
+              {lang === 'en' ? 'Inquire Now →' : 'അന്വേഷിക്കുക →'}
+            </Link>
           </div>
         </div>
       </div>

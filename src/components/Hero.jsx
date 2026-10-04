@@ -201,15 +201,15 @@ export default function Hero({ lang, t }) {
             <div className="hero-card-header">
               <div className="hero-card-badge">
                 <Sparkles size={13} className="hero-badge-icon" />
-                <span>{lang === 'en' ? 'Doorcarts Partnership' : 'ഡോർകാർട്സ് പാർട്ണർഷിപ്പ്'}</span>
+                <span>{lang === 'en' ? 'Dorek Flagship Brand • Doorcarts' : 'ഡോറക് ഫ്ലാഗ്‌ഷിപ്പ് സംരംഭം • ഡോർകാർട്സ്'}</span>
               </div>
               <h2 className="hero-card-title">
-                {lang === 'en' ? 'Interested in Doorcarts?' : 'ഡോർകാർട്സിൽ താല്പര്യമുണ്ടോ?'}
+                {lang === 'en' ? 'Partner With Doorcarts' : 'ഡോർകാർട്സുമായി കൈകോർക്കാം'}
               </h2>
               <p className="hero-card-subtitle">
                 {lang === 'en'
-                  ? 'Connect with our team to explore franchise, retail network, or partnership opportunities.'
-                  : 'ഫ്രാഞ്ചൈസി, റീട്ടെയിൽ നെറ്റ്വർക്ക് അല്ലെങ്കിൽ പാർട്ണർഷിപ്പ് വിവരങ്ങൾക്ക് ഞങ്ങളുമായി ബന്ധപ്പെടുക.'}
+                  ? 'Connect with Dorek International to explore Doorcarts franchise stores, dealership territories, or turnkey project partnerships.'
+                  : 'ഡോറക് ഇന്റർനാഷണലിന്റെ ഫ്ലാഗ്‌ഷിപ്പ് സംരംഭമായ ഡോർകാർട്സ് ഫ്രാഞ്ചൈസി, ഡീലർഷിപ്പ്, പ്രോജക്ട് പാർട്ണർഷിപ്പ് വിവരങ്ങൾക്ക് ബന്ധപ്പെടുക.'}
               </p>
             </div>
 

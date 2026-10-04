@@ -27,6 +27,12 @@ export default function Navbar({ minimal = false, lang, t, onLangChange }) {
       path: '/'
     },
     {
+      id: 'about',
+      label: t.nav?.about || (lang === 'en' ? 'About Us' : 'ഞങ്ങളെക്കുറിച്ച്'),
+      type: 'direct',
+      path: '/about'
+    },
+    {
       id: 'businesses',
       label: lang === 'en' ? 'Businesses' : 'ബിസിനസുകൾ',
       type: 'dropdown',

@@ -59,7 +59,7 @@ export default function Testimonials({ lang, t }) {
                 <div className="test-avatar">{item.name ? item.name.charAt(0) : 'D'}</div>
                 <div className="test-author-info">
                   <h3>{item.name}</h3>
-                  <span>{item.role}</span>
+                  <span>{item.role || item.category || (lang === 'en' ? 'Verified Client • Kerala' : 'ഉപഭോക്താവ് • കേരളം')}</span>
                 </div>
                 <div className="test-stars">
                   {[...Array(5)].map((_, j) => <Star key={j} size={14} fill="var(--secondary, #D4AF37)" color="var(--secondary, #D4AF37)" />)}

@@ -100,9 +100,10 @@ export default function About({ lang, t }) {
               <span className="section-label">{lang === 'en' ? 'Leadership' : 'നേതൃത്വം'}</span>
               <h3 className="about-h3 about-h3-center">{t.about?.foundersTitle || (lang === 'en' ? 'Founders & Board of Leadership' : 'സ്ഥാപകരും നേതൃത്വവും')}</h3>
               <p className="about-tl-subtitle">
-                {t.about?.foundersSubtitle || (lang === 'en' 
+                {(t.about?.foundersSubtitle || (lang === 'en' 
                   ? 'Meet the visionary founding leadership driving innovation, sustainable operations, and business excellence at Dorek International Enterprises LLP.'
-                  : 'ഡോറക് ഇന്റർനാഷണൽ എന്റർപ്രൈസസ് എൽഎൽപിയുടെ വിജയത്തിന് പിന്നിലെ സ്ഥാപക നേതൃത്വം.')}
+                  : 'ഡോറക് ഇന്റർനാഷണൽ എന്റർപ്രൈസസ് എൽഎൽപിയുടെ വിജയത്തിന് പിന്നിലെ സ്ഥാപക നേതൃത്വം.')
+                ).replace(/\b6\b/g, String(foundersList.length))}
               </p>
             </div>
 
@@ -158,6 +159,7 @@ export default function About({ lang, t }) {
               {visibleTimelineItems.map((item, i) => {
                 const stepNum = String(i + 1).padStart(2, '0');
                 const hasNextInRow = (i % 3 !== 2) && (i !== visibleTimelineItems.length - 1);
+                const cleanTitle = (item.title || '').replace(/\bpitching\b/g, 'Pitching');
 
                 return (
                   <div key={i} className="about-tl-card animate-fadeIn">
@@ -171,9 +173,9 @@ export default function About({ lang, t }) {
                     <div className="about-tl-card-inner">
                       <div className="about-tl-year-badge">
                         <Calendar size={13} />
-                        <span>{item.year}</span>
+                        <span>{item.year || `Step ${stepNum}`}</span>
                       </div>
-                      <h4 className="about-tl-card-title">{item.title}</h4>
+                      <h4 className="about-tl-card-title">{cleanTitle}</h4>
                       <p className="about-tl-card-desc">{item.desc}</p>
                     </div>
                   </div>

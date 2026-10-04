@@ -1,4 +1,5 @@
 "use client";
+import Link from 'next/link';
 import { TrendingUp, PieChart, DollarSign, BarChart3, ArrowRight } from 'lucide-react';
 import { useCMS } from '../context/CMSContext';
 import './Investors.css';
@@ -33,9 +34,12 @@ export default function Investors({ lang, t }) {
         </div>
         <div className="inv-cta">
           <div className="inv-cta-card">
-            <h3>Become an Investor</h3>
-            <p>Join Dorek's growth story with transparent governance and attractive returns.</p>
-            <button className="btn btn-gold btn-lg">Invest Now <ArrowRight size={18} /></button>
+            <h3>{lang === 'en' ? 'Become an Investor' : 'നിക്ഷേപകനാകൂ'}</h3>
+            <p>{lang === 'en' ? "Join Dorek's growth story with transparent governance and attractive returns." : 'സുതാര്യമായ ഭരണവും ആകർഷകമായ ലാഭവിഹിതവുമുള്ള ഡോറെക്കിന്റെ വളർച്ചയിൽ പങ്കാളിയാകൂ.'}</p>
+            <Link href="/contact" className="btn btn-gold btn-lg" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+              <span>{lang === 'en' ? 'Invest Now' : 'ഇപ്പോൾ നിക്ഷേപിക്കുക'}</span>
+              <ArrowRight size={18} />
+            </Link>
           </div>
         </div>
       </div>

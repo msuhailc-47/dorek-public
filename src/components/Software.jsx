@@ -1,4 +1,5 @@
 "use client";
+import Link from 'next/link';
 import { LayoutDashboard, Users, Receipt, Package, Calculator, Clock, Smartphone } from 'lucide-react';
 import { useCMS } from '../context/CMSContext';
 import './Software.css';
@@ -57,7 +58,9 @@ export default function Software({ lang, t }) {
           })}
         </div>
         <div className="sw-cta">
-          <button className="btn btn-primary btn-lg">Request Demo →</button>
+          <Link href="/contact" className="btn btn-primary btn-lg" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+            {lang === 'en' ? 'Request Demo →' : 'ഡെമോ ആവശ്യപ്പെടുക →'}
+          </Link>
         </div>
       </div>
     </section>

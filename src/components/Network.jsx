@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 import { useCMS } from '../context/CMSContext';
 import { MapPin, Building, Store, Users, ChevronRight, X, TrendingUp } from 'lucide-react';
 import './Network.css';
@@ -195,9 +196,9 @@ export default function Network({ lang, t }) {
                   </div>
                 </div>
 
-                <a href="#contact" className="btn btn-primary btn-sm net-info-cta">
-                  Contact This Region <ChevronRight size={14} />
-                </a>
+                <Link href="/contact" className="btn btn-primary btn-sm net-info-cta" style={{ textDecoration: 'none' }}>
+                  {lang === 'en' ? 'Contact This Region' : 'ഈ മേഖലയുമായി ബന്ധപ്പെടുക'} <ChevronRight size={14} />
+                </Link>
               </>
             ) : (
               <div className="net-info-empty">
