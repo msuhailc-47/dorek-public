@@ -13,18 +13,17 @@ export function ThemeProvider({ children }) {
 
   useEffect(() => {
     try {
-      const savedTheme = localStorage.getItem('dorek-theme');
-      if (savedTheme === 'dark' || savedTheme === 'light') {
-        setTheme(savedTheme);
-        document.documentElement.setAttribute('data-theme', savedTheme);
+      localStorage.removeItem('dorek-theme');
+      const savedTheme = localStorage.getItem('dorek-user-theme');
+      if (savedTheme === 'dark') {
+        setTheme('dark');
+        document.documentElement.setAttribute('data-theme', 'dark');
       } else {
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        const initial = prefersDark ? 'dark' : 'light';
-        setTheme(initial);
-        document.documentElement.setAttribute('data-theme', initial);
+        setTheme('light');
+        document.documentElement.setAttribute('data-theme', 'light');
       }
     } catch (e) {
-      console.warn('Could not read theme preference:', e);
+      document.documentElement.setAttribute('data-theme', 'light');
     }
     setMounted(true);
   }, []);
@@ -33,7 +32,7 @@ export function ThemeProvider({ children }) {
     const nextTheme = theme === 'dark' ? 'light' : 'dark';
     setTheme(nextTheme);
     try {
-      localStorage.setItem('dorek-theme', nextTheme);
+      localStorage.setItem('dorek-user-theme', nextTheme);
     } catch (e) {}
     document.documentElement.setAttribute('data-theme', nextTheme);
   };

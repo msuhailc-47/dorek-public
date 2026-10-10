@@ -38,14 +38,15 @@ const defaultFallbackData = {
   codeSettings: {}
 };
 
-// In-memory server cache to avoid repetitive network calls across concurrent requests
+// In-memory server cache to avoid repetitive network calls across concurrent requests in production
 let inMemoryCache = null;
 let lastCacheTime = 0;
-const CACHE_TTL = 30 * 1000; // 30 seconds memory cache
+const isDev = process.env.NODE_ENV === 'development';
+const CACHE_TTL = isDev ? 0 : 15 * 1000;
 
 export async function fetchCMSData() {
   const now = Date.now();
-  if (inMemoryCache && (now - lastCacheTime < CACHE_TTL)) {
+  if (!isDev && inMemoryCache && (now - lastCacheTime < CACHE_TTL)) {
     return inMemoryCache;
   }
 
@@ -59,7 +60,7 @@ export async function fetchCMSData() {
 
     const res = await fetch(url, { 
       signal: controller ? controller.signal : undefined,
-      next: { revalidate: 30 } 
+      ...(isDev ? { cache: 'no-store' } : { next: { revalidate: 15 } })
     });
     
     if (timeoutId) clearTimeout(timeoutId);
@@ -93,6 +94,18 @@ export async function fetchCMSData() {
         en: {
           ...translations.en,
           ...(data.translationsData.en || {}),
+          hero: {
+            ...translations.en.hero,
+            ...(data.translationsData.en?.hero || {}),
+            stats: {
+              ...translations.en.hero.stats,
+              ...(data.translationsData.en?.hero?.stats || {}),
+              counts: {
+                ...translations.en.hero.stats.counts,
+                ...(data.translationsData.en?.hero?.stats?.counts || {})
+              }
+            }
+          },
           about: {
             ...translations.en.about,
             ...(data.translationsData.en?.about || {}),
@@ -104,6 +117,18 @@ export async function fetchCMSData() {
         ml: {
           ...translations.ml,
           ...(data.translationsData.ml || {}),
+          hero: {
+            ...translations.ml.hero,
+            ...(data.translationsData.ml?.hero || {}),
+            stats: {
+              ...translations.ml.hero.stats,
+              ...(data.translationsData.ml?.hero?.stats || {}),
+              counts: {
+                ...translations.ml.hero.stats.counts,
+                ...(data.translationsData.ml?.hero?.stats?.counts || {})
+              }
+            }
+          },
           about: {
             ...translations.ml.about,
             ...(data.translationsData.ml?.about || {}),

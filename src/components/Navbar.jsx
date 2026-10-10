@@ -27,19 +27,14 @@ export default function Navbar({ minimal = false, lang, t, onLangChange }) {
       path: '/'
     },
     {
-      id: 'about',
-      label: t.nav?.about || (lang === 'en' ? 'About Us' : 'ഞങ്ങളെക്കുറിച്ച്'),
-      type: 'direct',
-      path: '/about'
-    },
-    {
       id: 'businesses',
       label: lang === 'en' ? 'Businesses' : 'ബിസിനസുകൾ',
       type: 'dropdown',
       path: '/businesses',
       items: [
-        { id: 'businesses', label: t.nav?.businesses || (lang === 'en' ? 'Our Divisions' : 'ഡിവിഷനുകൾ'), desc: 'Doorcarts, Solar, Engineering & Tech', path: '/businesses' },
+        { id: 'businesses', label: t.nav?.businesses || (lang === 'en' ? 'Our Divisions' : 'ഡിവിഷനുകൾ'), desc: 'Doorcarts, Solar, Engineering & Tech', path: '/businesses#businesses' },
         { id: 'products', label: t.nav?.products || (lang === 'en' ? 'Products & Solutions' : 'ഉൽപ്പന്നങ്ങൾ'), desc: 'Complete catalog of products & equipment', path: '/businesses#products' },
+        { id: 'appBrands', label: lang === 'en' ? 'App & Partner Brands' : 'ആപ്പും ബ്രാൻഡുകളും', desc: 'Check brands by budget (Premium / Standard / Budget)', path: '/businesses#app-brands' },
         { id: 'software', label: t.nav?.software || (lang === 'en' ? 'Software & Tech' : 'ടെക്നോളജി'), desc: 'Dorek Pulse, ERP & cloud platforms', path: '/businesses#software' },
         { id: 'network', label: t.nav?.network || (lang === 'en' ? 'Districts Network' : 'ശൃംഖല'), desc: 'Pan-Kerala presence & footprint', path: '/businesses#network' },
         { id: 'opportunities', label: t.nav?.opportunities || (lang === 'en' ? 'Franchise & Partnering' : 'ബിസിനസ് അവസരങ്ങൾ'), desc: 'Dealerships, stores & investor models', path: '/businesses#opportunities' }
@@ -54,6 +49,7 @@ export default function Navbar({ minimal = false, lang, t, onLangChange }) {
         { id: 'gallery', label: t.nav?.gallery || (lang === 'en' ? 'Media Gallery' : 'മീഡിയ ഗാലറി'), desc: 'Photos, videos & showroom moments', path: '/media#gallery' },
         { id: 'news', label: t.nav?.news || (lang === 'en' ? 'News & Press' : 'വാർത്തകൾ'), desc: 'Latest press releases & announcements', path: '/media#news' },
         { id: 'investors', label: t.nav?.investors || (lang === 'en' ? 'Investor Relations' : 'നിക്ഷേപകർ'), desc: 'Financial growth & partnerships', path: '/media#investors' },
+        { id: 'csr', label: t.nav?.csr || (lang === 'en' ? 'CSR & Social Impact' : 'സാമൂഹിക പ്രതിബദ്ധത (CSR)'), desc: 'Community welfare & sustainability initiatives', path: '/media#csr' },
         { id: 'downloads', label: t.nav?.downloads || (lang === 'en' ? 'Downloads' : 'ഡൗൺലോഡുകൾ'), desc: 'Brochures, catalog & documents', path: '/media#downloads' }
       ]
     },
@@ -108,21 +104,35 @@ export default function Navbar({ minimal = false, lang, t, onLangChange }) {
     if (!path) return;
 
     const [targetPath, targetHash] = path.split('#');
+    if (typeof window !== 'undefined') {
+      if (targetHash) {
+        sessionStorage.setItem('dorek_scroll_target', targetHash);
+      } else {
+        sessionStorage.removeItem('dorek_scroll_target');
+      }
+    }
+
     const isSamePage = pathname === targetPath || (pathname === '/' && targetPath === '');
 
     if (isSamePage) {
       if (e && e.preventDefault) e.preventDefault();
-      if (targetHash) {
-        const el = document.getElementById(targetHash);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
-          window.history.pushState(null, '', path);
-          return;
+      window.history.pushState(null, '', path);
+      setTimeout(() => {
+        if (targetHash) {
+          const el = document.getElementById(targetHash);
+          if (el) {
+            const headerOffset = 84;
+            const elementPosition = el.getBoundingClientRect().top + window.scrollY;
+            window.scrollTo({
+              top: Math.max(0, elementPosition - headerOffset),
+              behavior: 'smooth'
+            });
+          }
+          sessionStorage.removeItem('dorek_scroll_target');
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-      } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        return;
-      }
+      }, 20);
     }
   };
 
@@ -194,6 +204,7 @@ export default function Navbar({ minimal = false, lang, t, onLangChange }) {
                           <Link
                             key={item.id}
                             href={item.path}
+                            scroll={!item.path.includes('#')}
                             className="dropdown-item-card"
                             onClick={(e) => handleNavClick(e, item.path)}
                           >
@@ -314,6 +325,7 @@ export default function Navbar({ minimal = false, lang, t, onLangChange }) {
                           <Link
                             key={item.id}
                             href={item.path}
+                            scroll={!item.path.includes('#')}
                             className="mobile-sub-link"
                             onClick={(e) => handleNavClick(e, item.path)}
                           >

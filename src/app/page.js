@@ -2,6 +2,8 @@ import { fetchCMSData } from '../lib/fetchCMS';
 import { CMSProvider } from '../context/CMSContext';
 import MainSite from '../components/MainSite';
 
+export const dynamic = 'force-dynamic';
+
 export async function generateMetadata() {
   const cmsData = await fetchCMSData();
   const t = cmsData?.translationsData?.en;
@@ -45,7 +47,9 @@ export default async function HomePage() {
         hero: initialData.translationsData?.en?.hero || {},
         about: initialData.translationsData?.en?.about || {},
         businesses: initialData.translationsData?.en?.businesses || {},
+        appBrands: initialData.translationsData?.en?.appBrands || {},
         whyChoose: initialData.translationsData?.en?.whyChoose || {},
+        csr: initialData.translationsData?.en?.csr || {},
         testimonials: initialData.translationsData?.en?.testimonials || {},
         contact: initialData.translationsData?.en?.contact || {},
         footer: initialData.translationsData?.en?.footer || {},
@@ -57,7 +61,9 @@ export default async function HomePage() {
         hero: initialData.translationsData?.ml?.hero || {},
         about: initialData.translationsData?.ml?.about || {},
         businesses: initialData.translationsData?.ml?.businesses || {},
+        appBrands: initialData.translationsData?.ml?.appBrands || {},
         whyChoose: initialData.translationsData?.ml?.whyChoose || {},
+        csr: initialData.translationsData?.ml?.csr || {},
         testimonials: initialData.translationsData?.ml?.testimonials || {},
         contact: initialData.translationsData?.ml?.contact || {},
         footer: initialData.translationsData?.ml?.footer || {},

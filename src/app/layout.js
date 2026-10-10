@@ -66,14 +66,9 @@ import { ThemeProvider } from "../context/ThemeContext";
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${poppins.variable}`} suppressHydrationWarning>
+    <html lang="en" data-theme="light" data-scroll-behavior="smooth" className={`${inter.variable} ${poppins.variable}`} suppressHydrationWarning>
       <head>
         <link rel="icon" href="/logo.png" sizes="any" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var s=localStorage.getItem('dorek-theme');var d=window.matchMedia('(prefers-color-scheme: dark)').matches;if(s==='dark'||(!s&&d)){document.documentElement.setAttribute('data-theme','dark');}else{document.documentElement.setAttribute('data-theme','light');}}catch(e){}})();`,
-          }}
-        />
       </head>
       <body>
         <ThemeProvider>

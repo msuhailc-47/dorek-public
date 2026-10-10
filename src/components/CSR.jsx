@@ -1,28 +1,32 @@
 "use client";
+import Link from 'next/link';
 import { Heart, Users, GraduationCap, Leaf, ArrowRight } from 'lucide-react';
-import { useCMS } from '../context/CMSContext';
 import './CSR.css';
 import useScrollReveal from '../utils/useScrollReveal';
 
 const icons = [Heart, Users, GraduationCap, Leaf];
-const accents = ['#ef4444','#00b4d8','#f59e0b','#10b981'];
+const accents = ['#ef4444', '#00b4d8', '#f59e0b', '#10b981'];
 
 export default function CSR({ lang, t }) {
   const { ref: scrollRef, className: scrollClass } = useScrollReveal();
-    return (
+
+  if (!t?.csr) return null;
+
+  return (
     <section id="csr" className={`section csr-sec ${scrollClass}`} ref={scrollRef}>
       <div className="container">
         <div className="section-header">
-          <span className="section-label">{t.csr.label}</span>
+          <span className="section-label">{t.csr.label || 'CSR'}</span>
           <h2 className="section-title">{t.csr.title}</h2>
           <p className="section-subtitle">{t.csr.subtitle}</p>
         </div>
         <div className="csr-grid">
-          {t.csr.items.map((item, i) => {
-            const Icon = icons[i];
+          {(t.csr?.items || []).map((item, i) => {
+            const Icon = icons[i % icons.length];
+            const accent = accents[i % accents.length];
             return (
-              <div key={i} className="csr-card" style={{ borderTopColor: accents[i] }}>
-                <div className="csr-card-icon" style={{ background: `${accents[i]}20`, color: accents[i] }}>
+              <div key={i} className="csr-card" style={{ borderTopColor: accent }}>
+                <div className="csr-card-icon" style={{ background: `${accent}20`, color: accent }}>
                   <Icon size={28} />
                 </div>
                 <h3>{item.name}</h3>
@@ -32,11 +36,16 @@ export default function CSR({ lang, t }) {
           })}
         </div>
         <div className="csr-cta">
-          <p>Want to partner with us for a social cause?</p>
-          <button className="btn btn-primary">Partner With Us <ArrowRight size={16} /></button>
+          <p>
+            {lang === 'en'
+              ? 'Want to partner with us for a social cause?'
+              : 'സാമൂഹിക സേവന പ്രവർത്തനങ്ങളിൽ ഞങ്ങളോടൊപ്പം ചേരാൻ താല്പര്യമുണ്ടോ?'}
+          </p>
+          <Link href="/contact" className="btn btn-primary">
+            {lang === 'en' ? 'Partner With Us' : 'ഞങ്ങളുമായി സഹകരിക്കാം'} <ArrowRight size={16} />
+          </Link>
         </div>
       </div>
     </section>
   );
 }
-

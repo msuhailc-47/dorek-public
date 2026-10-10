@@ -1,0 +1,1092 @@
+.app-brands-sec {
+  background: linear-gradient(180deg, var(--bg-section) 0%, var(--bg-main) 100%);
+  position: relative;
+}
+
+/* --- Design Option Preview Switcher --- */
+.abe-design-switcher {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 auto 22px;
+  padding: 8px 14px;
+  width: fit-content;
+  background: rgba(10, 46, 93, 0.06);
+  border: 1px dashed rgba(10, 46, 93, 0.25);
+  border-radius: 50px;
+}
+
+.abe-switcher-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--primary);
+  padding: 0 6px;
+}
+
+.abe-switch-btn {
+  padding: 7px 16px;
+  border-radius: 30px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.abe-switch-btn:hover {
+  color: var(--primary);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.abe-switch-btn.active {
+  background: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(10, 46, 93, 0.2);
+}
+
+.abe-layout {
+  display: grid;
+  gap: 28px;
+  align-items: start;
+}
+
+.abe-layout-full {
+  grid-template-columns: 1fr;
+}
+
+.abe-layout-split {
+  grid-template-columns: 335px 1fr;
+}
+
+/* --- Left Column: App Showcase Card --- */
+.abe-app-card {
+  background: linear-gradient(145deg, #061A38 0%, #0A2E5D 60%, #123E7C 100%);
+  color: #ffffff;
+  border-radius: 22px;
+  padding: 32px 26px;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  box-shadow: 0 20px 50px rgba(10, 46, 93, 0.18);
+  position: sticky;
+  top: 96px;
+}
+
+.abe-app-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(212, 175, 55, 0.18);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  color: #F3D060;
+  padding: 6px 14px;
+  border-radius: 30px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.abe-app-title {
+  color: #ffffff !important;
+  font-size: 1.65rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  line-height: 1.25;
+}
+
+.abe-app-desc {
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 0.9rem;
+  line-height: 1.65;
+  margin-bottom: 20px;
+}
+
+/* Customer Segment Box */
+.abe-segment-box {
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 16px;
+  padding: 14px;
+  margin-bottom: 20px;
+}
+
+.abe-segment-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #F3D060;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 10px;
+}
+
+.abe-segment-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.abe-seg-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 9px 12px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  text-align: left;
+}
+
+.abe-seg-row:hover,
+.abe-seg-row.active {
+  background: rgba(212, 175, 55, 0.22);
+  border-color: #D4AF37;
+  transform: translateX(3px);
+}
+
+.abe-seg-info {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.85rem;
+}
+
+.abe-seg-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.abe-seg-dot.premium { background: #F59E0B; box-shadow: 0 0 8px #F59E0B; }
+.abe-seg-dot.standard { background: #38BDF8; box-shadow: 0 0 8px #38BDF8; }
+.abe-seg-dot.budget { background: #10B981; box-shadow: 0 0 8px #10B981; }
+
+.abe-seg-pct {
+  font-size: 0.74rem;
+  font-weight: 700;
+  background: rgba(0, 0, 0, 0.28);
+  padding: 3px 8px;
+  border-radius: 20px;
+  color: #F3D060;
+}
+
+/* App Perks */
+.abe-app-perks {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.abe-app-perks li {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  font-size: 0.84rem;
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.45;
+}
+
+.abe-app-perks li svg {
+  color: #10B981;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Store Buttons */
+.abe-store-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.abe-store-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #ffffff;
+  color: #0A2E5D !important;
+  padding: 10px 12px;
+  border-radius: 12px;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
+.abe-store-btn:hover {
+  background: #D4AF37;
+  color: #061A38 !important;
+  transform: translateY(-2px);
+}
+
+.abe-store-btn-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+
+.abe-store-btn-text small {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  opacity: 0.8;
+}
+
+.abe-store-btn-text strong {
+  font-size: 0.88rem;
+  font-weight: 800;
+}
+
+/* --- Right Column: Brand Explorer Panel --- */
+.abe-explorer-panel {
+  background: var(--bg-main);
+  border: 1px solid rgba(10, 46, 93, 0.1);
+  border-radius: 22px;
+  padding: 26px;
+  box-shadow: var(--shadow-soft);
+}
+
+.abe-controls-top {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+/* Search Box */
+.abe-search-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.abe-search-icon {
+  position: absolute;
+  left: 16px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.abe-search-input {
+  width: 100%;
+  padding: 13px 42px 13px 44px;
+  border-radius: 14px;
+  border: 1.5px solid rgba(10, 46, 93, 0.16);
+  background: var(--bg-section);
+  color: var(--text-main);
+  font-size: 0.94rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.abe-search-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  background: var(--bg-main);
+  box-shadow: 0 0 0 3px rgba(10, 46, 93, 0.08);
+}
+
+.abe-search-clear {
+  position: absolute;
+  right: 12px;
+  background: rgba(10, 46, 93, 0.08);
+  border: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+/* 3-Tier Tabs */
+.abe-tier-tabs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+
+.abe-tier-tab {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 13px;
+  border-radius: 14px;
+  border: 1.5px solid rgba(10, 46, 93, 0.1);
+  background: var(--bg-section);
+  color: var(--text-main);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  text-align: left;
+}
+
+.abe-tier-tab:hover {
+  border-color: var(--primary);
+  transform: translateY(-1px);
+}
+
+.abe-tier-tab.active {
+  background: var(--primary);
+  color: #ffffff;
+  border-color: var(--primary);
+  box-shadow: 0 8px 20px rgba(10, 46, 93, 0.18);
+}
+
+.abe-tier-tab.tier-premium.active {
+  background: linear-gradient(135deg, #92400e 0%, #b45309 100%);
+  border-color: #f59e0b;
+}
+
+.abe-tier-tab.tier-standard.active {
+  background: linear-gradient(135deg, #0A2E5D 0%, #1d4ed8 100%);
+  border-color: #3b82f6;
+}
+
+.abe-tier-tab.tier-budget.active {
+  background: linear-gradient(135deg, #065f46 0%, #059669 100%);
+  border-color: #10b981;
+}
+
+.abe-tier-tab-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.abe-tier-tab-text span {
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.abe-tier-tab-text small {
+  font-size: 0.7rem;
+  opacity: 0.8;
+  font-weight: 600;
+}
+
+/* Sector Pills */
+.abe-sector-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.abe-sector-pill {
+  padding: 6px 13px;
+  border-radius: 30px;
+  border: 1px solid rgba(10, 46, 93, 0.12);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.abe-sector-pill:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.abe-sector-pill.active {
+  background: rgba(212, 175, 55, 0.18);
+  border-color: #b45309;
+  color: var(--text-heading);
+  font-weight: 700;
+}
+
+/* Summary Strip */
+.abe-tier-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--bg-section);
+  border-radius: 12px;
+  margin-bottom: 18px;
+  font-size: 0.84rem;
+  color: var(--text-muted);
+}
+
+.abe-tier-summary-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.abe-summary-icon {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.abe-brand-count {
+  font-weight: 700;
+  color: var(--primary);
+  background: rgba(10, 46, 93, 0.08);
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 0.76rem;
+  white-space: nowrap;
+}
+
+/* Brands Grid */
+.abe-brands-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.abe-brands-grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.abe-brands-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.abe-brand-card {
+  background: var(--bg-main);
+  border: 1px solid rgba(10, 46, 93, 0.1);
+  border-radius: 16px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.22s ease;
+}
+
+.abe-brand-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--secondary);
+}
+
+.abe-brand-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.abe-brand-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 11px;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.92rem;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.abe-brand-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.abe-tier-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.tier-pill-premium {
+  background: rgba(245, 158, 11, 0.14);
+  color: #b45309;
+  border: 1px solid rgba(245, 158, 11, 0.35);
+}
+
+.tier-pill-standard {
+  background: rgba(37, 99, 235, 0.12);
+  color: #1d4ed8;
+  border: 1px solid rgba(37, 99, 235, 0.3);
+}
+
+.tier-pill-budget {
+  background: rgba(16, 185, 129, 0.13);
+  color: #047857;
+  border: 1px solid rgba(16, 185, 129, 0.32);
+}
+
+.abe-brand-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  margin-bottom: 5px;
+}
+
+.abe-brand-items {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+.abe-brand-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(10, 46, 93, 0.1);
+  font-size: 0.74rem;
+}
+
+.abe-brand-sector {
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.abe-brand-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: #15803d;
+  font-weight: 600;
+}
+
+.abe-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #16a34a;
+}
+
+/* Empty Search State */
+.abe-empty-search {
+  text-align: center;
+  padding: 36px 20px;
+  background: var(--bg-section);
+  border-radius: 16px;
+  border: 1px dashed rgba(10, 46, 93, 0.2);
+}
+
+.abe-empty-search h4 {
+  font-size: 1.15rem;
+  margin-bottom: 8px;
+}
+
+.abe-empty-search p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  max-width: 520px;
+  margin: 0 auto 16px;
+}
+
+/* =========================================================================
+   OPTION 1: SLEEK HORIZONTAL APP DOWNLOAD BANNER
+   ========================================================================= */
+.abe-horizontal-app-banner {
+  margin-top: 26px;
+  background: linear-gradient(135deg, #061A38 0%, #0A2E5D 55%, #123E7C 100%);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 20px;
+  padding: 28px 32px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  box-shadow: 0 18px 40px rgba(10, 46, 93, 0.16);
+}
+
+.abe-hab-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.abe-hab-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.abe-hab-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(212, 175, 55, 0.2);
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  color: #F3D060;
+  padding: 4px 12px;
+  border-radius: 30px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+}
+
+.abe-hab-appname {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.abe-hab-title {
+  color: #ffffff !important;
+  font-size: 1.35rem;
+  font-weight: 800;
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+}
+
+.abe-hab-desc {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.88rem;
+  line-height: 1.55;
+  margin: 0 0 14px 0;
+  max-width: 680px;
+}
+
+.abe-hab-perks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.abe-hab-perks span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #F3D060;
+}
+
+.abe-hab-perks span svg {
+  color: #10B981;
+}
+
+.abe-hab-right {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  flex-shrink: 0;
+  min-width: 295px;
+}
+
+.abe-hab-stores {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.abe-hab-quote-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  color: #F3D060 !important;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.abe-hab-quote-btn:hover {
+  background: rgba(212, 175, 55, 0.22);
+  color: #ffffff !important;
+}
+
+/* =========================================================================
+   OPTION 2: REALISTIC INTERACTIVE PHONE APP MOCKUP
+   ========================================================================= */
+.abe-phone-wrapper {
+  position: sticky;
+  top: 96px;
+  display: flex;
+  justify-content: center;
+}
+
+.abe-phone-frame {
+  width: 100%;
+  max-width: 335px;
+  background: #07162c;
+  border: 6px solid #1e293b;
+  border-radius: 38px;
+  padding: 12px;
+  box-shadow: 0 24px 55px rgba(6, 26, 56, 0.28), inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+}
+
+.abe-phone-notch {
+  width: 110px;
+  height: 18px;
+  background: #040d1a;
+  border-radius: 0 0 14px 14px;
+  margin: -12px auto 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.abe-phone-speaker {
+  width: 36px;
+  height: 4px;
+  border-radius: 4px;
+  background: #334155;
+}
+
+.abe-phone-camera {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #0ea5e9;
+}
+
+.abe-phone-screen {
+  background: #f8fafc;
+  color: #0f172a;
+  border-radius: 24px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.abe-phone-appbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.abe-phone-brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.abe-phone-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #0A2E5D, #1d4ed8);
+  color: #F3D060;
+  font-weight: 800;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.abe-phone-brand strong {
+  display: block;
+  font-size: 0.86rem;
+  color: #0A2E5D;
+  line-height: 1.1;
+}
+
+.abe-phone-brand small {
+  font-size: 0.66rem;
+  color: #64748b;
+}
+
+.abe-phone-live-pill {
+  font-size: 0.64rem;
+  font-weight: 800;
+  color: #15803d;
+  background: rgba(22, 163, 74, 0.14);
+  padding: 3px 8px;
+  border-radius: 20px;
+}
+
+.abe-phone-hero {
+  background: linear-gradient(135deg, #0A2E5D 0%, #1e3a8a 100%);
+  color: #ffffff;
+  border-radius: 14px;
+  padding: 12px 14px;
+}
+
+.abe-phone-hero-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.66rem;
+  font-weight: 700;
+  color: #F3D060;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.abe-phone-hero h4 {
+  color: #ffffff !important;
+  font-size: 0.88rem;
+  font-weight: 800;
+  margin: 0 0 4px 0;
+  line-height: 1.3;
+}
+
+.abe-phone-hero p {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.82);
+  margin: 0;
+}
+
+.abe-phone-section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #334155;
+}
+
+.abe-phone-section-title small {
+  color: #0A2E5D;
+  background: #e2e8f0;
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-size: 0.65rem;
+}
+
+.abe-phone-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.abe-phone-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 11px;
+  padding: 8px 10px;
+}
+
+.abe-phone-item-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.abe-phone-item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.abe-phone-item-info strong {
+  display: block;
+  font-size: 0.78rem;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.abe-phone-item-info span {
+  display: block;
+  font-size: 0.66rem;
+  color: #64748b;
+}
+
+.abe-phone-item-check {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: rgba(22, 163, 74, 0.14);
+  color: #15803d;
+  font-size: 0.68rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.abe-phone-trust {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 6px;
+  border-top: 1px dashed #cbd5e1;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.abe-phone-trust span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.abe-phone-trust span svg {
+  color: #16a34a;
+}
+
+.abe-phone-dock {
+  padding: 12px 4px 4px;
+  text-align: center;
+}
+
+.abe-phone-dock-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #F3D060;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 8px;
+}
+
+.abe-store-buttons-compact .abe-store-btn {
+  padding: 8px 10px;
+}
+
+.abe-store-buttons-compact .abe-store-btn-text strong {
+  font-size: 0.8rem;
+}
+
+/* Bottom CTA Bar */
+.abe-bottom-cta {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(10, 46, 93, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.abe-bottom-cta p {
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.abe-quote-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.abe-quote-link:hover {
+  color: var(--secondary);
+}
+
+/* Dark Theme Overrides */
+[data-theme="dark"] .abe-explorer-panel,
+[data-theme="dark"] .abe-brand-card {
+  background: #0f213c;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .abe-search-input,
+[data-theme="dark"] .abe-tier-tab,
+[data-theme="dark"] .abe-tier-summary,
+[data-theme="dark"] .abe-empty-search {
+  background: #091528;
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .tier-pill-premium {
+  color: #fbbf24;
+}
+[data-theme="dark"] .tier-pill-standard {
+  color: #60a5fa;
+}
+[data-theme="dark"] .tier-pill-budget {
+  color: #34d399;
+}
+[data-theme="dark"] .abe-brand-sector,
+[data-theme="dark"] .abe-quote-link,
+[data-theme="dark"] .abe-brand-count,
+[data-theme="dark"] .abe-switcher-label {
+  color: #F3D060;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1120px) {
+  .abe-layout-split {
+    grid-template-columns: 1fr;
+  }
+  .abe-phone-wrapper {
+    position: static;
+  }
+  .abe-brands-grid-4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .abe-horizontal-app-banner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .abe-tier-tabs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .abe-brands-grid-4,
+  .abe-brands-grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .abe-explorer-panel {
+    padding: 18px;
+  }
+  .abe-horizontal-app-banner {
+    padding: 22px 20px;
+  }
+}
+
+@media (max-width: 520px) {
+  .abe-brands-grid-4,
+  .abe-brands-grid-3 {
+    grid-template-columns: 1fr;
+  }
+  .abe-tier-tabs {
+    grid-template-columns: 1fr;
+  }
+  .abe-store-buttons,
+  .abe-hab-stores {
+    grid-template-columns: 1fr;
+  }
+}

@@ -23,31 +23,32 @@ export default function Software({ lang, t }) {
           <p className="section-subtitle">{t.software.subtitle}</p>
         </div>
         <div className="sw-grid">
-          {t.software.items.map((item, i) => {
+          {(t.software.items || []).map((item, i) => {
             const Icon = iconMap[item.icon] || LayoutDashboard;
+            const color = mockColors[i % mockColors.length];
             return (
               <div key={i} className="sw-card">
-                <div className="sw-mockup" style={{ borderColor: `${mockColors[i]}30` }}>
+                <div className="sw-mockup" style={{ borderColor: `${color}30` }}>
                   <div className="sw-mockup-header">
                     <div className="sw-dots"><span /><span /><span /></div>
-                    <div className="sw-mockup-title" style={{ background: `${mockColors[i]}30` }} />
+                    <div className="sw-mockup-title" style={{ background: `${color}30` }} />
                   </div>
                   <div className="sw-mockup-body">
-                    <div className="sw-mock-sidebar" style={{ background: `${mockColors[i]}15` }}>
-                      {[...Array(4)].map((_,j) => <div key={j} className="sw-mock-bar" style={{ background: `${mockColors[i]}25`, width: `${60+j*10}%` }}/>)}
+                    <div className="sw-mock-sidebar" style={{ background: `${color}15` }}>
+                      {[...Array(4)].map((_,j) => <div key={j} className="sw-mock-bar" style={{ background: `${color}25`, width: `${60+j*10}%` }}/>)}
                     </div>
                     <div className="sw-mock-content">
-                      <div className="sw-mock-chart" style={{ background: `${mockColors[i]}10` }}>
-                        {[...Array(5)].map((_,j) => <div key={j} className="sw-mock-col" style={{ background: mockColors[i], height: mockHeights[(i + j) % 5], opacity: mockOpacities[(i + j) % 5] }}/>)}
+                      <div className="sw-mock-chart" style={{ background: `${color}10` }}>
+                        {[...Array(5)].map((_,j) => <div key={j} className="sw-mock-col" style={{ background: color, height: mockHeights[(i + j) % 5], opacity: mockOpacities[(i + j) % 5] }}/>)}
                       </div>
                       <div className="sw-mock-rows">
-                        {[...Array(3)].map((_,j) => <div key={j} className="sw-mock-row" style={{ background: `${mockColors[i]}12` }}/>)}
+                        {[...Array(3)].map((_,j) => <div key={j} className="sw-mock-row" style={{ background: `${color}12` }}/>)}
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="sw-card-info">
-                  <div className="sw-card-icon" style={{ background: `${mockColors[i]}20`, color: mockColors[i] }}>
+                  <div className="sw-card-icon" style={{ background: `${color}20`, color: color }}>
                     <Icon size={22} />
                   </div>
                   <h3>{item.name}</h3>
@@ -58,7 +59,7 @@ export default function Software({ lang, t }) {
           })}
         </div>
         <div className="sw-cta">
-          <Link href="/contact" className="btn btn-primary btn-lg" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+          <Link href="/contact?subject=Product&topic=Software%20%26%20ERP%20Demo" className="btn btn-primary btn-lg" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
             {lang === 'en' ? 'Request Demo →' : 'ഡെമോ ആവശ്യപ്പെടുക →'}
           </Link>
         </div>

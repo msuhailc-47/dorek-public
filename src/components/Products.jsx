@@ -11,8 +11,11 @@ const catColors = ['#00b4d8','#06b6d4','#f59e0b','#3b82f6','#f97316','#eab308','
 
 export default function Products({ lang, t }) {
   const { ref: scrollRef, className: scrollClass } = useScrollReveal();
-    const [active, setActive] = useState(0);
-  const categories = t.products.categories;
+  const [active, setActive] = useState(0);
+  const categories = t.products?.categories || [];
+  if (categories.length === 0) return null;
+  const safeActive = categories[active] ? active : 0;
+  const activeColor = catColors[safeActive % catColors.length];
 
   return (
     <section id="products" className={`section products ${scrollClass}`} ref={scrollRef}>
@@ -26,10 +29,11 @@ export default function Products({ lang, t }) {
           <div className="prod-tabs">
             {categories.map((cat, i) => {
               const Icon = iconMap[cat.icon] || Zap;
+              const tabColor = catColors[i % catColors.length];
               return (
-                <button key={i} className={`prod-tab ${active === i ? 'prod-tab-active' : ''}`}
-                  onClick={() => setActive(i)} style={active === i ? { borderLeftColor: catColors[i] } : {}}>
-                  <Icon size={18} style={active === i ? { color: catColors[i] } : {}} />
+                <button key={i} className={`prod-tab ${safeActive === i ? 'prod-tab-active' : ''}`}
+                  onClick={() => setActive(i)} style={safeActive === i ? { borderLeftColor: tabColor } : {}}>
+                  <Icon size={18} style={safeActive === i ? { color: tabColor } : {}} />
                   <span>{cat.name}</span>
                 </button>
               );
@@ -37,13 +41,13 @@ export default function Products({ lang, t }) {
           </div>
           <div className="prod-content">
             <div className="prod-content-header">
-              {(() => { const Icon = iconMap[categories[active].icon] || Zap; return <Icon size={32} style={{ color: catColors[active] }} />; })()}
-              <h3>{categories[active].name}</h3>
+              {(() => { const Icon = iconMap[categories[safeActive].icon] || Zap; return <Icon size={32} style={{ color: activeColor }} />; })()}
+              <h3>{categories[safeActive].name}</h3>
             </div>
             <div className="prod-items-grid">
-              {categories[active].items.map((item, i) => (
+              {(categories[safeActive].items || []).map((item, i) => (
                 <div key={i} className="prod-item">
-                  <ChevronRight size={14} style={{ color: catColors[active], flexShrink: 0 }} />
+                  <ChevronRight size={14} style={{ color: activeColor, flexShrink: 0 }} />
                   <span>{item}</span>
                 </div>
               ))}

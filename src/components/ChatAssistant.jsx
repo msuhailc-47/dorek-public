@@ -43,7 +43,7 @@ export default function ChatAssistant({ lang, t }) {
   }, [isOpen]);
 
   const getBotResponse = (userMessage) => {
-    return findBestResponse(userMessage);
+    return findBestResponse(userMessage, t?.contact);
   };
 
   const handleSend = (e) => {

@@ -67,6 +67,41 @@ export default function MainSite() {
       window.removeEventListener('scroll', triggerFloating);
       window.removeEventListener('mousemove', triggerFloating);
       window.removeEventListener('touchstart', triggerFloating);
+      window.removeEventListener('pointerdown', triggerFloating);
+    };
+  }, []);
+
+  useEffect(() => {
+    const scrollToHash = (clearStored = false) => {
+      if (typeof window === 'undefined') return;
+      const storedHash = sessionStorage.getItem('dorek_scroll_target') || '';
+      const urlHash = window.location.hash ? window.location.hash.replace('#', '') : '';
+      const hash = urlHash || storedHash;
+      if (!hash) return;
+
+      const el = document.getElementById(hash);
+      if (el) {
+        const headerOffset = 84;
+        const elementPosition = el.getBoundingClientRect().top + window.scrollY;
+        window.scrollTo({
+          top: Math.max(0, elementPosition - headerOffset),
+          behavior: 'smooth'
+        });
+        if (clearStored) {
+          sessionStorage.removeItem('dorek_scroll_target');
+        }
+      }
+    };
+
+    const t1 = setTimeout(() => scrollToHash(false), 80);
+    const t2 = setTimeout(() => scrollToHash(true), 350);
+    const handleHashChange = () => scrollToHash(true);
+    window.addEventListener('hashchange', handleHashChange);
+
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      window.removeEventListener('hashchange', handleHashChange);
     };
   }, []);
 
@@ -95,7 +130,7 @@ export default function MainSite() {
             <Businesses lang={lang} t={t} />
             <div className="section-cta-banner">
               <Link href="/businesses" className="section-cta-btn">
-                <span>{lang === 'en' ? 'Explore All Products, Software & Franchise Models' : 'എല്ലാ ഉൽപ്പന്നങ്ങളും ബിസിനസ് അവസരങ്ങളും കാണുക'}</span>
+                <span>{lang === 'en' ? 'Explore All Products, Partner Brands, Software & Franchise Models' : 'എല്ലാ ഉൽപ്പന്നങ്ങളും ബ്രാൻഡുകളും ബിസിനസ് അവസരങ്ങളും കാണുക'}</span>
                 <ArrowRight size={16} />
               </Link>
             </div>

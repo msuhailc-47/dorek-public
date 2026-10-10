@@ -1,6 +1,6 @@
 "use client";
-import { useState, useRef } from 'react';
-import { MapPin, Phone, Mail, Send } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { MapPin, Phone, Mail, Send, CheckCircle2, AlertCircle } from 'lucide-react';
 import { useCMS } from '../context/CMSContext';
 import './Contact.css';
 import useScrollReveal from '../utils/useScrollReveal';
@@ -10,19 +10,47 @@ export default function Contact({ lang, t }) {
   const { ref: scrollRef, className: scrollClass } = useScrollReveal();
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', subject: '', message: '', honeypot: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
   const isSubmittingRef = useRef(false);
-  
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
-  
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    const subjectParam = params.get('subject') || '';
+    const topicParam = params.get('topic') || '';
+    if (!subjectParam && !topicParam) return;
+
+    const options = t.contact?.formOptions || [];
+    let matchedSubject = '';
+    if (subjectParam) {
+      const lowerSub = subjectParam.toLowerCase();
+      matchedSubject = options.find(opt => opt.toLowerCase().includes(lowerSub)) || options[0] || subjectParam;
+    }
+
+    setFormData(prev => ({
+      ...prev,
+      subject: matchedSubject || prev.subject,
+      message: topicParam && !prev.message
+        ? (lang === 'en'
+            ? `I would like to enquire about: ${topicParam}`
+            : `${topicParam} സംബന്ധിച്ച വിവരങ്ങൾ അറിയാൻ താല്പര്യപ്പെടുന്നു.`)
+        : prev.message
+    }));
+  }, [lang, t.contact?.formOptions]);
+
+  const handleChange = (e) => {
+    if (submitStatus) setSubmitStatus(null);
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Strict lock against duplicate double clicks
     if (isSubmittingRef.current || isSubmitting) return;
 
     // Honeypot check - if bot fills this hidden field, silently reject
     if (formData.honeypot !== '') {
-      console.log('Spam detected');
       setFormData({ name: '', email: '', phone: '', subject: '', message: '', honeypot: '' });
       return;
     }
@@ -34,13 +62,17 @@ export default function Contact({ lang, t }) {
     const cleanSubject = (formData.subject || '').trim();
 
     if (!cleanName || !cleanEmail || !cleanMessage) {
-      alert('Please fill in all required fields.');
+      setSubmitStatus({
+        type: 'error',
+        text: lang === 'en' ? 'Please fill in all required fields.' : 'ദയവായി ആവശ്യമായ എല്ലാ വിവരങ്ങളും പൂരിപ്പിക്കുക.'
+      });
       return;
     }
 
     isSubmittingRef.current = true;
     setIsSubmitting(true);
-    
+    setSubmitStatus(null);
+
     try {
       // Save to Firestore
       addSubmission({
@@ -50,7 +82,7 @@ export default function Contact({ lang, t }) {
         subject: cleanSubject,
         message: cleanMessage
       });
-      
+
       // Send email notification in background asynchronously
       fetch('/api/contact', {
         method: 'POST',
@@ -66,18 +98,29 @@ export default function Contact({ lang, t }) {
       }).catch(notifyErr => {
         console.warn('Email notification failed:', notifyErr);
       });
-      
-      alert('Thank you for contacting us! We will get back to you soon.');
+
+      setSubmitStatus({
+        type: 'success',
+        text: lang === 'en'
+          ? 'Thank you for contacting Dorek International! Our team will get back to you shortly.'
+          : 'ഡോറെക് ഇന്റർനാഷണലുമായി ബന്ധപ്പെട്ടതിന് നന്ദി! ഞങ്ങളുടെ ടീം ഉടൻ തന്നെ നിങ്ങളെ ബന്ധപ്പെടുന്നതാണ്.'
+      });
       setFormData({ name: '', email: '', phone: '', subject: '', message: '', honeypot: '' });
     } catch (err) {
       console.error('Submission error:', err);
-      alert('An error occurred. Please try again.');
+      setSubmitStatus({
+        type: 'error',
+        text: lang === 'en' ? 'An error occurred. Please try again.' : 'എന്തോ തകരാർ സംഭവിച്ചു. ദയവായി വീണ്ടും ശ്രമിക്കുക.'
+      });
     } finally {
       isSubmittingRef.current = false;
       setIsSubmitting(false);
     }
   };
-  
+
+  const cleanTel = (t.contact?.phone || '').replace(/[^+\d]/g, '');
+  const cleanWa = (t.contact?.whatsapp || '').replace(/[^\d]/g, '');
+
   return (
     <section id="contact" className={`section contact-sec ${scrollClass}`} ref={scrollRef}>
       <div className="container">
@@ -99,14 +142,35 @@ export default function Contact({ lang, t }) {
               <div className="contact-icon"><Phone size={24} /></div>
               <div>
                 <h3>{t.contact.phoneLabel}</h3>
-                <p>{t.contact.phone}<br />{t.contact.whatsapp && `WA: ${t.contact.whatsapp}`}</p>
+                <p>
+                  <a href={`tel:${cleanTel}`} style={{ color: 'inherit', textDecoration: 'none', fontWeight: 600 }}>
+                    {t.contact.phone}
+                  </a>
+                  {t.contact.whatsapp && (
+                    <>
+                      <br />
+                      <a
+                        href={`https://wa.me/${cleanWa}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ color: 'inherit', textDecoration: 'none' }}
+                      >
+                        WA: {t.contact.whatsapp}
+                      </a>
+                    </>
+                  )}
+                </p>
               </div>
             </div>
             <div className="contact-info-card">
               <div className="contact-icon"><Mail size={24} /></div>
               <div>
                 <h3>{t.contact.emailLabel}</h3>
-                <p>{t.contact.email}</p>
+                <p>
+                  <a href={`mailto:${t.contact.email}`} style={{ color: 'inherit', textDecoration: 'none', fontWeight: 600 }}>
+                    {t.contact.email}
+                  </a>
+                </p>
               </div>
             </div>
             <div className="contact-map">
@@ -130,7 +194,33 @@ export default function Contact({ lang, t }) {
             </div>
           </div>
           <div className="contact-form">
-            <h3>Send us a Message</h3>
+            <h3>{lang === 'en' ? 'Send us a Message' : 'സന്ദേശം അയക്കുക'}</h3>
+            {submitStatus && (
+              <div
+                role="status"
+                style={{
+                  display: 'flex',
+                  alignItems: 'flex-start',
+                  gap: '10px',
+                  padding: '14px 16px',
+                  marginBottom: '18px',
+                  borderRadius: '12px',
+                  fontSize: '0.92rem',
+                  fontWeight: 600,
+                  lineHeight: 1.5,
+                  background: submitStatus.type === 'success' ? 'rgba(22, 163, 74, 0.12)' : 'rgba(220, 38, 38, 0.12)',
+                  border: `1px solid ${submitStatus.type === 'success' ? '#16A34A' : '#DC2626'}`,
+                  color: submitStatus.type === 'success' ? '#15803d' : '#b91c1c'
+                }}
+              >
+                {submitStatus.type === 'success' ? (
+                  <CheckCircle2 size={20} style={{ flexShrink: 0, marginTop: '2px', color: '#16A34A' }} />
+                ) : (
+                  <AlertCircle size={20} style={{ flexShrink: 0, marginTop: '2px', color: '#DC2626' }} />
+                )}
+                <span>{submitStatus.text}</span>
+              </div>
+            )}
             <form onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="contact-name" className="sr-only">{t.contact.formName}</label>
@@ -218,7 +308,7 @@ export default function Contact({ lang, t }) {
                   cursor: isSubmitting ? 'not-allowed' : 'pointer'
                 }}
               >
-                {isSubmitting ? 'Sending Message...' : <>{t.contact.formSubmit} <Send size={16} /></>}
+                {isSubmitting ? (lang === 'en' ? 'Sending Message...' : 'അയക്കുന്നു...') : <>{t.contact.formSubmit} <Send size={16} /></>}
               </button>
             </form>
           </div>

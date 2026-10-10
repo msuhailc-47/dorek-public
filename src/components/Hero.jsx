@@ -139,15 +139,15 @@ export default function Hero({ lang, t }) {
           {/* Subtle Enterprise Badge */}
           <div className="hero-badge-pill">
             <span className="badge-pulse-indicator" />
-            <span>{lang === 'en' ? 'DOREK INTERNATIONAL ENTERPRISES LLP' : 'ഡോറക് ഇന്റർനാഷണൽ എന്റർപ്രൈസസ്'}</span>
+            <span>{t.hero?.badge || (lang === 'en' ? 'DOREK INTERNATIONAL ENTERPRISES LLP' : 'ഡോറക് ഇന്റർനാഷണൽ എന്റർപ്രൈസസ്')}</span>
           </div>
 
           <h1 className="hero-modern-title">
             <span className="hero-line-white">
-              {lang === 'en' ? 'Engineering Excellence.' : 'എഞ്ചിനീയറിംഗ് മികവ്.'}
+              {t.hero?.titleLine1 || (lang === 'en' ? 'Engineering Excellence.' : 'എഞ്ചിനീയറിംഗ് മികവ്.')}
             </span>
             <span className="hero-line-gold">
-              {lang === 'en' ? "Powering Future Brands." : "നാളെയുടെ ബ്രാൻഡുകൾക്ക് കരുത്ത്."}
+              {t.hero?.titleLine2 || (lang === 'en' ? 'Powering Future Brands.' : 'നാളെയുടെ ബ്രാൻഡുകൾക്ക് കരുത്ത്.')}
             </span>
           </h1>
 
@@ -160,7 +160,7 @@ export default function Hero({ lang, t }) {
           {/* Action CTAs */}
           <div className="hero-btn-cluster">
             <a href="/businesses" className="hero-primary-btn">
-              <span>{lang === 'en' ? 'Explore Our Businesses' : 'ഞങ്ങളുടെ ബിസിനസുകൾ'}</span>
+              <span>{t.hero?.getStarted || (lang === 'en' ? 'Explore Our Businesses' : 'ഞങ്ങളുടെ ബിസിനസുകൾ')}</span>
               <ArrowRight size={17} />
             </a>
             <a href="/contact" className="hero-secondary-btn">
@@ -172,22 +172,22 @@ export default function Hero({ lang, t }) {
           <div className="hero-metrics-bar">
             <div className="metric-item">
               <span className="metric-val">{t.hero?.stats?.counts?.divisions || '8+'}</span>
-              <span className="metric-lbl">{lang === 'en' ? 'Core Divisions' : 'ഡിവിഷനുകൾ'}</span>
+              <span className="metric-lbl">{t.hero?.stats?.divisions || (lang === 'en' ? 'Core Divisions' : 'ഡിവിഷനുകൾ')}</span>
             </div>
             <div className="metric-divider" />
             <div className="metric-item">
               <span className="metric-val">{t.hero?.stats?.counts?.districts || '14'}</span>
-              <span className="metric-lbl">{lang === 'en' ? 'Districts Covered' : 'ജില്ലകൾ'}</span>
+              <span className="metric-lbl">{t.hero?.stats?.districts || (lang === 'en' ? 'Districts Covered' : 'ജില്ലകൾ')}</span>
             </div>
             <div className="metric-divider" />
             <div className="metric-item">
               <span className="metric-val">{t.hero?.stats?.counts?.associates || '500+'}</span>
-              <span className="metric-lbl">{lang === 'en' ? 'Active Partners' : 'പങ്കാളികൾ'}</span>
+              <span className="metric-lbl">{t.hero?.stats?.associates || (lang === 'en' ? 'Active Partners' : 'പങ്കാളികൾ')}</span>
             </div>
             <div className="metric-divider" />
             <div className="metric-item">
-              <span className="metric-val">Global</span>
-              <span className="metric-lbl">{lang === 'en' ? 'Standard & Vision' : 'നിലവാരം'}</span>
+              <span className="metric-val">{t.hero?.stats?.counts?.sectors || 'Global'}</span>
+              <span className="metric-lbl">{t.hero?.stats?.sectors || (lang === 'en' ? 'Standard & Vision' : 'നിലവാരം')}</span>
             </div>
           </div>
         </div>
@@ -201,15 +201,15 @@ export default function Hero({ lang, t }) {
             <div className="hero-card-header">
               <div className="hero-card-badge">
                 <Sparkles size={13} className="hero-badge-icon" />
-                <span>{lang === 'en' ? 'Dorek Flagship Brand • Doorcarts' : 'ഡോറക് ഫ്ലാഗ്‌ഷിപ്പ് സംരംഭം • ഡോർകാർട്സ്'}</span>
+                <span>{t.hero?.formBadge || (lang === 'en' ? 'Dorek Flagship Brand • Doorcarts' : 'ഡോറക് ഫ്ലാഗ്‌ഷിപ്പ് സംരംഭം • ഡോർകാർട്സ്')}</span>
               </div>
               <h2 className="hero-card-title">
-                {lang === 'en' ? 'Partner With Doorcarts' : 'ഡോർകാർട്സുമായി കൈകോർക്കാം'}
+                {t.hero?.formTitle || (lang === 'en' ? 'Partner With Doorcarts' : 'ഡോർകാർട്സുമായി കൈകോർക്കാം')}
               </h2>
               <p className="hero-card-subtitle">
-                {lang === 'en'
+                {t.hero?.formSubtitle || (lang === 'en'
                   ? 'Connect with Dorek International to explore Doorcarts franchise stores, dealership territories, or turnkey project partnerships.'
-                  : 'ഡോറക് ഇന്റർനാഷണലിന്റെ ഫ്ലാഗ്‌ഷിപ്പ് സംരംഭമായ ഡോർകാർട്സ് ഫ്രാഞ്ചൈസി, ഡീലർഷിപ്പ്, പ്രോജക്ട് പാർട്ണർഷിപ്പ് വിവരങ്ങൾക്ക് ബന്ധപ്പെടുക.'}
+                  : 'ഡോറക് ഇന്റർനാഷണലിന്റെ ഫ്ലാഗ്‌ഷിപ്പ് സംരംഭമായ ഡോർകാർട്സ് ഫ്രാഞ്ചൈസി, ഡീലർഷിപ്പ്, പ്രോജക്ട് പാർട്ണർഷിപ്പ് വിവരങ്ങൾക്ക് ബന്ധപ്പെടുക.')}
               </p>
             </div>
 
@@ -309,9 +309,9 @@ export default function Hero({ lang, t }) {
                 {/* Message Field: Why interested in Doorcarts */}
                 <div className="hero-input-group">
                   <label className="hero-field-label" htmlFor="hero-message">
-                    {lang === 'en'
+                    {t.hero?.formQuestion || (lang === 'en'
                       ? 'Why are you interested in Doorcarts?'
-                      : 'ഡോർകാർട്സിൽ താങ്കൾക്കുള്ള താല്പര്യം എന്താണ്?'} <span className="req">*</span>
+                      : 'ഡോർകാർട്സിൽ താങ്കൾക്കുള്ള താല്പര്യം എന്താണ്?')} <span className="req">*</span>
                   </label>
                   <div className="hero-input-wrapper textarea-wrapper">
                     <MessageSquare size={15} className="hero-input-icon textarea-icon" />
@@ -321,9 +321,9 @@ export default function Hero({ lang, t }) {
                       rows={2}
                       value={formData.message}
                       onChange={handleChange}
-                      placeholder={lang === 'en'
+                      placeholder={t.hero?.formPlaceholder || (lang === 'en'
                         ? 'e.g. Franchise ownership, retail partner, smart QR, supplier...'
-                        : 'ഉദാ: ഫ്രാഞ്ചൈസി, റീട്ടെയിൽ പാർട്ണർ, സ്മാർട്ട് ക്യുആർ...'}
+                        : 'ഉദാ: ഫ്രാഞ്ചൈസി, റീട്ടെയിൽ പാർട്ണർ, സ്മാർട്ട് ക്യുആർ...')}
                       required
                       className="hero-text-input hero-textarea"
                     />
@@ -350,7 +350,7 @@ export default function Hero({ lang, t }) {
                     </>
                   ) : (
                     <>
-                      <span>{lang === 'en' ? 'Submit Doorcarts Enquiry' : 'അന്വേഷണം അയക്കുക'}</span>
+                      <span>{t.hero?.formSubmitBtn || (lang === 'en' ? 'Submit Doorcarts Enquiry' : 'അന്വേഷണം അയക്കുക')}</span>
                       <Send size={15} />
                     </>
                   )}
@@ -359,7 +359,7 @@ export default function Hero({ lang, t }) {
                 {/* Trust micro-caption */}
                 <div className="hero-form-trust">
                   <span className="trust-dot" />
-                  <span>{lang === 'en' ? 'Direct response within 24 hours • Confidential' : '24 മണിക്കൂറിനകം പ്രതികരണം • പൂർണ്ണ രഹസ്യസ്വഭാവം'}</span>
+                  <span>{t.hero?.formTrustText || (lang === 'en' ? 'Direct response within 24 hours • Confidential' : '24 മണിക്കൂറിനകം പ്രതികരണം • പൂർണ്ണ രഹസ്യസ്വഭാവം')}</span>
                 </div>
               </form>
             )}

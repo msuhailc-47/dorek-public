@@ -76,8 +76,8 @@ export default function Businesses({ lang, t }) {
           <p className="section-subtitle">{t.businesses.subtitle}</p>
         </div>
         <div className="biz-grid">
-          {t.businesses.items.map((item, i) => {
-            const Icon = icons[i] || ShoppingCart;
+          {(t.businesses.items || []).map((item, i) => {
+            const Icon = icons[i % icons.length] || ShoppingCart;
             return (
               <div key={i} className="biz-card">
                 <div className="biz-card-icon" style={{ background: gradients[i % gradients.length] }}>
@@ -105,7 +105,7 @@ export default function Businesses({ lang, t }) {
               </button>
               <div className="biz-popup-header">
                 <div className="biz-popup-icon" style={{ background: gradients[activePopup % gradients.length] }}>
-                  {(() => { const Icon = icons[activePopup] || ShoppingCart; return <Icon size={32} color="white" />; })()}
+                  {(() => { const Icon = icons[activePopup % icons.length] || ShoppingCart; return <Icon size={32} color="white" />; })()}
                 </div>
                 <div>
                   <span className="badge">{t.businesses.items[activePopup].tag}</span>
@@ -119,7 +119,7 @@ export default function Businesses({ lang, t }) {
                 </div>
                 <div style={{ marginTop: '22px', display: 'flex', justifyContent: 'flex-end' }}>
                   <Link
-                    href="/contact"
+                    href={`/contact?subject=${encodeURIComponent('Business')}&topic=${encodeURIComponent(t.businesses.items[activePopup].name)}`}
                     className="btn btn-primary btn-sm"
                     style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '8px' }}
                     onClick={() => setActivePopup(null)}

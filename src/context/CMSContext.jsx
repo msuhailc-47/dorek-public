@@ -25,17 +25,29 @@ export function CMSProvider({ children, initialData }) {
   }
 
   const { translationsData, themeSettings, sectionVisibility, codeSettings, customSections, navigation } = initialData;
-  const [lang, setLang] = useState('en');
+  const [lang, setLangState] = useState('en');
   const [liveTheme, setLiveTheme] = useState(themeSettings || {});
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [showPinBox, setShowPinBox] = useState(false);
   const [pinInput, setPinInput] = useState('');
   const [pinError, setPinError] = useState('');
 
+  const setLang = (nextLang) => {
+    const resolved = typeof nextLang === 'function' ? nextLang(lang) : nextLang;
+    setLangState(resolved);
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('dorek_lang', resolved);
+    }
+  };
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       if (sessionStorage.getItem('dorek_maintenance_bypass') === 'true') {
         setIsUnlocked(true);
+      }
+      const savedLang = localStorage.getItem('dorek_lang');
+      if (savedLang === 'en' || savedLang === 'ml') {
+        setLangState(savedLang);
       }
     }
 
@@ -90,7 +102,11 @@ export function CMSProvider({ children, initialData }) {
 
   if (!t) return null;
 
-  const isMaintenanceActive = liveTheme?.maintenanceMode !== undefined ? Boolean(liveTheme.maintenanceMode) : true;
+  const isLocalDev = typeof window !== 'undefined'
+    ? (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+    : process.env.NODE_ENV === 'development';
+
+  const isMaintenanceActive = !isLocalDev && (liveTheme?.maintenanceMode !== undefined ? Boolean(liveTheme.maintenanceMode) : false);
   const expectedPin = String(liveTheme?.maintenancePin || '2026').trim();
 
   const handlePinSubmit = (e) => {

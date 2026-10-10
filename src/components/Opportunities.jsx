@@ -18,21 +18,41 @@ export default function Opportunities({ lang, t }) {
           <p className="section-subtitle">{t.opportunities.subtitle}</p>
         </div>
         <div className="opp-grid">
-          {t.opportunities.items.map((item, i) => {
+          {(t.opportunities.items || []).map((item, i) => {
             const Icon = iconMap[item.icon] || Users;
+            const accent = accents[i % accents.length];
             return (
-              <div key={i} className="opp-card" style={{ borderTopColor: accents[i] }}>
-                <div className="opp-card-icon" style={{ background: `${accents[i]}20`, color: accents[i] }}>
-                  <Icon size={28} />
+              <div key={i} className="opp-card" style={{ borderTopColor: accent, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <div>
+                  <div className="opp-card-icon" style={{ background: `${accent}20`, color: accent }}>
+                    <Icon size={28} />
+                  </div>
+                  <h3 className="opp-card-name">{item.name}</h3>
+                  <p className="opp-card-desc">{item.desc}</p>
                 </div>
-                <h3 className="opp-card-name">{item.name}</h3>
-                <p className="opp-card-desc">{item.desc}</p>
+                <Link
+                  href={`/contact?subject=${encodeURIComponent('Franchise')}&topic=${encodeURIComponent(`${item.name} Partnership`)}`}
+                  style={{
+                    marginTop: '16px',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '6px',
+                    fontSize: '0.84rem',
+                    fontWeight: 700,
+                    color: accent,
+                    textDecoration: 'none'
+                  }}
+                >
+                  <span>{lang === 'en' ? 'Enquire Now' : 'അപേക്ഷിക്കുക'}</span>
+                  <ArrowRight size={14} />
+                </Link>
               </div>
             );
           })}
         </div>
         <div className="opp-cta">
-          <Link href="/contact" className="btn btn-gold btn-lg">
+          <Link href="/contact?subject=Franchise" className="btn btn-gold btn-lg">
             {t.opportunities?.applyNow || 'Apply Now'} <ArrowRight size={18} />
           </Link>
         </div>

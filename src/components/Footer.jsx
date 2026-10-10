@@ -43,11 +43,11 @@ export default function Footer({ lang, t }) {
           <div className="footer-col">
             <h4>{t.footer?.quickLinks || 'Quick Links'}</h4>
             <ul className="footer-links">
-              <li><Link href="/about">{t.nav?.about || 'About'}</Link></li>
               <li><Link href="/businesses">{t.nav?.businesses || 'Businesses'}</Link></li>
               <li><Link href="/businesses#products">{t.nav?.services || 'Products & Services'}</Link></li>
               <li><Link href="/businesses#opportunities">{t.nav?.opportunities || 'Opportunities'}</Link></li>
               <li><Link href="/media#investors">{t.nav?.investors || 'Investors'}</Link></li>
+              <li><Link href="/media#csr">{t.nav?.csr || (lang === 'en' ? 'CSR & Social Impact' : 'സാമൂഹിക പ്രതിബദ്ധത')}</Link></li>
               <li><Link href="/careers">{t.nav?.careers || 'Careers'}</Link></li>
               <li><Link href="/contact">{t.nav?.contact || (lang === 'en' ? 'Contact' : 'ബന്ധപ്പെടുക')}</Link></li>
             </ul>
@@ -65,8 +65,18 @@ export default function Footer({ lang, t }) {
             <h4>{t.footer?.connect || 'Contact Us'}</h4>
             <ul className="footer-contact">
               <li><MapPin size={16} className="fc-icon" /> <span style={{whiteSpace: 'pre-line'}}>{t.contact?.address || '1st Floor, Dorek Building, Ernakulam, Kerala'}</span></li>
-              <li><Phone size={16} className="fc-icon" /> <span>{t.contact?.phone || '+91 98765 43210'}</span></li>
-              <li><Mail size={16} className="fc-icon" /> <span>{t.contact?.email || 'info@dorek.com'}</span></li>
+              <li>
+                <Phone size={16} className="fc-icon" />
+                <a href={`tel:${(t.contact?.phone || '+91 8606999350').replace(/[^+\d]/g, '')}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                  {t.contact?.phone || '+91 8606999350'}
+                </a>
+              </li>
+              <li>
+                <Mail size={16} className="fc-icon" />
+                <a href={`mailto:${t.contact?.email || 'dorekinternationalllp@gmail.com'}`} style={{ color: 'inherit', textDecoration: 'none' }}>
+                  {t.contact?.email || 'dorekinternationalllp@gmail.com'}
+                </a>
+              </li>
             </ul>
           </div>
         </div>

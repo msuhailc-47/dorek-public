@@ -99,12 +99,12 @@ const knowledgeBase = [
   {
     keywords: ['opportunity', 'opportunities', 'franchise', 'dealer', 'distributor', 'partner', 'partnership', 'join', 'invest', 'business model', 'associate'],
     topic: 'opportunities',
-    response: `💼 **Business Opportunities at Dorek**:\n\nWe offer **8 partnership models**:\n\n1. 🤝 **Associate** — Earn commissions by referring customers\n2. 🏪 **Franchise** — Own a Doorcarts My Store outlet\n3. 📍 **Authorized Outlet** — Become a branded outlet partner\n4. 💰 **Investor** — Invest in our growth story\n5. 🤫 **Silent Partner** — Invest without active involvement\n6. 🏢 **Active Partner** — Join operations & management\n7. 📦 **Dealer** — Sell Doorcarts products in your area\n8. 🚛 **Distributor** — Large-scale distribution rights\n\n📋 Apply via the **Portal Login** on our website or ask me for contact details!`
+    response: `💼 **Business Opportunities at Dorek**:\n\nWe offer **8 partnership models**:\n\n1. 🤝 **Associate** — Earn commissions by referring customers\n2. 🏪 **Franchise** — Own a Doorcarts My Store outlet\n3. 📍 **Authorized Outlet** — Become a branded outlet partner\n4. 💰 **Investor** — Invest in our growth story\n5. 🤫 **Silent Partner** — Invest without active involvement\n6. 🏢 **Active Partner** — Join operations & management\n7. 📦 **Dealer** — Sell Doorcarts products in your area\n8. 🚛 **Distributor** — Large-scale distribution rights\n\n📋 Apply via the **Contact** page on our website or ask me for contact details!`
   },
   {
     keywords: ['franchise cost', 'franchise fee', 'how much', 'investment', 'cost to start', 'capital', 'money needed'],
     topic: 'franchise_cost',
-    response: `💰 **Franchise & Investment Details**:\n\nInvestment requirements vary by model:\n\n• **Associate**: Minimal investment (referral-based)\n• **Franchise (Doorcarts My Store)**: Moderate investment\n• **Authorized Outlet**: Medium investment\n• **Dealer/Distributor**: Based on region & volume\n\nFor **exact investment figures**, please contact our Business Development team:\n📞 **+91 8590 36 8590**\n📧 **info@dorek.in**\n\nOr use the **Apply Now** button on our website!`
+    response: `💰 **Franchise & Investment Details**:\n\nInvestment requirements vary by model:\n\n• **Associate**: Minimal investment (referral-based)\n• **Franchise (Doorcarts My Store)**: Moderate investment\n• **Authorized Outlet**: Medium investment\n• **Dealer/Distributor**: Based on region & volume\n\nFor **exact investment figures**, please contact our Business Development team:\n📞 **{{PHONE}}**\n📧 **{{EMAIL}}**\n\nOr use the **Apply Now** button on our website!`
   },
 
   // --- Software ---
@@ -118,28 +118,28 @@ const knowledgeBase = [
   {
     keywords: ['network', 'coverage', 'kerala', 'district', 'where', 'location', 'branch', 'hub', 'outlet'],
     topic: 'network',
-    response: `📍 **Network Across Kerala**:\n\n• **14 Districts** covered\n• **50+ Hubs** operational\n• **200+ Outlets** across the state\n• **500+ Associates** in our network\n\nWe have presence in all 14 Kerala districts including Ernakulam, Thiruvananthapuram, Kozhikode, Thrissur, and more.\n\nCheck out our **interactive Kerala map** on the website for district-wise details!`
+    response: `📍 **Network Across Kerala**:\n\n• **14 Districts** covered\n• **50+ Hubs** operational\n• **200+ Outlets** across the state\n• **500+ Associates** in our network\n\nWe have presence in all 14 Kerala districts including Malappuram, Kozhikode, Ernakulam, Thiruvananthapuram, Thrissur, and more.\n\nCheck out our **interactive Kerala map** on the website for district-wise details!`
   },
 
   // --- Contact ---
   {
     keywords: ['contact', 'phone', 'call', 'email', 'address', 'reach', 'whatsapp', 'office', 'number', 'talk'],
     topic: 'contact',
-    response: `📞 **Contact Dorek International**:\n\n🏢 **Head Office**: Dorek International Enterprises LLP, Kerala, India\n📱 **Phone**: +91 8590 36 8590\n📧 **Email**: info@dorek.in\n💬 **WhatsApp**: +91 8590 36 8590\n\n🕐 **Office Hours**: Mon–Sat, 9:00 AM – 6:00 PM\n\nYou can also fill in the **Contact Form** on our website for any inquiries!`
+    response: `📞 **Contact Dorek International**:\n\n🏢 **Head Office**: {{ADDRESS}}\n📱 **Phone**: {{PHONE}}\n📧 **Email**: {{EMAIL}}\n💬 **WhatsApp**: {{PHONE}}\n\n🕐 **Office Hours**: Mon–Sat, 9:00 AM – 6:00 PM\n\nYou can also fill in the **Contact Form** on our website for any inquiries!`
   },
 
   // --- Careers ---
   {
     keywords: ['career', 'careers', 'job', 'jobs', 'hiring', 'vacancy', 'work', 'opening', 'internship', 'training program'],
     topic: 'careers',
-    response: `👔 **Careers at Dorek**:\n\nWe're always looking for talented individuals!\n\n• 📋 **Current Openings** — Sales, Technical, Admin roles\n• 🎓 **Internships** — For engineering & management students\n• 📚 **Training Programs** — Skill development & certification\n\nVisit the **Careers** section on our website for the latest openings.\n\n📧 Send your resume to: **careers@dorek.in**`
+    response: `👔 **Careers at Dorek**:\n\nWe're always looking for talented individuals!\n\n• 📋 **Current Openings** — Sales, Technical, Admin roles\n• 🎓 **Internships** — For engineering & management students\n• 📚 **Training Programs** — Skill development & certification\n\nVisit the **Careers** page on our website for the latest openings.\n\n📧 Send your resume to: **{{EMAIL}}**`
   },
 
   // --- Pricing ---
   {
     keywords: ['price', 'pricing', 'cost', 'rate', 'quote', 'quotation', 'estimate', 'cheap', 'expensive', 'affordable'],
     topic: 'pricing',
-    response: `💰 **Pricing & Quotations**:\n\nWe offer **competitive wholesale & retail pricing** across all product categories. Prices vary based on:\n\n• Product brand & specifications\n• Order quantity\n• Delivery location\n\nFor a **custom quotation**, please:\n📞 Call: **+91 8590 36 8590**\n📧 Email: **info@dorek.in**\n\nOr fill out the **Contact Form** on our website!`
+    response: `💰 **Pricing & Quotations**:\n\nWe offer **competitive wholesale & retail pricing** across all product categories. Prices vary based on:\n\n• Product brand & specifications\n• Order quantity\n• Delivery location\n\nFor a **custom quotation**, please:\n📞 Call: **{{PHONE}}**\n📧 Email: **{{EMAIL}}**\n\nOr fill out the **Contact Form** on our website!`
   },
 
   // --- CSR ---
@@ -163,13 +163,22 @@ const knowledgeBase = [
   {
     keywords: ['bye', 'goodbye', 'see you', 'later', 'close', 'exit'],
     topic: 'goodbye',
-    response: `Goodbye! 👋 Thank you for visiting Dorek International.\n\n📞 Remember, you can always reach us at **+91 8590 36 8590** or **info@dorek.in**.\n\nHave a great day! 🌟`
+    response: `Goodbye! 👋 Thank you for visiting Dorek International.\n\n📞 Remember, you can always reach us at **{{PHONE}}** or **{{EMAIL}}**.\n\nHave a great day! 🌟`
   },
 ];
 
 // --- Matching Engine ---
-export function findBestResponse(userInput) {
+export function findBestResponse(userInput, contactInfo = {}) {
   const input = userInput.toLowerCase().trim();
+  const phone = contactInfo?.phone || '+91 8606999350';
+  const email = contactInfo?.email || 'dorekinternationalllp@gmail.com';
+  const address = (contactInfo?.address || 'Dorek International Enterprises LLP, Malappuram, Kerala, India').replace(/\n+/g, ', ');
+
+  const formatReply = (str) =>
+    str
+      .replace(/\{\{PHONE\}\}/g, phone)
+      .replace(/\{\{EMAIL\}\}/g, email)
+      .replace(/\{\{ADDRESS\}\}/g, address);
 
   // Score each knowledge entry
   let bestMatch = null;
@@ -190,11 +199,11 @@ export function findBestResponse(userInput) {
   }
 
   if (bestMatch && bestScore > 0) {
-    return bestMatch.response;
+    return formatReply(bestMatch.response);
   }
 
   // Fallback
-  return `I appreciate your question! While I don't have a specific answer for that, I can help you with:\n\n• **Products & Services** — Ask about our 10 product categories\n• **Business Opportunities** — Franchise, dealer, investor info\n• **Contact Details** — Phone, email, address\n• **Software Solutions** — ERP, CRM, Billing\n• **Network** — Our presence across Kerala\n\nOr contact us directly at 📞 **+91 8590 36 8590**`;
+  return formatReply(`I appreciate your question! While I don't have a specific answer for that, I can help you with:\n\n• **Products & Services** — Ask about our 10 product categories\n• **Business Opportunities** — Franchise, dealer, investor info\n• **Contact Details** — Phone, email, address\n• **Software Solutions** — ERP, CRM, Billing\n• **Network** — Our presence across Kerala\n\nOr contact us directly at 📞 **{{PHONE}}**`);
 }
 
 export default knowledgeBase;

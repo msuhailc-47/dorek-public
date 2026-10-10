@@ -38,7 +38,7 @@ export default function Downloads({ lang, t }) {
                   </a>
                 ) : (
                   <Link
-                    href="/contact"
+                    href={`/contact?subject=General&topic=${encodeURIComponent(`Request Copy: ${item.name}`)}`}
                     className="dl-btn"
                     style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}
                   >

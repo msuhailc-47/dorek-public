@@ -3,6 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false, // Hide Next.js fingerprint from attackers
   compress: true,
+  allowedDevOrigins: ['100.121.123.38'],
   experimental: {
     optimizePackageImports: ['lucide-react'],
   },
