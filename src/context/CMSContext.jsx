@@ -27,6 +27,7 @@ export function CMSProvider({ children, initialData }) {
   const { translationsData, themeSettings, sectionVisibility, codeSettings, customSections, navigation } = initialData;
   const [lang, setLangState] = useState('en');
   const [liveTheme, setLiveTheme] = useState(themeSettings || {});
+  const [liveVisibility, setLiveVisibility] = useState(sectionVisibility || {});
   const [isUnlocked, setIsUnlocked] = useState(false);
   const [showPinBox, setShowPinBox] = useState(false);
   const [pinInput, setPinInput] = useState('');
@@ -76,7 +77,44 @@ export function CMSProvider({ children, initialData }) {
       }
     };
 
+    // Fetch live sectionVisibility directly from Firestore REST API so toggle is instant
+    const fetchLiveVisibility = async () => {
+      try {
+        const res = await fetch(
+          `https://firestore.googleapis.com/v1/projects/dorek-international-3ef93/databases/(default)/documents/dorek_cms/sectionVisibility?t=${Date.now()}`,
+          { cache: 'no-store' }
+        );
+        if (res.ok) {
+          const doc = await res.json();
+          if (doc && doc.fields) {
+            const parsed = {};
+            for (const [k, v] of Object.entries(doc.fields)) {
+              parsed[k] = parseVal(v);
+            }
+            const actualVis = parsed.sectionVisibility !== undefined ? parsed.sectionVisibility : parsed;
+            if (actualVis) {
+              setLiveVisibility(prev => ({ ...prev, ...actualVis }));
+            }
+          }
+        }
+      } catch (e) {
+        // Silent fallback to server initialData
+      }
+    };
+
     fetchLiveTheme();
+    fetchLiveVisibility();
+
+    // Re-sync visibility & theme whenever user switches back to this tab
+    const handleFocus = () => {
+      fetchLiveTheme();
+      fetchLiveVisibility();
+    };
+    window.addEventListener('focus', handleFocus);
+
+    return () => {
+      window.removeEventListener('focus', handleFocus);
+    };
   }, []);
 
   const t = translationsData && translationsData[lang] ? translationsData[lang] : null;
@@ -86,7 +124,7 @@ export function CMSProvider({ children, initialData }) {
     : (translationsData?.en?.customSections || []);
 
   const getAnimationClass = () => 'animate-fadeIn';
-  const isSectionVisible = (id) => sectionVisibility ? sectionVisibility[id] !== false : true;
+  const isSectionVisible = (id) => liveVisibility ? liveVisibility[id] !== false : true;
 
   const addSubmission = async (formData) => {
     try {
@@ -279,7 +317,7 @@ export function CMSProvider({ children, initialData }) {
       setLang,
       t,
       themeSettings: liveTheme || {},
-      sectionVisibility: sectionVisibility || {},
+      sectionVisibility: liveVisibility || {},
       isSectionVisible,
       codeSettings: codeSettings || {},
       customSections: fallbackCustomSections,

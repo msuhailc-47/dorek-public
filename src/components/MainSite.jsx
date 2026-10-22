@@ -20,10 +20,7 @@ const WhatsAppButton = dynamic(() => import('./WhatsAppButton'), { ssr: false })
 
 export default function MainSite() {
   const [loadFloatingWidgets, setLoadFloatingWidgets] = useState(false);
-  const { lang, setLang, t, sectionVisibility } = useCMS();
-  
-  // Convert boolean-based section visibility mapping
-  const isSectionVisible = (id) => sectionVisibility[id] !== false;
+  const { lang, setLang, t, isSectionVisible } = useCMS();
 
   useEffect(() => {
     const triggerFloating = () => {
