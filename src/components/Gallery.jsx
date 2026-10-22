@@ -87,11 +87,22 @@ export default function Gallery({ lang, t }) {
   const videos = t.gallery?.videos || [];
   const achievements = t.gallery?.achievements || [];
 
-  // Helper to extract YouTube embed URL
-  const getYouTubeEmbed = (url) => {
+  // Helper to extract YouTube or Google Drive embed URL
+  const getVideoEmbed = (url) => {
     if (!url || typeof url !== 'string') return null;
-    const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([a-zA-Z0-9_-]{11})/);
-    return match ? `https://www.youtube.com/embed/${match[1]}` : null;
+    const trimmed = url.trim();
+    const ytMatch = trimmed.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([a-zA-Z0-9_-]{11})/);
+    if (ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}`;
+    const driveMatch = trimmed.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || 
+                       trimmed.match(/[?&]id=([a-zA-Z0-9_-]+)/) ||
+                       trimmed.match(/\/d\/([a-zA-Z0-9_-]+)/);
+    if (driveMatch && driveMatch[1]) {
+      return `https://drive.google.com/file/d/${driveMatch[1]}/preview`;
+    }
+    if (trimmed.startsWith('https://') && (trimmed.includes('embed') || trimmed.includes('player'))) {
+      return trimmed;
+    }
+    return null;
   };
 
   const tabs = t.gallery?.tabs || [
@@ -168,7 +179,7 @@ export default function Gallery({ lang, t }) {
           {tab === 1 && (
             <div className="gal-videos-grid animate-fadeIn">
               {videos.map((vid, i) => {
-                const embedUrl = getYouTubeEmbed(vid.url);
+                const embedUrl = getVideoEmbed(vid.url);
                 const posterUrl = DEFAULT_VIDEO_POSTERS[i % DEFAULT_VIDEO_POSTERS.length];
                 const introVideoUrl = 'https://youtu.be/HmR_lSJZzps';
 

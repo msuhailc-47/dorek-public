@@ -1,6 +1,7 @@
 "use client";
 import { useState } from 'react';
-import { Eye, Target, Heart, Users, Award, Leaf, Quote, ChevronDown, Calendar } from 'lucide-react';
+import Link from 'next/link';
+import { Eye, Target, Heart, Users, Award, Leaf, Quote, ChevronDown, Calendar, ArrowRight } from 'lucide-react';
 import { useCMS } from '../context/CMSContext';
 import { getOptimizedUrl, convertDriveUrl } from '../utils/getOptimizedUrl';
 import './About.css';
@@ -37,6 +38,13 @@ export default function About({ lang, t }) {
                   loading="lazy" 
                   decoding="async" 
                   className="about-real-image" 
+                  referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    const direct = convertDriveUrl(t.about.image);
+                    if (direct && e.target.src !== direct) {
+                      e.target.src = direct;
+                    }
+                  }}
                 />
               </div>
             ) : (
@@ -47,6 +55,38 @@ export default function About({ lang, t }) {
             )}
             <h3 className="about-h3">{t.about?.history}</h3>
             <p className="about-text">{t.about?.historyText}</p>
+
+            {/* Official Company Overview from Brochure */}
+            <div className="about-overview-card" style={{
+              background: '#f8fafc',
+              border: '1px solid rgba(10, 46, 93, 0.1)',
+              borderLeft: '4px solid #D4AF37',
+              borderRadius: '10px',
+              padding: '16px 20px',
+              marginTop: '20px'
+            }}>
+              <h4 style={{ fontSize: '0.92rem', fontWeight: 800, color: '#0A2E5D', marginBottom: '10px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                {lang === 'en' ? 'Company Overview' : 'കമ്പനി വിവരങ്ങൾ'}
+              </h4>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '10px', fontSize: '0.84rem' }}>
+                <div>
+                  <span style={{ color: '#64748b', display: 'block', fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase' }}>{lang === 'en' ? 'Parent Company' : 'മാതൃ കമ്പനി'}</span>
+                  <strong style={{ color: '#0A2E5D' }}>DOREK INTERNATIONAL ENTERPRISES LLP</strong>
+                </div>
+                <div>
+                  <span style={{ color: '#64748b', display: 'block', fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase' }}>{lang === 'en' ? 'Subsidiary' : 'സബ്സിഡിയറി'}</span>
+                  <strong style={{ color: '#0A2E5D' }}>DOREK ENTERPRISES LLP</strong>
+                </div>
+                <div>
+                  <span style={{ color: '#64748b', display: 'block', fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase' }}>{lang === 'en' ? 'Flagship Apps' : 'പ്രധാന പ്ലാറ്റ്‌ഫോമുകൾ'}</span>
+                  <strong style={{ color: '#b45309' }}>Doorcarts & Doorcarts MyStore</strong>
+                </div>
+                <div>
+                  <span style={{ color: '#64748b', display: 'block', fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase' }}>{lang === 'en' ? 'Corporate Offices' : 'ഓഫീസ് ശൃംഖല'}</span>
+                  <strong style={{ color: '#1e293b' }}>Delhi (HQ) • Kochi • Kottakkal</strong>
+                </div>
+              </div>
+            </div>
           </div>
           <div className="about-vm">
             <div className="about-card about-card-vision">
@@ -108,7 +148,7 @@ export default function About({ lang, t }) {
             </div>
 
             <div className="about-founders-grid">
-              {foundersList.map((founder, idx) => (
+              {foundersList.slice(0, 5).map((founder, idx) => (
                 <div key={idx} className="about-founder-profile-card">
                   <div className="about-founder-photo-wrapper">
                     {founder.photo ? (
@@ -138,6 +178,14 @@ export default function About({ lang, t }) {
                   </div>
                 </div>
               ))}
+            </div>
+
+            {/* View Full Board of Directors */}
+            <div className="about-directors-cta-wrap">
+              <Link href="/directors" className="about-directors-btn">
+                <span>{lang === 'en' ? 'View Board of Directors' : 'ഡയറക്ടർ ബോർഡ് കാണുക'}</span>
+                <ArrowRight size={16} />
+              </Link>
             </div>
           </div>
         )}

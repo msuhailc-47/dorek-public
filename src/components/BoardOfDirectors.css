@@ -1,0 +1,342 @@
+/* Board of Directors Page Styles */
+.directors-page {
+  padding-top: 110px;
+  padding-bottom: 80px;
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+  min-height: 100vh;
+}
+
+.directors-hero {
+  text-align: center;
+  max-width: 840px;
+  margin: 0 auto 50px auto;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.directors-breadcrumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  color: #64748b;
+  margin-bottom: 18px;
+  width: 100%;
+}
+
+.directors-breadcrumb a {
+  color: #0a2e5d;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.directors-breadcrumb a:hover {
+  color: #d4af37;
+}
+
+.directors-badge-wrap {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 14px;
+}
+
+.directors-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: rgba(10, 46, 93, 0.06);
+  border: 1px solid rgba(10, 46, 93, 0.12);
+  border-radius: 9999px;
+  color: #0a2e5d;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.directors-title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #0a2e5d;
+  line-height: 1.2;
+  margin-bottom: 14px;
+  letter-spacing: -0.02em;
+}
+
+.directors-subtitle {
+  font-size: 1.05rem;
+  color: #475569;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+/* Section Dividers */
+.directors-subgroup {
+  margin-bottom: 60px;
+}
+
+.directors-subgroup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid rgba(10, 46, 93, 0.08);
+  padding-bottom: 14px;
+  margin-bottom: 28px;
+}
+
+.directors-subgroup-title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #0a2e5d;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+}
+
+.directors-count-pill {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: #0a2e5d;
+  color: #ffffff;
+}
+
+.directors-count-pill.gold {
+  background: #d4af37;
+  color: #0a2e5d;
+}
+
+/* Grid for the 5 Executive Founders */
+.directors-exec-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.director-exec-card {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid rgba(10, 46, 93, 0.1);
+  box-shadow: 0 4px 20px rgba(10, 46, 93, 0.04);
+  padding: 32px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.director-exec-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(10, 46, 93, 0.1);
+  border-color: #d4af37;
+}
+
+.director-exec-photo-wrapper {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 18px;
+  border: 3px solid #d4af37;
+  background: #f1f5f9;
+  box-shadow: 0 4px 12px rgba(10, 46, 93, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.director-exec-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.director-exec-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #0a2e5d;
+  background: linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%);
+}
+
+.director-exec-name {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #0a2e5d;
+  margin-bottom: 6px;
+}
+
+.director-exec-role {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #b45309;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.director-exec-bio {
+  font-size: 0.88rem;
+  color: #64748b;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* Grid for the 8 Board of Directors (Name focused) */
+.directors-board-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.director-board-card {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid rgba(10, 46, 93, 0.09);
+  box-shadow: 0 2px 10px rgba(10, 46, 93, 0.03);
+  padding: 24px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+  position: relative;
+  min-height: 150px;
+}
+
+.director-board-card:hover {
+  transform: translateY(-3px);
+  border-color: #0a2e5d;
+  box-shadow: 0 8px 24px rgba(10, 46, 93, 0.08);
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+}
+
+.director-board-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0a2e5d 0%, #1e4976 100%);
+  color: #d4af37;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.05rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(10, 46, 93, 0.15);
+}
+
+.director-board-name {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0a2e5d;
+  margin-bottom: 6px;
+  line-height: 1.35;
+}
+
+.director-board-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #475569;
+  background: #f1f5f9;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+/* Footer CTA */
+.directors-footer-bar {
+  margin-top: 50px;
+  text-align: center;
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid rgba(10, 46, 93, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.directors-footer-text h4 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0a2e5d;
+  margin-bottom: 4px;
+}
+
+.directors-footer-text p {
+  font-size: 0.9rem;
+  color: #64748b;
+  margin: 0;
+}
+
+.directors-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #0a2e5d;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.directors-back-btn:hover {
+  background: #d4af37;
+  color: #0a2e5d;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1024px) {
+  .directors-exec-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .directors-board-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .directors-title {
+    font-size: 2rem;
+  }
+  .directors-exec-grid {
+    grid-template-columns: 1fr;
+  }
+  .directors-board-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .directors-footer-bar {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .directors-board-grid {
+    grid-template-columns: 1fr;
+  }
+}

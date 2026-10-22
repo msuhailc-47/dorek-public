@@ -40,7 +40,7 @@ const CustomSections = () => {
               
               {section.image && (
                 <div className="custom-image-content">
-                  <img src={getOptimizedUrl(section.image)} alt={section.title || 'Custom Section Image'} className="custom-img" />
+                  <img src={getOptimizedUrl(section.image)} alt={section.title || 'Custom Section Image'} className="custom-img" referrerPolicy="no-referrer" />
                 </div>
               )}
             </div>
