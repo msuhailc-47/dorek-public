@@ -117,6 +117,53 @@ export function CMSProvider({ children, initialData }) {
     };
   }, []);
 
+  // Initialize Meta Pixel & Google Analytics dynamically from CMS codeSettings
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    // Inject Meta Pixel if metaPixelId exists
+    const pixelId = codeSettings?.metaPixelId?.trim();
+    if (pixelId && !window._fbq_initialized) {
+      window._fbq_initialized = true;
+      try {
+        (function(f,b,e,v,n,t,s){
+          if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments);};
+          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=true;n.version='2.0';
+          n.queue=[];t=b.createElement(e);t.async=true;
+          t.src=v;s=b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t,s);
+        })(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+        if (window.fbq) {
+          window.fbq('init', pixelId);
+          window.fbq('track', 'PageView');
+        }
+      } catch (err) {
+        // Safe fallback
+      }
+    }
+
+    // Inject Google Analytics if googleAnalyticsId exists
+    const gaId = codeSettings?.googleAnalyticsId?.trim();
+    if (gaId && !window._ga_initialized) {
+      window._ga_initialized = true;
+      try {
+        const gaScript = document.createElement('script');
+        gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`;
+        gaScript.async = true;
+        document.head.appendChild(gaScript);
+
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){window.dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', gaId);
+        window.gtag = gtag;
+      } catch (err) {
+        // Safe fallback
+      }
+    }
+  }, [codeSettings]);
+
   const t = translationsData && translationsData[lang] ? translationsData[lang] : null;
 
   const fallbackCustomSections = (t && t.customSections && t.customSections.length > 0)

@@ -29,7 +29,7 @@ const defaultFallbackData = {
     sectionBackgrounds: {}
   },
   sectionVisibility: {
-    hero: true, about: true, businesses: true, whyChoose: true, products: true,
+    hero: true, about: true, catalog: true, businesses: true, whyChoose: true, products: true,
     opportunities: true, software: true, network: true, investors: true,
     careers: true, news: true, gallery: true, downloads: true, testimonials: true,
     csr: true, contact: true
@@ -112,6 +112,16 @@ export async function fetchCMSData() {
             founders: (data.translationsData.en?.about?.founders && data.translationsData.en.about.founders.length > 0)
               ? data.translationsData.en.about.founders
               : translations.en.about.founders
+          },
+          catalog: {
+            ...translations.en.catalog,
+            ...(data.translationsData.en?.catalog || {}),
+            categories: (data.translationsData.en?.catalog?.categories && data.translationsData.en.catalog.categories.length > 0)
+              ? data.translationsData.en.catalog.categories
+              : translations.en.catalog.categories,
+            products: (data.translationsData.en?.catalog?.products && data.translationsData.en.catalog.products.length > 0)
+              ? data.translationsData.en.catalog.products
+              : translations.en.catalog.products
           }
         },
         ml: {
@@ -135,6 +145,16 @@ export async function fetchCMSData() {
             founders: (data.translationsData.ml?.about?.founders && data.translationsData.ml.about.founders.length > 0)
               ? data.translationsData.ml.about.founders
               : translations.ml.about.founders
+          },
+          catalog: {
+            ...translations.ml.catalog,
+            ...(data.translationsData.ml?.catalog || {}),
+            categories: (data.translationsData.ml?.catalog?.categories && data.translationsData.ml.catalog.categories.length > 0)
+              ? data.translationsData.ml.catalog.categories
+              : translations.ml.catalog.categories,
+            products: (data.translationsData.ml?.catalog?.products && data.translationsData.ml.catalog.products.length > 0)
+              ? data.translationsData.ml.catalog.products
+              : translations.ml.catalog.products
           }
         }
       };

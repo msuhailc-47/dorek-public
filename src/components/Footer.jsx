@@ -47,6 +47,7 @@ export default function Footer({ lang, t }) {
           <div className="footer-col">
             <h4>{t.footer?.quickLinks || 'Quick Links'}</h4>
             <ul className="footer-links">
+              {isVisible('catalog') && <li><Link href="/catalog">{lang === 'en' ? 'Doorcarts Catalog' : 'ഡോർകാർട്സ് കാറ്റലോഗ്'}</Link></li>}
               {isVisible('businesses') && <li><Link href="/businesses">{t.nav?.businesses || 'Businesses'}</Link></li>}
               {isVisible('products') && <li><Link href="/businesses#products">{t.nav?.services || 'Products & Services'}</Link></li>}
               {isVisible('opportunities') && <li><Link href="/businesses#opportunities">{t.nav?.opportunities || 'Opportunities'}</Link></li>}

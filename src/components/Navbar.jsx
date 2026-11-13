@@ -27,6 +27,12 @@ export default function Navbar({ minimal = false, lang, t, onLangChange }) {
       path: '/'
     },
     {
+      id: 'catalog',
+      label: lang === 'en' ? 'Doorcarts Catalog' : 'ഡോർകാർട്സ് കാറ്റലോഗ്',
+      type: 'direct',
+      path: '/catalog'
+    },
+    {
       id: 'businesses',
       label: lang === 'en' ? 'Businesses' : 'ബിസിനസുകൾ',
       type: 'dropdown',
